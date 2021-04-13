@@ -41,8 +41,8 @@ public class ReservaDao {
     /* Actualitzem els atributs de la reserva
        (excepte el nom, que és la clau primària) */
     public void updateReserva(Reserva reserva) {
-        jdbcTemplate.update("UPDATE Reserva SET codi_qr = ?, nombre_persones = ?, data_creacio = ?, estat = ?, nif_ciutada = ?, id_franja = ?, id_zona = ? WHERE nom = ?",
-                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja(), reserva.getIdZona());
+        jdbcTemplate.update("UPDATE Reserva SET codi_qr = ?, nombre_persones = ?, data_creacio = ?, estat = ?, nif_ciutada = ?, id_franja = ?, id_zona = ? WHERE id = ?",
+                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja(), reserva.getIdZona(), reserva.getId());
     }
 
     /* Obtenim la reserva amb el id. Torna null si no existeix. */
