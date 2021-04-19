@@ -28,13 +28,13 @@ public class OcupaDao {
     }
 
     /* Esborrem l'objecte ocupa */
-    public void deleteZona(String idReserva, String idZona) {
+    public void deleteOcupa(String idReserva, String idZona) {
         jdbcTemplate.update("DELETE from Zona where id_reserva=? and id_zona=?",
                 idReserva, idZona);
     }
 
     /* Esborrem l'objecte ocupa */
-    public void deleteReserva(Ocupa ocupa) {
+    public void deleteOcupa(Ocupa ocupa) {
         jdbcTemplate.update("DELETE from Ocupa where id_reserva=? and id_zona = ?",
                 ocupa.getIdReserva(), ocupa.getIdZona());
     }
