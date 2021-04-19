@@ -26,9 +26,9 @@ public class GestorMunicipalDao {
     }
 
     /* Esborrem el gestor amb el idMunicipi*/
-    public void deleteGestor(String id) {
-        jdbcTemplate.update("DELETE FROM GestorMunicipal WHERE id_municipi=?",
-                id);
+    public void deleteGestor(String nif) {
+        jdbcTemplate.update("DELETE FROM GestorMunicipal WHERE nif=?",
+                nif);
     }
 
     /* Esborrem el gestor */
