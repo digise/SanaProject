@@ -56,7 +56,7 @@ public class EspaiPublic
         return terreny;
     }
 
-    public void setTerreny(TipusSol ing terreny) {
+    public void setTerreny(TipusSol terreny) {
         this.terreny = terreny;
     }
 
