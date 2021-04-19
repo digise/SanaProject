@@ -5,11 +5,13 @@ import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class GestorMunicipalDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -22,7 +24,7 @@ public class GestorMunicipalDao {
     /* Afegim el gestor municipal */
     public void addGestorMunicipal(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("INSERT INTO GestorMunicipal VALUES(?, ?, ?, ?, ?, ?, ?)",
-                gestorMunicipal.getNif(), gestorMunicipal.getIdMunicipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(), gestorMunicipal.getContrasenya());
+                gestorMunicipal.getNif(), gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(), gestorMunicipal.getContrasenya());
     }
 
     /* Esborrem el gestor amb el idMunicipi*/
@@ -41,7 +43,7 @@ public class GestorMunicipalDao {
        (excepte el nif, que és la clau primària) */
     public void updateGestor(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("UPDATE GestorMunicipal SET id_municipi = ?, nom = ?, cognoms = ?, email = ?, telefon = ?, contrasenya = ? WHERE nif = ?",
-                gestorMunicipal.getIdMunicipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),gestorMunicipal.getContrasenya(), gestorMunicipal.getNif());
+                gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),gestorMunicipal.getContrasenya(), gestorMunicipal.getNif());
     }
 
     /* Obtenim el gestor amb el nif. Torna null si no existeix. */

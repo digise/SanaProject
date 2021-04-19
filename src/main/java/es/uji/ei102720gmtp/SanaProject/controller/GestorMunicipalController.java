@@ -29,28 +29,28 @@ public class GestorMunicipalController {
         return "gestorMunicipal/list";
     }
 
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add")
     public String addGestorMunicipal(Model model){
-        model.addAttribute("gestor", new GestorMunicipal());
+        model.addAttribute("gestorMunicipal", new GestorMunicipal());
         return "gestorMunicipal/add";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("gestor") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+    public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "nadador/add";
+            return "gestorMunicipal/add";
         gestorMunicipalDao.addGestorMunicipal(gestorMunicipal);
         return "redirect:list";
     }
 
     @RequestMapping(value="/update/{nif}", method = RequestMethod.GET)
     public String editGestorMunicipal(Model model, @PathVariable String nif){
-        model.addAttribute("gestor", gestorMunicipalDao.getGestor(nif));
+        model.addAttribute("gestorMunicipal", gestorMunicipalDao.getGestor(nif));
         return "gestorMunicipal/update";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("gestor") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return "gestorMunicipal/update";
         gestorMunicipalDao.updateGestor(gestorMunicipal);
