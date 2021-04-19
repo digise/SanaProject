@@ -20,7 +20,6 @@ public final class ReservaRowMapper implements RowMapper<Reserva> {
         reserva.setEstat(rs.getObject("estat", EstatReserva.class));
         reserva.setNifCiutada(rs.getString("nif_ciutada"));
         reserva.setIdFranja(rs.getString("id_franja"));
-        reserva.setIdZona(rs.getString("id_zona"));
         return reserva;
     }
 }
