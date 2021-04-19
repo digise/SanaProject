@@ -1,16 +1,16 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
-import es.uji.ei102720gmtp.SanaProject.model.Comentaris;
+import es.uji.ei102720gmtp.SanaProject.model.Comentari;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class ComentarisRowMapper implements RowMapper<Comentaris> {
+public final class ComentarisRowMapper implements RowMapper<Comentari> {
 
-    public Comentaris mapRow(ResultSet rs, int rowNum) throws SQLException
+    public Comentari mapRow(ResultSet rs, int rowNum) throws SQLException
     {
-        Comentaris comentari = new Comentaris();
+        Comentari comentari = new Comentari();
         comentari.setIdEspaiPublic(rs.getString("id_espaiPublic"));
         comentari.setNifCiutada(rs.getString("nif_ciutada"));
         comentari.setContadorComentaris(rs.getLong("contador_comentaris"));

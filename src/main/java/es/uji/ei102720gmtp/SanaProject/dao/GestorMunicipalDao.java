@@ -24,7 +24,9 @@ public class GestorMunicipalDao {
     /* Afegim el gestor municipal */
     public void addGestorMunicipal(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("INSERT INTO GestorMunicipal VALUES(?, ?, ?, ?, ?, ?, ?)",
-                gestorMunicipal.getNif(), gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(), gestorMunicipal.getContrasenya());
+                gestorMunicipal.getNif(), gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(),
+                gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),
+                gestorMunicipal.getContrasenya());
     }
 
     /* Esborrem el gestor amb el idMunicipi*/
@@ -43,7 +45,9 @@ public class GestorMunicipalDao {
        (excepte el nif, que és la clau primària) */
     public void updateGestor(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("UPDATE GestorMunicipal SET id_municipi = ?, nom = ?, cognoms = ?, email = ?, telefon = ?, contrasenya = ? WHERE nif = ?",
-                gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),gestorMunicipal.getContrasenya(), gestorMunicipal.getNif());
+                gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(),
+                gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),gestorMunicipal.getContrasenya(),
+                gestorMunicipal.getNif());
     }
 
     /* Obtenim el gestor amb el nif. Torna null si no existeix. */
