@@ -25,7 +25,7 @@ public class GestorMunicipalController {
 
     @RequestMapping("/list")
     public String listGestorsMunicipals(Model model){
-        model.addAttribute("gestors", gestorMunicipalDao.getGestors());
+        model.addAttribute("gestors", gestorMunicipalDao.getGestorsMunicipals());
         return "gestorMunicipal/list";
     }
 
@@ -45,7 +45,7 @@ public class GestorMunicipalController {
 
     @RequestMapping(value="/update/{nif}", method = RequestMethod.GET)
     public String editGestorMunicipal(Model model, @PathVariable String nif){
-        model.addAttribute("gestorMunicipal", gestorMunicipalDao.getGestor(nif));
+        model.addAttribute("gestorMunicipal", gestorMunicipalDao.getGestorMunicipal(nif));
         return "gestorMunicipal/update";
     }
 
@@ -53,13 +53,13 @@ public class GestorMunicipalController {
     public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return "gestorMunicipal/update";
-        gestorMunicipalDao.updateGestor(gestorMunicipal);
+        gestorMunicipalDao.updateGestorMunicipal(gestorMunicipal);
         return "redirect:list";
     }
 
     @RequestMapping(value = "/delete/{nif}")
     public String processDelete(@PathVariable String nif){
-        gestorMunicipalDao.deleteGestor(nif);
+        gestorMunicipalDao.deleteGestorMunicipal(gestorMunicipalDao.getGestorMunicipal(nif));
         return "redirect:../list";
     }
 }
