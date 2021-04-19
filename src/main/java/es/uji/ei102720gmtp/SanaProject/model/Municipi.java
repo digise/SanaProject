@@ -1,10 +1,12 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
+import es.uji.ei102720gmtp.SanaProject.model.enums.Provincia;
+
 public class Municipi {
 
     private String idMunicipi;
     private String nom;
-    private String provincia;
+    private Provincia provincia;
 
     public String getIdMunicipi() {
         return idMunicipi;
@@ -22,11 +24,11 @@ public class Municipi {
         this.nom = nom;
     }
 
-    public String getProvincia() {
+    public Provincia getProvincia() {
         return provincia;
     }
 
-    public void setProvincia(String provincia) {
+    public void setProvincia(Provincia provincia) {
         this.provincia = provincia;
     }
 

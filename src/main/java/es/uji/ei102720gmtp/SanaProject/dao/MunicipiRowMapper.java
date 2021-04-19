@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
+import es.uji.ei102720gmtp.SanaProject.model.enums.Provincia;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ public final class MunicipiRowMapper implements RowMapper<Municipi> {
         Municipi municipi = new Municipi();
         municipi.setIdMunicipi(rs.getString("id"));
         municipi.setNom(rs.getString("nom"));
-        municipi.setProvincia(rs.getString("provincia"));
+        municipi.setProvincia(rs.getObject("provincia", Provincia.class));
         return municipi;
     }
 }
