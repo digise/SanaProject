@@ -22,28 +22,32 @@ public class FranjaHorariaDao{
 
     /* Afegim  */
     public void addFranjaHoraria(FranjaHoraria franjaHoraria) {
-        jdbcTemplate.update("INSERT INTO Reserva VALUES(?, ?, ?, ?, ?, ? ,?)",
-                franjaHoraria.getId(), franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(), franjaHoraria.getHoraInici(), franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(), franjaHoraria.getDataFinal());
+        jdbcTemplate.update("INSERT INTO FranjaHoraria VALUES(?, ?, ?, ?, ?, ? ,?)",
+                franjaHoraria.getId(), franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(),
+                franjaHoraria.getHoraInici(), franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(),
+                franjaHoraria.getDataFinal());
     }
 
     /* Esborrem */
     public void deleteFranjaHoraria(String idFranja) {
-        jdbcTemplate.update("DELETE from franja_horaria where id=?",
+        jdbcTemplate.update("DELETE from franjaHoraria where id=?",
                 idFranja);
     }
 
     /* Actualitzem els atributs
        (excepte el id, que és la clau primària) */
     public void updateFranjaHoraria(FranjaHoraria franjaHoraria) {
-        jdbcTemplate.update("UPDATE franja_horaria SET id_espai = ?, descripcio = ?, hora_inici = ?, hora_final = ?, data_inici = ?, data_final = ?  WHERE id = ?",
-                franjaHoraria.getIdEspai(),franjaHoraria.getDescripcio(),franjaHoraria.getHoraInici(),franjaHoraria.getHoraFinal(),franjaHoraria.getDataInici(),franjaHoraria.getDataFinal());
+        jdbcTemplate.update("UPDATE franjaHoraria SET id_espai = ?, descripcio = ?, hora_inici = ?, hora_final = ?, data_inici = ?, data_final = ?  WHERE id = ?",
+                franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(), franjaHoraria.getHoraInici(),
+                franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(), franjaHoraria.getDataFinal(),
+                franjaHoraria.getId());
     }
 
     /* Obtenim la franja amb el id. Torna null si no existeix. */
     public FranjaHoraria getFranjaHoraria(String idFranja) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM franja_horaria WHERE id = ?",
+                    "SELECT * FROM franjaHoraria WHERE id = ?",
                     new FranjaHorariaRowMapper(),
                     idFranja);
         }
@@ -56,7 +60,7 @@ public class FranjaHorariaDao{
     public List<FranjaHoraria> getFranjas() {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM franja_horaria",
+                    "SELECT * FROM franjaHoraria",
                     new FranjaHorariaRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<FranjaHoraria>();

@@ -14,10 +14,10 @@ public class FranjaHorariaRowMapper implements RowMapper<FranjaHoraria>
     public FranjaHoraria mapRow(ResultSet rs, int rowNum) throws SQLException {
         FranjaHoraria franjaHoraria = new FranjaHoraria();
         franjaHoraria.setId(rs.getString("id"));
-        franjaHoraria.setIdEspai(rs.getString("id_spai"));
+        franjaHoraria.setIdEspai(rs.getString("id_espai"));
         franjaHoraria.setDescripcio(rs.getString("descripcio"));
         franjaHoraria.setHoraInici(rs.getObject("hora_inici", LocalTime.class));
-        franjaHoraria.setHoraFinal(rs.getTime("hora_final", LocalTime.class));
+        franjaHoraria.setHoraFinal(rs.getObject("hora_final", LocalTime.class));
         franjaHoraria.setDataInici(rs.getObject("data_inici", LocalDate.class));
         franjaHoraria.setDataFinal(rs.getObject("data_final", LocalDate.class));
         return franjaHoraria;

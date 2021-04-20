@@ -13,7 +13,6 @@ public class Reserva {
     private EstatReserva estat;
     private String nifCiutada;
     private String idFranja;
-    private String idZona;
 
     public Reserva(){}
 
@@ -45,9 +44,6 @@ public class Reserva {
         return idFranja;
     }
 
-    public String getIdZona() {
-        return idZona;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -77,9 +73,6 @@ public class Reserva {
         this.idFranja = id_franja;
     }
 
-    public void setIdZona(String idZona) {
-        this.idZona = idZona;
-    }
 
     @Override
     public String toString() {
@@ -91,7 +84,6 @@ public class Reserva {
                 ", estat=" + estat +
                 ", nif_ciutada='" + nifCiutada + '\'' +
                 ", id_franja='" + idFranja + '\'' +
-                ", id_zona='" + idZona + '\'' +
                 '}';
     }
 }

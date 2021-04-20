@@ -3,25 +3,14 @@ package es.uji.ei102720gmtp.SanaProject.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class FranjaHoraria {
-    private String id;
+public class PeriodeServeiEspai {
+
     private String idEspai;
-    private String descripcio;
+    private String nomServei;
     private LocalTime horaInici;
     private LocalTime horaFinal;
     private LocalDate dataInici;
     private LocalDate dataFinal;
-
-    public FranjaHoraria() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getIdEspai() {
         return idEspai;
@@ -31,12 +20,12 @@ public class FranjaHoraria {
         this.idEspai = idEspai;
     }
 
-    public String getDescripcio() {
-        return descripcio;
+    public String getNomServei() {
+        return nomServei;
     }
 
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
+    public void setNomServei(String nomServei) {
+        this.nomServei = nomServei;
     }
 
     public LocalTime getHoraInici() {
@@ -73,14 +62,13 @@ public class FranjaHoraria {
 
     @Override
     public String toString() {
-        return "FranjaHoraria{" +
-                "id='" + id + '\'' +
-                ", idEspai='" + idEspai + '\'' +
-                ", descripcio='" + descripcio + '\'' +
-                ", horaInici='" + horaInici + '\'' +
+        return "PeriodeServeiEspai{" +
+                "idEspai='" + idEspai + '\'' +
+                ", nomServei='" + nomServei + '\'' +
+                ", horaInici=" + horaInici +
                 ", horaFinal=" + horaFinal +
-                ", dataInici='" + dataInici + '\'' +
-                ", dataFinal='" + dataFinal + '\'' +
+                ", dataInici=" + dataInici +
+                ", dataFinal=" + dataFinal +
                 '}';
     }
 }

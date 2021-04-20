@@ -14,7 +14,7 @@ public class ControlaRowMapper implements RowMapper<Controla>
         {
             Controla controla = new Controla();
             controla.setNifControlador(rs.getString("nif_controlador"));
-            controla.setIdEspai(rs.getString("id_spai"));
+            controla.setIdEspai(rs.getString("id_espai"));
             controla.setDataInici(rs.getObject("data_inici", LocalDate.class));
             controla.setDataFinal(rs.getObject("data_final", LocalDate.class));
             return controla;

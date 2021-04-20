@@ -23,28 +23,34 @@ public class EspaiPublicDao
 
     /* Afegim */
     public void addEspaiPublic(EspaiPublic espaiPublic) {
-        jdbcTemplate.update("INSERT INTO espai_public VALUES(?, ?, ?, ?, ?, ? ,? , ?, ?, ?, ?, ?)",
-                espaiPublic.getId(),espaiPublic.getIdMunicipi(),espaiPublic.getNom(),espaiPublic.getTipus(),espaiPublic.getTerreny(),espaiPublic.getTipusAcces(),espaiPublic.getLocalitzacio(),espaiPublic.getLongitud(),espaiPublic.getAmplaria(),espaiPublic.getImagen(),espaiPublic.getComentaris(),espaiPublic.getDescripcio());
+        jdbcTemplate.update("INSERT INTO espaiPublic VALUES(?, ?, ?, ?, ?, ? ,? , ?, ?, ?, ?)",
+                espaiPublic.getId(), espaiPublic.getIdMunicipi(), espaiPublic.getNom(),
+                espaiPublic.getTipus(), espaiPublic.getTerreny(), espaiPublic.getTipusAcces(),
+                espaiPublic.getLocalitzacio(), espaiPublic.getLongitud(), espaiPublic.getAmplaria(),
+                espaiPublic.getImagen(), espaiPublic.getDescripcio());
     }
 
     /* Esborrem  */
     public void deleteEspaiPublic(String idEspai) {
-        jdbcTemplate.update("DELETE from espai_public where id=?",
+        jdbcTemplate.update("DELETE from espaiPublic where id=?",
                 idEspai);
     }
 
     /* Actualitzem els atributs
        (excepte el id, que és la clau primària) */
     public void updateEspaiPublic(EspaiPublic espaiPublic) {
-        jdbcTemplate.update("UPDATE espai_public SET id_municipi = ?, nom = ?, tipus = ?, terreny = ?, tipus_acces = ?, localitzacio = ?, longitud = ? , amplaria = ?, imagen = ?, comentaris = ?, descripcio = ? WHERE id = ?",
-                espaiPublic.getIdMunicipi(),espaiPublic.getNom(),espaiPublic.getTipus(),espaiPublic.getTerreny(),espaiPublic.getTipusAcces(),espaiPublic.getLocalitzacio(),espaiPublic.getLongitud(),espaiPublic.getAmplaria(),espaiPublic.getImagen(),espaiPublic.getComentaris(),espaiPublic.getDescripcio());;
+        jdbcTemplate.update("UPDATE espaiPublic SET id_municipi = ?, nom = ?, tipus = ?, terreny = ?, tipus_acces = ?, localitzacio = ?, longitud = ? , amplaria = ?, imagen = ?, descripcio = ? WHERE id = ?",
+                espaiPublic.getIdMunicipi(), espaiPublic.getNom(), espaiPublic.getTipus(),
+                espaiPublic.getTerreny(), espaiPublic.getTipusAcces(), espaiPublic.getLocalitzacio(),
+                espaiPublic.getLongitud(), espaiPublic.getAmplaria(), espaiPublic.getImagen(),
+                espaiPublic.getDescripcio(), espaiPublic.getId());
     }
 
     /* Obtenim el espai amb el id. Torna null si no existeix. */
     public EspaiPublic getEspaiPublic(String idEspai) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM espai_public WHERE id = ?",
+                    "SELECT * FROM espaiPublic WHERE id = ?",
                     new EspaiPublicRowMapper(),
                     idEspai);
         }
@@ -54,10 +60,10 @@ public class EspaiPublicDao
     }
 
     /* Obtenim totes les reserves. Torna una llista buida si no n'hi ha cap. */
-    public List<EspaiPublic> getReserves() {
+    public List<EspaiPublic> getEspaisPublics() {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM espai_public",
+                    "SELECT * FROM espaiPublic",
                     new EspaiPublicRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<EspaiPublic>();

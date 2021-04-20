@@ -24,27 +24,27 @@ public class ControlaDao {
     /* Afegim  */
     public void addControla(Controla controla)
     {
-        jdbcTemplate.update("INSERT INTO Controla VALUES(?, ?)",
-                controla.getDataInici(), controla.getDataFinal());
+        jdbcTemplate.update("INSERT INTO Controla VALUES(?, ?, ?, ?)",
+                controla.getNifControlador(), controla.getIdEspai(), controla.getDataInici(), controla.getDataFinal());
     }
 
     /* Esborrem  */
     public void deleteControla(String nifControlador,String idEspai,LocalDate dataInici) {
-        jdbcTemplate.update("DELETE from Controla where nif_controlador=? AND id_spai=? AND dataFinal=? ",
+        jdbcTemplate.update("DELETE from Controla where nif_controlador=? AND id_espai=? AND data_inici=?",
                 nifControlador,idEspai,dataInici);
     }
 
     /* Actualitzem els atributs  */
     public void updateControla(Controla controla) {
-        jdbcTemplate.update("UPDATE Controla SET nif_controla = ?, id_espai = ?, data_inici = ?,  data_final = ? ",
-                controla.getNifControlador(),controla.getIdEspai(),controla.getDataInici(), controla.getDataFinal());
+        jdbcTemplate.update("UPDATE Controla SET data_final = ? WHERE nif_controla = ?, id_espai = ?, data_inici = ?",
+                controla.getDataFinal(), controla.getNifControlador(),controla.getIdEspai(),controla.getDataInici());
     }
 
     /* Obtenim  amb el id. Torna null si no existeix. */
     public Controla getControla(String nifControlador, String idEspai, LocalDate dataInici) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM reserva WHERE id = ? AND id_spai=? AND dataFinal=?",
+                    "SELECT * FROM Controla WHERE nif_controla=? AND id_espai=? AND data_inici=?",
                     new ControlaRowMapper(),
                     nifControlador,idEspai,dataInici);
         }
