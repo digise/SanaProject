@@ -40,7 +40,7 @@ public class MunicipiDao {
     /* Actualitzem els atributs del municipi
        (excepte el id, que és la clau primària) */
     public void updateMunicipi(Municipi municipi) {
-        jdbcTemplate.update("UPDATE Municipi SET nom = ?, provincia = ? WHERE nom = ?",
+        jdbcTemplate.update("UPDATE Municipi SET nom = ?, provincia = ? WHERE id = ?",
                 municipi.getNom(), municipi.getProvincia(), municipi.getIdMunicipi());
     }
 

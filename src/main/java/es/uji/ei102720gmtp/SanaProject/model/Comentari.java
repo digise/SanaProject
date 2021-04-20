@@ -1,6 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
-public class Comentaris {
+public class Comentari {
 
     private String idEspaiPublic;
     private String nifCiutada;

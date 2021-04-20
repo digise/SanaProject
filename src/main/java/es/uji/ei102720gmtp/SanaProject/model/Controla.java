@@ -1,0 +1,57 @@
+package es.uji.ei102720gmtp.SanaProject.model;
+
+import java.time.LocalDate;
+
+public class Controla {
+    private String nifControlador;
+    private String idEspai;
+    private LocalDate dataInici;
+    private LocalDate dataFinal;
+
+    public Controla() {
+    }
+
+    public String getNifControlador() {
+        return nifControlador;
+    }
+
+    public void setNifControlador(String nifControlador) {
+        this.nifControlador = nifControlador;
+    }
+
+    public String getIdEspai() {
+        return idEspai;
+    }
+
+    public void setIdEspai(String idEspai) {
+        this.idEspai = idEspai;
+    }
+
+    public LocalDate getDataInici() {
+        return dataInici;
+    }
+
+    public void setDataInici(LocalDate dataInici) {
+        this.dataInici = dataInici;
+    }
+
+    public LocalDate getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(LocalDate dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Controla{" +
+                "nifControlador='" + nifControlador + '\'' +
+                ", idEspai='" + idEspai + '\'' +
+                "dataInici='" + dataInici + '\'' +
+                ", dataFinal='" + dataFinal + '\'' +
+                '}';
+    }
+}
+
