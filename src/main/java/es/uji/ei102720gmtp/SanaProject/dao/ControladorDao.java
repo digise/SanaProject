@@ -42,13 +42,13 @@ public class ControladorDao {
 
     public ArrayList<Controlador> updateControlador(Controlador controlador) {
         jdbcTemplate.update("UPDATE Controlador SET nom = ?, cognoms = ?, especialitat = ?, email = ?, telefon = ?",
-                controlador.getNif(), controlador.getNom(),controlador.getCognom(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon());
-
+                controlador.getNif(), controlador.getNom(), controlador.getCognom(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon());
+        }
     /* Obtenim el controlador amb el nif. Torna null si no existeix. */
-        public Controlador getControlador(String nifControlador) {
-            try {
-                return jdbcTemplate.queryForObject(
-                        "SELECT * FROM Controlador WHERE nif = ?",
+    public Controlador getControlador(String nifControlador) {
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM Controlador WHERE nif = ?",
                         new ControladorRowMapper(),
                         nifControlador);
             }
@@ -67,7 +67,6 @@ public class ControladorDao {
                 return new ArrayList<Controlador>();
             }
         }
-    }
 }
 
 
