@@ -1,7 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
 import es.uji.ei102720gmtp.SanaProject.model.Ocupa;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
