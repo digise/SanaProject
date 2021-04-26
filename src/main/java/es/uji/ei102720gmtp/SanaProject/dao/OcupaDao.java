@@ -1,8 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
-import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
 import es.uji.ei102720gmtp.SanaProject.model.Ocupa;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
