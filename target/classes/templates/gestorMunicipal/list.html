@@ -6,16 +6,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 </head>
 <body>
-<h1>Llista de gestors</h1>
-<table>
+<h1>Llista de Gestors Municipals</h1>
+<table class="table">
     <thead>
     <tr>
         <th>NIF</th>
-        <th>IdMunicipi</th>
+        <th>Id Municipi</th>
         <th>Nom</th>
         <th>Cognoms</th>
         <th>Email</th>
-        <th>Telefon</th>
+        <th>Telèfon</th>
         <th>Contrasenya</th>
         <th></th>
         <th></th>
@@ -30,13 +30,13 @@
         <td th:text="${gestorMunicipal.email}"></td>
         <td th:text="${gestorMunicipal.telefon}"></td>
         <td th:text="${gestorMunicipal.contrasenya}"></td>
-        <td><a th:href="@{/gestorMunicipal/update/{nif}(nif=${gestorMunicipal.nif})}">Edita</a>
+        <td><a th:href="@{/gestorMunicipal/update/{nif}(nif=${gestorMunicipal.nif})}"><button type="button" class="btn btn-danger">Edita</button></a>
         </td>
-        <td><a th:href="@{/gestorMunicipal/delete/{nif}(nif=${gestorMunicipal.nif})}">Esborra</a>
+        <td><a th:href="@{/gestorMunicipal/delete/{nif}(nif=${gestorMunicipal.nif})}"><button type="button" class="btn btn-danger">Esborra</button></a>
         </td>
     </tr>
     </tbody>
 </table>
-<a href="add">Afegeix gestor municipal</a>
+<a href="add"><button type="button" class="btn btn-success">Afegeix gestor municipal</button></a>
 </body>
 </html>
