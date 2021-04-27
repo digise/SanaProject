@@ -32,7 +32,7 @@ public class CiutadaDao {
     }
 
     /* Esborrem la reserva */
-    public void deleteReserva(Ciutada ciutada) {
+    public void deleteCiutada(Ciutada ciutada) {
         jdbcTemplate.update("DELETE from Ciutada where id=?",
                 ciutada.getNif());
     }
