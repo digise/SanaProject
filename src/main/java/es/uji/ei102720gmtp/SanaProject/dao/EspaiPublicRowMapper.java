@@ -2,7 +2,6 @@ package es.uji.ei102720gmtp.SanaProject.dao;
 
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
-import es.uji.ei102720gmtp.SanaProject.model.enums.TipusEspai;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusSol;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -16,7 +15,7 @@ public class EspaiPublicRowMapper implements RowMapper<EspaiPublic> {
         espaiPublic.setId(rs.getString("id"));
         espaiPublic.setIdMunicipi(rs.getString("id_municipi"));
         espaiPublic.setNom(rs.getString("nom"));
-        espaiPublic.setTipus(rs.getObject("tipus",  TipusEspai.class));
+        espaiPublic.setTipus(rs.getString("tipus"));
         espaiPublic.setTerreny(rs.getObject("terreny", TipusSol.class));
         espaiPublic.setTipusAcces(rs.getObject("tipus_acces", TipusAcces.class));
         espaiPublic.setLongitud(rs.getInt("longitud"));

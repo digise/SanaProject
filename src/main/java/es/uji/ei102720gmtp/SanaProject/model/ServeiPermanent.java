@@ -1,11 +1,9 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
-import es.uji.ei102720gmtp.SanaProject.model.enums.TipusServei;
-
 public class ServeiPermanent {
 
     private String nom;
-    private TipusServei tipus;
+    private String tipus;
 
     public String getNom() {
         return nom;
@@ -15,11 +13,11 @@ public class ServeiPermanent {
         this.nom = nom;
     }
 
-    public TipusServei getTipus() {
+    public String getTipus() {
         return tipus;
     }
 
-    public void setTipus(TipusServei tipus) {
+    public void setTipus(String tipus) {
         this.tipus = tipus;
     }
 

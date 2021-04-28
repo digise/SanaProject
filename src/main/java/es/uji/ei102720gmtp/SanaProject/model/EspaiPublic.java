@@ -1,7 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
-import es.uji.ei102720gmtp.SanaProject.model.enums.TipusEspai;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusSol;
 
 public class EspaiPublic
@@ -9,7 +8,7 @@ public class EspaiPublic
     private String id;
     private String idMunicipi;
     private String nom;
-    private TipusEspai tipus;
+    private String tipus;
     private TipusSol terreny;
     private TipusAcces tipusAcces;
     private String localitzacio;
@@ -44,11 +43,11 @@ public class EspaiPublic
         this.nom = nom;
     }
 
-    public TipusEspai getTipus() {
+    public String getTipus() {
         return tipus;
     }
 
-    public void setTipus(TipusEspai tipus) {
+    public void setTipus(String tipus) {
         this.tipus = tipus;
     }
 
