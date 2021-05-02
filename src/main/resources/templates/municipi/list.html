@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar municipis</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de municipis</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Provincia</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="municipi: ${municipis}">
+        <td th:text="${municipi.idMunicipi}"></td>
+        <td th:text="${municipi.nom}"></td>
+        <td th:text="${municipi.provincia}"></td>
+        <td><a th:href="@{/municipi/update/{id}(id=${municipi.id})}"><button type="button" class="btn btn-danger">Edita</button></a>
+        </td>
+        <td><a th:href="@{/municipi/delete/{id}(id=${municipi.id})}"><button type="button" class="btn btn-danger">Esborra</button></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add"><button type="button" class="btn btn-success">Afegeix municipi</button></a>
+</body>
+</html>
