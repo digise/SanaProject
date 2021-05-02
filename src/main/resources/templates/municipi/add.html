@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear nou gestor municipal</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Nou municipi</h2>
+<form action="#" th:action="@{/municipi/add}"
+      th:object="${municipi}" method="post">
+    <table>
+        <tr>
+            <td><label>Id municipi</label></td>
+            <td><input type="text" th:field="*{idMunicipi}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nom</label></td>
+            <td><input type="text" th:field="*{nom}" /></td>
+        </tr>
+        <tr>
+            <td><label>Provincia</label></td>
+            <td><input type="text" th:field="*{provincia}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Afegeix municipi" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

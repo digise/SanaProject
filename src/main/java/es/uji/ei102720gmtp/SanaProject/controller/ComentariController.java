@@ -30,6 +30,18 @@ public class ComentariController {
         return "comentari/list";
     }
 
+    @RequestMapping("/listEspai/{id}")
+    public String listComentarisEspai(Model model, @PathVariable String id){
+        model.addAttribute("comentaris", comentarisDao.getComentarisEspaiPublic(id));
+        return "comentari/listEspai";
+    }
+
+    @RequestMapping("/listCiutada/{nif}")
+    public String listComentarisCiutada(Model model, @PathVariable String nif){
+        model.addAttribute("comentaris", comentarisDao.getComentarisCiutada(nif));
+        return "comentari/listCiutada";
+    }
+
     @RequestMapping(value = "/add")
     public String addComentari(Model model){
         model.addAttribute("comentari", new Comentari());
