@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar nova zonal</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2><span th:text=" Actualitzar ${zona.nom}"></span></h2>
+<form action="#" th:action="@{/zona/update}"
+      th:object="${zona}" method="post">
+    <table>
+        <tr>
+            <td><label>Id Zona</label></td>
+            <td><input type="text" th:field="*{id}" /></td>
+        </tr>
+        <tr>
+            <td><label>Id Espai</label></td>
+            <td><input type="text" th:field="*{idEspai}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nom</label></td>
+            <td><input type="text" th:field="*{nom}" /></td>
+        </tr>
+        <tr>
+            <td><label>Capacitat</label></td>
+            <td><input type="text" th:field="*{capacitat}" /></td>
+        </tr>
+        <tr>
+            <td><label>Coordenades</label></td>
+            <td><input type="text" th:field="*{coordenades}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Editar zona" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

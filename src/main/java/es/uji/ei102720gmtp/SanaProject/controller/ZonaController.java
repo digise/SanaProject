@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/zona")
+@RequestMapping("zona")
 public class ZonaController {
 
 
@@ -28,17 +28,17 @@ public class ZonaController {
     @RequestMapping("/list")
     public String listZones(Model model){
         model.addAttribute("zones", zonaDao.getZones());
-        return "zones/list";
+        return "zona/list";
     }
 
     @RequestMapping(value = "/add")
     public String addZona(Model model){
-        model.addAttribute("zona", new Zona());
+        model.addAttribute("templates/zona", new Zona());
         return "zona/add";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("zona") Zona zona, BindingResult bindingResult){
+    public String processAddSubmit(@ModelAttribute("templates/zona") Zona zona, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "zona/add";
         zonaDao.addZona(zona);
@@ -47,14 +47,14 @@ public class ZonaController {
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
     public String editZona(Model model, @PathVariable String id){
-        model.addAttribute("zona", zonaDao.getZona(id));
+        model.addAttribute("templates/zona", zonaDao.getZona(id));
         return "zona/update";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("zona") Zona zona, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("templates/zona") Zona zona, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "zona/update";
+            return "templates/zona/update";
         zonaDao.updateZona(zona);
         return "redirect:list";
     }

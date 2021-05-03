@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar els ciutadans</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de Ciutadans</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>NIF</th>
+        <th>Nom</th>
+        <th>Cognoms</th>
+        <th>Telèfon</th>
+        <th>Domicili</th>
+        <th>Localitat</th>
+        <th>País</th>
+        <th>Pin</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ciutada: ${ciutadans}">
+        <td th:text="${ciutada.nif}"></td>
+        <td th:text="${ciutada.nom}"></td>
+        <td th:text="${ciutada.cognoms}"></td>
+        <td th:text="${ciutada.telefon}"></td>
+        <td th:text="${ciutada.email}"></td>
+        <td th:text="${ciutada.domicili}"></td>
+        <td th:text="${ciutada.localitat}"></td>
+        <td th:text="${ciutada.pais}"></td>
+        <td th:text="${ciutada.pin}"></td>
+        <td><a th:href="@{/ciutada/update/{nif}(nif=${ciutada.nif})}"><button type="button" class="btn btn-danger">Edita</button></a>
+        </td>
+        <td><a th:href="@{/ciutada/delete/{nif}(nif=${ciutada.nif})}"><button type="button" class="btn btn-danger">Esborra</button></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add"><button type="button" class="btn btn-success">Afegeix ciutada</button></a>
+</body>
+</html>

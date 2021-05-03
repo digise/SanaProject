@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar reserva</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<form action="#" th:action="@{/reserva/update}"
+      th:object="${reserva}" method="post">
+    <table>
+        <tr>
+            <td><label>Id Reserva</label></td>
+            <td><input type="text" th:field="*{id}" /></td>
+        </tr>
+        <tr>
+            <td><label>Codi Qr</label></td>
+            <td><input type="text" th:field="*{codiQr}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nombre Persones</label></td>
+            <td><input type="text" th:field="*{nombrePersones}" /></td>
+        </tr>
+        <tr>
+            <td><label>Data Creació</label></td>
+            <td><input type="text" th:field="*{dataCreacio}" /></td>
+        </tr>
+        <tr>
+            <td><label>Estat</label></td>
+            <td><input type="text" th:field="*{estat}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nif ciutada</label></td>
+            <td><input type="text" th:field="*{nifCiutada}" /></td>
+        </tr>
+        <tr>
+            <td><label>Id franja</label></td>
+            <td><input type="text" th:field="*{idFranja}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Editar reserva" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
