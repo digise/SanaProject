@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/comentari")
@@ -32,7 +29,7 @@ public class ComentariController {
 
     @RequestMapping("/listEspai/{id}")
     public String listComentarisEspai(Model model, @PathVariable String id){
-        model.addAttribute("comentaris", comentarisDao.getComentarisEspaiPublic("0"));
+        model.addAttribute("comentaris", comentarisDao.getComentarisEspaiPublic("2"));
         return "comentari/listEspai";
     }
 
@@ -56,7 +53,7 @@ public class ComentariController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "/update/{idEspai,nifCiutada,contador}", method = RequestMethod.GET)
+    @RequestMapping(value = "/update/{idEspai}/{nifCiutada}/{contador}", method = RequestMethod.GET)
     public String processUpdateSubmit(Model model, @PathVariable String idEspai, @PathVariable String nifCiutada, @PathVariable long contador){
         model.addAttribute("comentari", comentarisDao.getComentari(idEspai, nifCiutada, contador));
         return "comentari/update";
@@ -70,10 +67,10 @@ public class ComentariController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "/delete/{idEspai,nifCiutada,contador}")
+    @RequestMapping(value = "/delete/{idEspai}/{nifCiutada}/{contador}")
     public String processDelete(@PathVariable String idEspai, @PathVariable String nifCiutada, @PathVariable long contador){
         comentarisDao.deleteComentari(idEspai, nifCiutada, contador);
-        return "redirect:../list";
+        return "redirect:../../../list";
     }
 
 }

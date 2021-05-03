@@ -21,7 +21,7 @@
         <td th:text="${comentari.nifCiutada}"></td>
         <td th:text="${comentari.contadorComentaris}"></td>
         <td th:text="${comentari.comentari}"></td>
-        <td><a th:href="@{/comentari/delete/{id}(id=${municipi.id})}"><button type="button" class="btn btn-danger">Esborra</button></a>
+        <td><a th:href="@{/comentari/delete/{id}(id=${comentari.idEspaiPublic})}"><button type="button" class="btn btn-danger">Esborra</button></a>
         </td>
     </tr>
     </tbody>

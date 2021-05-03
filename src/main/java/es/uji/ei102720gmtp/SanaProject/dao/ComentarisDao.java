@@ -28,20 +28,20 @@ public class ComentarisDao {
 
     /* Esborrem el comentari amb el id, nif, contador*/
     public void deleteComentari(String idEspaiPublic, String nifCiutada, long contador) {
-        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=?, nif_ciutada=?, contador_comentaris=?",
+        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=? AND nif_ciutada=? AND contador_comentaris=?",
                 idEspaiPublic, nifCiutada, contador);
     }
 
     /* Esborrem el comentari */
     public void deleteComentari(Comentari comentari) {
-        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=?, nif_ciutada=?, contador_comentaris=?",
+        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=? AND nif_ciutada=? AND contador_comentaris=?",
                 comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris());
     }
 
     /* Actualitzem els atributs del comentari
        (excepte el id, nif que és la clau primària) */
     public void updateComentari(Comentari comentari) {
-        jdbcTemplate.update("UPDATE Comentari SET Comentaris = ? WHERE id_espaiPublic = ?, nif_ciutada=?, contador_comentaris = ?",
+        jdbcTemplate.update("UPDATE Comentari SET Comentaris = ? WHERE id_espaiPublic = ? AND nif_ciutada=? AND contador_comentaris = ?",
                 comentari.getComentari(), comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris());
     }
 
@@ -49,7 +49,7 @@ public class ComentarisDao {
     public Comentari getComentari(String idEspaiPublic, String nif, long contador) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Comentaris WHERE id_espaiPublic = ?, nif_ciutada=?, contador_comentaris=?",
+                    "SELECT * FROM Comentaris WHERE id_espaiPublic = ? AND nif_ciutada=? AND contador_comentaris=?",
                     new ComentarisRowMapper(),
                     idEspaiPublic, nif, contador);
         }
