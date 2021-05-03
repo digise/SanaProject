@@ -21,7 +21,12 @@
         </tr>
         <tr>
             <td><label>Provincia</label></td>
-            <td><input type="text" th:field="*{provincia}" /></td>
+            <td><select class="form_control" type="text" th:field="*{provincia}">
+                <option value="CASTELLO">Castello</option>
+                <option value="VALENCIA">Valencia</option>
+                <option value="ALACANT">Alacant</option>
+            </select>
+            </td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Afegeix municipi" /></td>
