@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar controladors</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de controladors</h1>
+<table>
+    <thead>
+    <tr>
+        <th>NIF</th>
+        <th>Nom</th>
+        <th>Cognom</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="controlador: ${controladors}">
+        <td th:text="${controlador.nif}"></td>
+        <td th:text="${controlador.nom}"></td>
+        <td th:text="${controlador.cognom}"></td>
+        <td th:text="${controlador.email}"></td>
+        <td th:text="${controlador.telefon}"></td>
+        <td><a th:href="@{/controlador/update/{nifControlador}(nif=${controlador.nifControlador})}">Edita</a>
+        </td>
+        <td><a th:href="@{/controlador/delete/{nifControlador}(nif=${controlador.nifControlador})}">Esborra</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add">Afegeix Controlador</a>
+</body>
+</html>
