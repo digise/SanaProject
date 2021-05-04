@@ -1,11 +1,15 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 public class Controla {
     private String nifControlador;
     private String idEspai;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataInici;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataFinal;
 
     public Controla() {

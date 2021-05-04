@@ -7,26 +7,26 @@
 </head>
 <body>
 <h1>Llista de controla</h1>
-<table>
+<table class="table">
     <thead>
     <tr>
-        <th>NIFControla</th>
-        <th>IdEspai</th>
-        <th>FechaInicial</th>
-        <th>FechaFinal</th>
+        <th>NIF Controlador</th>
+        <th>Id Espai</th>
+        <th>Fecha Inicial</th>
+        <th>Fecha Final</th>
         <th></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="controla: ${controla}">
+    <tr th:each="controla: ${listControla}">
         <td th:text="${controla.nifControlador}"></td>
         <td th:text="${controla.idEspai}"></td>
-        <td th:text="${controla.dataInicial}"></td>
+        <td th:text="${controla.dataInici}"></td>
         <td th:text="${controla.dataFinal}"></td>
-        <td><a th:href="@{/controla/update/{nifControlador}/{idEspai}/{dataInici}(nifControlador=${controla.nifControlador}, idEspai=${controla.idEspai},dataInicial=${controla.dataInicial})}">Edita</a>
+        <td><a th:href="@{/controla/update/{nifControlador}/{idEspai}/{dataInici}(nifControlador=${controla.nifControlador}, idEspai=${controla.idEspai},dataInici=${controla.dataInici})}">Edita</a>
         </td>
-        <td><a th:href="@{/controla/delete/{nifControlaor}/{idEspai}/{dataInici}(nifControlador=${controla.nifControlador}, idEspai=${controla.idEspai},dataInicial=${controla.dataInicial})}">Esborra</a>
+        <td><a th:href="@{/controla/delete/{nifControlador}/{idEspai}/{dataInici}(nifControlador=${controla.nifControlador}, idEspai=${controla.idEspai},dataInici=${controla.dataInici})}">Esborra</a>
         </td>
     </tr>
     </tbody>

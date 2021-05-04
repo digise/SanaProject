@@ -53,7 +53,7 @@ public class ReservaController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@ModelAttribute("reserva") Reserva reserva, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "gestorMunicipal/update";
+            return "reserva/update";
         reservaDao.updateReserva(reserva);
         return "redirect:list";
     }

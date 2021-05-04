@@ -3,7 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.model;
 public class GestorMunicipal {
 
     private String nif;
-    private String id_municipi;
+    private String idMunicipi;
     private String nom;
     private String cognoms;
     private String email;
@@ -18,12 +18,12 @@ public class GestorMunicipal {
         this.nif = nif;
     }
 
-    public String getId_municipi() {
-        return id_municipi;
+    public String getIdMunicipi() {
+        return idMunicipi;
     }
 
-    public void setId_municipi(String id_municipi) {
-        this.id_municipi = id_municipi;
+    public void setIdMunicipi(String idMunicipi) {
+        this.idMunicipi = idMunicipi;
     }
 
     public String getNom() {
@@ -70,7 +70,7 @@ public class GestorMunicipal {
     public String toString() {
         return "GestorMunicipal{" +
                 "nif='" + nif + '\'' +
-                ", idMunicipi='" + id_municipi + '\'' +
+                ", idMunicipi='" + idMunicipi + '\'' +
                 ", nom='" + nom + '\'' +
                 ", cognoms='" + cognoms + '\'' +
                 ", email='" + email + '\'' +

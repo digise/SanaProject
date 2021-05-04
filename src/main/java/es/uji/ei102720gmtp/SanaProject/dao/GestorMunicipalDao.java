@@ -24,7 +24,7 @@ public class GestorMunicipalDao {
     /* Afegim el gestor municipal */
     public void addGestorMunicipal(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("INSERT INTO GestorMunicipal VALUES(?, ?, ?, ?, ?, ?, ?)",
-                gestorMunicipal.getNif(), gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(),
+                gestorMunicipal.getNif(), gestorMunicipal.getIdMunicipi(), gestorMunicipal.getNom(),
                 gestorMunicipal.getCognoms(), gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),
                 gestorMunicipal.getContrasenya());
     }
@@ -45,7 +45,7 @@ public class GestorMunicipalDao {
        (excepte el nif, que és la clau primària) */
     public void updateGestorMunicipal(GestorMunicipal gestorMunicipal) {
         jdbcTemplate.update("UPDATE GestorMunicipal SET id_municipi = ?, nom = ?, cognoms = ?, email = ?, telefon = ?, contrasenya = ? WHERE nif = ?",
-                gestorMunicipal.getId_municipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(),
+                gestorMunicipal.getIdMunicipi(), gestorMunicipal.getNom(), gestorMunicipal.getCognoms(),
                 gestorMunicipal.getEmail(), gestorMunicipal.getTelefon(),gestorMunicipal.getContrasenya(),
                 gestorMunicipal.getNif());
     }

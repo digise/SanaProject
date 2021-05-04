@@ -15,7 +15,7 @@ public final class MunicipiRowMapper implements RowMapper<Municipi> {
         Municipi municipi = new Municipi();
         municipi.setIdMunicipi(rs.getString("id"));
         municipi.setNom(rs.getString("nom"));
-        municipi.setProvincia(Provincia.valueOf(rs.getString("provincia").toUpperCase(Locale.ROOT)));
+        municipi.setProvincia(Provincia.valueOf(rs.getString("provincia")));
         return municipi;
     }
 }

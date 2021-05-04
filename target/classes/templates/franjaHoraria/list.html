@@ -7,16 +7,16 @@
 </head>
 <body>
 <h1>Llista de franjas</h1>
-<table>
+<table class="table">
     <thead>
     <tr>
         <th>Id</th>
-        <th>IdEspai</th>
+        <th>Id Espai</th>
         <th>Descripcio</th>
-        <th>HoraInici</th>
-        <th>HoraFinal</th>
-        <th>DataInici</th>
-        <th>DataFinal</th>
+        <th>Hora Inici</th>
+        <th>Hora Final</th>
+        <th>Data Inici</th>
+        <th>Data Final</th>
         <th></th>
         <th></th>
     </tr>
@@ -24,12 +24,12 @@
     <tbody>
     <tr th:each="franjaHoraria: ${franjas}">
         <td th:text="${franjaHoraria.id}"></td>
-        <td th:text="${franjaHoraria.id_espai}"></td>
+        <td th:text="${franjaHoraria.idEspai}"></td>
         <td th:text="${franjaHoraria.descripcio}"></td>
-        <td th:text="${franjaHoraria.hora_inici}"></td>
-        <td th:text="${franjaHoraria.hora_final}"></td>
-        <td th:text="${franjaHoraria.data_inici}"></td>
-        <td th:text="${franjaHoraria.data_final}"></td>
+        <td th:text="${franjaHoraria.horaInici}"></td>
+        <td th:text="${franjaHoraria.horaFinal}"></td>
+        <td th:text="${franjaHoraria.dataInici}"></td>
+        <td th:text="${franjaHoraria.dataFinal}"></td>
         <td><a th:href="@{/franjaHoraria/update/{id}(id=${franjaHoraria.id})}">Edita</a>
         </td>
         <td><a th:href="@{/franjaHoraria/delete/{id}(id=${franjaHoraria.id})}">Esborra</a>

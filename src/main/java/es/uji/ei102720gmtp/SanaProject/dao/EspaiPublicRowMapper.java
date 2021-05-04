@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class EspaiPublicRowMapper implements RowMapper<EspaiPublic> {
 
@@ -16,8 +17,9 @@ public class EspaiPublicRowMapper implements RowMapper<EspaiPublic> {
         espaiPublic.setIdMunicipi(rs.getString("id_municipi"));
         espaiPublic.setNom(rs.getString("nom"));
         espaiPublic.setTipus(rs.getString("tipus"));
-        espaiPublic.setTerreny(rs.getObject("terreny", TipusSol.class));
-        espaiPublic.setTipusAcces(rs.getObject("tipus_acces", TipusAcces.class));
+        espaiPublic.setTerreny(TipusSol.valueOf(rs.getString("terreny")));
+        espaiPublic.setTipusAcces(TipusAcces.valueOf(rs.getString("tipus_acces")));
+        espaiPublic.setLocalitzacio(rs.getString("localitzacio"));
         espaiPublic.setLongitud(rs.getInt("longitud"));
         espaiPublic.setAmplaria(rs.getInt("amplaria"));
         espaiPublic.setImagen(rs.getString("imagen"));

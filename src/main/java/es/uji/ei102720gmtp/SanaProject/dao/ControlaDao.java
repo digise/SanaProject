@@ -36,7 +36,7 @@ public class ControlaDao {
 
     /* Actualitzem els atributs  */
     public void updateControla(Controla controla) {
-        jdbcTemplate.update("UPDATE Controla SET data_final = ? WHERE nif_controla = ?, id_espai = ?, data_inici = ?",
+        jdbcTemplate.update("UPDATE Controla SET data_final = ? WHERE nif_controlador = ? AND id_espai = ? AND data_inici = ?",
                 controla.getDataFinal(), controla.getNifControlador(),controla.getIdEspai(),controla.getDataInici());
     }
 
@@ -44,7 +44,7 @@ public class ControlaDao {
     public Controla getControla(String nifControlador, String idEspai, LocalDate dataInici) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Controla WHERE nif_controla=? AND id_espai=? AND data_inici=?",
+                    "SELECT * FROM Controla WHERE nif_controlador=? AND id_espai=? AND data_inici=?",
                     new ControlaRowMapper(),
                     nifControlador,idEspai,dataInici);
         }

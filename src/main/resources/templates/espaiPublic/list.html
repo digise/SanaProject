@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Llista de espais</h1>
-<table>
+<table class="table">
     <thead>
     <tr>
         <th>Id</th>
@@ -28,16 +28,16 @@
     <tbody>
     <tr th:each="espaiPublic: ${espais}">
         <td th:text="${espaiPublic.id}"></td>
-        <td th:text="${espaiPublic.id_municipi}"></td>
+        <td th:text="${espaiPublic.idMunicipi}"></td>
         <td th:text="${espaiPublic.nom}"></td>
         <td th:text="${espaiPublic.tipus}"></td>
         <td th:text="${espaiPublic.terreny}"></td>
-        <td th:text="${espaiPublic.tipus_acces}"></td>
-        <td th:text="${esapiPublic.localitzacio}"></td>
-        <td th:text="${esapiPublic.longitud}"></td>
-        <td th:text="${esapiPublic.amplaria}"></td>
-        <td th:text="${esapiPublic.imagen}"></td>
-        <td th:text="${esapiPublic.descripcio}"></td>
+        <td th:text="${espaiPublic.tipusAcces}"></td>
+        <td th:text="${espaiPublic.localitzacio}"></td>
+        <td th:text="${espaiPublic.longitud}"></td>
+        <td th:text="${espaiPublic.amplaria}"></td>
+        <td th:text="${espaiPublic.imagen}"></td>
+        <td th:text="${espaiPublic.descripcio}"></td>
         <td><a th:href="@{/espaiPublic/update/{id}(id=${espaiPublic.id})}">Edita</a>
         </td>
         <td><a th:href="@{/espaiPublic/delete/{id}(id=${espaiPublic.id})}">Esborra</a>

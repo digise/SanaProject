@@ -1,5 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -7,9 +9,13 @@ public class FranjaHoraria {
     private String id;
     private String idEspai;
     private String descripcio;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaInici;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaFinal;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataInici;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataFinal;
 
     public FranjaHoraria() {

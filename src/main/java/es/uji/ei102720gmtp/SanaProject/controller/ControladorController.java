@@ -26,7 +26,7 @@ public class ControladorController  {
 
     @RequestMapping("/list")
     public String listControllers(Model model){
-        model.addAttribute("controlers", controladorDao.getlistControlador());
+        model.addAttribute("controladors", controladorDao.getlistControlador());
         return "controlador/list";
     }
 

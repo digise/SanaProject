@@ -33,12 +33,12 @@ public class ZonaController {
 
     @RequestMapping(value = "/add")
     public String addZona(Model model){
-        model.addAttribute("templates/zona", new Zona());
+        model.addAttribute("zona", new Zona());
         return "zona/add";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("templates/zona") Zona zona, BindingResult bindingResult){
+    public String processAddSubmit(@ModelAttribute("zona") Zona zona, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "zona/add";
         zonaDao.addZona(zona);
@@ -47,14 +47,14 @@ public class ZonaController {
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
     public String editZona(Model model, @PathVariable String id){
-        model.addAttribute("templates/zona", zonaDao.getZona(id));
+        model.addAttribute("zona", zonaDao.getZona(id));
         return "zona/update";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("templates/zona") Zona zona, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("zona") Zona zona, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "templates/zona/update";
+            return "zona/update";
         zonaDao.updateZona(zona);
         return "redirect:list";
     }

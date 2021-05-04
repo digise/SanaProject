@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Llista de controladors</h1>
-<table>
+<table class="table">
     <thead>
     <tr>
         <th>NIF</th>
@@ -26,9 +26,9 @@
         <td th:text="${controlador.cognom}"></td>
         <td th:text="${controlador.email}"></td>
         <td th:text="${controlador.telefon}"></td>
-        <td><a th:href="@{/controlador/update/{nifControlador}(nif=${controlador.nifControlador})}">Edita</a>
+        <td><a th:href="@{/controlador/update/{nifControlador}(nifControlador=${controlador.nif})}">Edita</a>
         </td>
-        <td><a th:href="@{/controlador/delete/{nifControlador}(nif=${controlador.nifControlador})}">Esborra</a>
+        <td><a th:href="@{/controlador/delete/{nifControlador}(nifControlador=${controlador.nif})}">Esborra</a>
         </td>
     </tr>
     </tbody>
