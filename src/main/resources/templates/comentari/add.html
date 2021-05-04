@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear nou comentari</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Nou comentari</h2>
+<form action="#" th:action="@{/comentari/add}"
+      th:object="${comentari}" method="post">
+    <table>
+        <tr>
+            <td><label>Id espai public</label></td>
+            <td><input type="text" th:field="*{idEspaiPublic}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nif ciutada</label></td>
+            <td><input type="text" th:field="*{nifCiutada}" /></td>
+        </tr>
+        <tr>
+            <td><label>Contador</label></td>
+            <td><input type="number" th:field="*{contadorComentaris}"/></td>
+        </tr>
+        <tr>
+            <td><label>Comentari</label></td>
+            <td><input type="text" th:field="*{comentari}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Afegeix comentari" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

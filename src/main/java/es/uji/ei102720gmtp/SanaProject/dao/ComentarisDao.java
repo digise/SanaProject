@@ -4,11 +4,13 @@ import es.uji.ei102720gmtp.SanaProject.model.Comentari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ComentarisDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -20,26 +22,26 @@ public class ComentarisDao {
 
     /* Afegim el comentari */
     public void addComentari(Comentari comentari) {
-        jdbcTemplate.update("INSERT INTO Comentari VALUES(?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Comentaris VALUES(?, ?, ?, ?)",
                 comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris(), comentari.getComentari());
     }
 
     /* Esborrem el comentari amb el id, nif, contador*/
     public void deleteComentari(String idEspaiPublic, String nifCiutada, long contador) {
-        jdbcTemplate.update("DELETE FROM Comentari WHERE id_espaiPublic=?, nif_ciutada=?, contador_comentaris=?",
+        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=? AND nif_ciutada=? AND contador_comentaris=?",
                 idEspaiPublic, nifCiutada, contador);
     }
 
     /* Esborrem el comentari */
     public void deleteComentari(Comentari comentari) {
-        jdbcTemplate.update("DELETE FROM Comentari WHERE id_espaiPublic=?, nif_ciutada=?, contador_comentaris=?",
+        jdbcTemplate.update("DELETE FROM Comentaris WHERE id_espaiPublic=? AND nif_ciutada=? AND contador_comentaris=?",
                 comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris());
     }
 
     /* Actualitzem els atributs del comentari
        (excepte el id, nif que és la clau primària) */
     public void updateComentari(Comentari comentari) {
-        jdbcTemplate.update("UPDATE Comentari SET comentari = ? WHERE id_espaiPublic = ?, nif_ciutada=?, contador_comentaris = ?",
+        jdbcTemplate.update("UPDATE Comentari SET Comentaris = ? WHERE id_espaiPublic = ? AND nif_ciutada=? AND contador_comentaris = ?",
                 comentari.getComentari(), comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris());
     }
 
@@ -47,7 +49,7 @@ public class ComentarisDao {
     public Comentari getComentari(String idEspaiPublic, String nif, long contador) {
         try {
             return jdbcTemplate.queryForObject(
-                    "SELECT * FROM Comentari WHERE id_espaiPublic = ?, nif_ciutada=?, contador_comentaris=?",
+                    "SELECT * FROM Comentaris WHERE id_espaiPublic = ? AND nif_ciutada=? AND contador_comentaris=?",
                     new ComentarisRowMapper(),
                     idEspaiPublic, nif, contador);
         }
@@ -60,7 +62,7 @@ public class ComentarisDao {
     public List<Comentari> getComentaris() {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Comentari",
+                    "SELECT * FROM Comentaris",
                     new ComentarisRowMapper());
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<Comentari>();
@@ -71,7 +73,7 @@ public class ComentarisDao {
     public List<Comentari> getComentarisEspaiPublic(String id){
         try{
             return jdbcTemplate.query(
-                    "SELECT * FROM Comentari WHERE id_espaiPublic=?",
+                    "SELECT * FROM Comentaris WHERE id_espaiPublic=?",
                     new ComentarisRowMapper(),
                     id);
         }catch (EmptyResultDataAccessException ex){
@@ -83,7 +85,7 @@ public class ComentarisDao {
     public List<Comentari> getComentarisCiutada(String nif){
         try{
             return jdbcTemplate.query(
-                    "SELECT * FROM Comentari WHERE nif_ciutada=?",
+                    "SELECT * FROM Comentaris WHERE nif_ciutada=?",
                     new ComentarisRowMapper(),
                     nif);
         }catch (EmptyResultDataAccessException ex){
