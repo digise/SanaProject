@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Crear una nova reserva</title>
+    <title>Editar reserva</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
 </head>
 <body>
-<h2>Nova reserva</h2>
-<form action="#" th:action="@{/reserva/add}"
+<form action="#" th:action="@{/reserva/update}"
       th:object="${reserva}" method="post">
     <table>
         <tr>
@@ -20,24 +19,16 @@
             <td><input type="text" th:field="*{codiQr}" /></td>
         </tr>
         <tr>
-            <td><label>Nombre persones</label></td>
+            <td><label>Nombre Persones</label></td>
             <td><input type="text" th:field="*{nombrePersones}" /></td>
         </tr>
         <tr>
-            <td><label>Data crecio</label></td>
-            <td><input type="date" th:field="*{dataCreacio}" /></td>
+            <td><label>Data Creació</label></td>
+            <td><input type="text" th:field="*{dataCreacio}" /></td>
         </tr>
         <tr>
             <td><label>Estat</label></td>
-            <td><select class="form_control" type="text" th:field="*{estat}">
-                <option value="CASTELLO">Pendent ús</option>
-                <option value="VALENCIA">En ús</option>
-                <option value="ALACANT">Fi ús</option>
-                <option value="ALACANT">Cancelada per un ciutada</option>
-                <option value="ALACANT">Candelada per un controlador</option>
-                <option value="ALACANT">cancelada per gestor un municipal</option>
-            </select>
-            </td>
+            <td><input type="text" th:field="*{estat}" /></td>
         </tr>
         <tr>
             <td><label>Nif ciutada</label></td>
@@ -48,7 +39,7 @@
             <td><input type="text" th:field="*{idFranja}" /></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Afegeix nova reserva" /></td>
+            <td colspan="2"><input type="submit" value="Editar reserva" /></td>
         </tr>
     </table>
 </form>

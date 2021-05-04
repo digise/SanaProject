@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar les ocupacions</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de ocupacions</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id reserva</th>
+        <th>Id zona</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ocupa: ${ocupacions}">
+        <td th:text="${ocupa.idReserva}"></td>
+        <td th:text="${ocupa.idZona}"></td>
+        <td><a th:href="@{/ocupa/update/{idReserva}/{idZOna}(idReserva=${ocupa.idReserva}, idZona=${ocupa.idZona})}"><button type="button" class="btn btn-danger">Edita</button></a>
+        </td>
+        <td><a th:href="@{/ocupa/delete/{idReserva}/{idZona}(idReserva=${ocupa.idReserva}, idZona=${ocupa.idZona})}"><button type="button" class="btn btn-danger">Esborra</button></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add"><button type="button" class="btn btn-success">Afegeix reserva</button></a>
+</body>
+</html>

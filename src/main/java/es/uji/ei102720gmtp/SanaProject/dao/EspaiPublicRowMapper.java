@@ -18,6 +18,7 @@ public class EspaiPublicRowMapper implements RowMapper<EspaiPublic> {
         espaiPublic.setTipus(rs.getString("tipus"));
         espaiPublic.setTerreny(rs.getObject("terreny", TipusSol.class));
         espaiPublic.setTipusAcces(rs.getObject("tipus_acces", TipusAcces.class));
+        espaiPublic.setLocalitzacio(rs.getString("localitzacio"));
         espaiPublic.setLongitud(rs.getInt("longitud"));
         espaiPublic.setAmplaria(rs.getInt("amplaria"));
         espaiPublic.setImagen(rs.getString("imagen"));
