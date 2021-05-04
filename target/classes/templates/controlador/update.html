@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar un controlador</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2><span th:text="${controlador.nif}"></span></h2>
+<form action="#" th:action="@{/controlador/update}"
+      th:object="${controlador}" method="post">
+    <table>
+        <tr>
+            <td><label>NIFControlador</label></td>
+            <td><input type="text" th:field="*{nifControlador}" /></td>
+        </tr>
+        <tr>
+            <td><label>Nom</label></td>
+            <td><input type="text" th:field="*{nom}" /></td>
+        </tr>
+        <tr>
+            <td><label>Cognom</label></td>
+            <td><input type="text" th:field="*{cognom}" /></td>
+        </tr>
+        <tr>
+            <td><label>Especialitat</label></td>
+            <td><input type="text" th:field="*{especialitat}" /></td>
+        </tr>
+        <tr>
+            <td><label>Email</label></td>
+            <td><input type="text" th:field="*{email}" /></td>
+        </tr>
+        <tr>
+            <td><label>Telefon</label></td>
+            <td><input type="text" th:field="*{telefon}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Editar controlador" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
