@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear nou controla</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Nou controla</h2>
+<form action="#" th:action="@{/controla/add}"
+      th:object="${controla}" method="post">
+    <table>
+        <tr>
+            <td><label>NIFControlador</label></td>
+            <td><input type="text" th:field="*{nifControlador}" /></td>
+        </tr>
+        <tr>
+            <td><label>IdEspai</label></td>
+            <td><input type="text" th:field="*{idEspai}" /></td>
+        </tr>
+        <tr>
+            <td><label>DataInici</label></td>
+            <td><input type="date" th:field="*{dataInici}" /></td>
+        </tr>
+        <tr>
+            <td><label>DataFinal</label></td>
+            <td><input type="date" th:field="*{cognoms}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Afegeix controla" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

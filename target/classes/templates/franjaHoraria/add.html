@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear nova franja horaria</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>Nova franja horaria</h2>
+<form action="#" th:action="@{/franjaHoraria/add}"
+      th:object="${franjaHoraria}" method="post">
+    <table>
+        <tr>
+            <td><label>ID</label></td>
+            <td><input type="text" th:field="*{id}" /></td>
+        </tr>
+        <tr>
+            <td><label>IdEspai</label></td>
+            <td><input type="text" th:field="*{idEspai}" /></td>
+        </tr>
+        <tr>
+            <td><label>Descripcio</label></td>
+            <td><input type="text" th:field="*{descripcio}" /></td>
+        </tr>
+        <tr>
+            <td><label>HoraInici</label></td>
+            <td><input type="text" th:field="*{horaInici}" /></td>
+        </tr>
+        <tr>
+            <td><label>HoraFinal</label></td>
+            <td><input type="text" th:field="*{horaFinal}" /></td>
+        </tr>
+        <tr>
+            <td><label>DataInici</label></td>
+            <td><input type="text" th:field="*{dataInici}" /></td>
+        </tr>
+        <tr>
+            <td><label>DataFinal</label></td>
+            <td><input type="text" th:field="*{dataFinal}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Afegeix franja horaria" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

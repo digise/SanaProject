@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestionar espais publics</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1>Llista de espais</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>IdMunicipi</th>
+        <th>Nom</th>
+        <th>Tipus</th>
+        <th>Terreny</th>
+        <th>TipusAcces</th>
+        <th>Localitzacio</th>
+        <th>Longitud</th>
+        <th>Amplaria</th>
+        <th>Imagen</th>
+        <th>Descripcio</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="espaiPublic: ${espais}">
+        <td th:text="${espaiPublic.id}"></td>
+        <td th:text="${espaiPublic.id_municipi}"></td>
+        <td th:text="${espaiPublic.nom}"></td>
+        <td th:text="${espaiPublic.tipus}"></td>
+        <td th:text="${espaiPublic.terreny}"></td>
+        <td th:text="${espaiPublic.tipus_acces}"></td>
+        <td th:text="${esapiPublic.localitzacio}"></td>
+        <td th:text="${esapiPublic.longitud}"></td>
+        <td th:text="${esapiPublic.amplaria}"></td>
+        <td th:text="${esapiPublic.imagen}"></td>
+        <td th:text="${esapiPublic.descripcio}"></td>
+        <td><a th:href="@{/espaiPublic/update/{id}(id=${espaiPublic.id})}">Edita</a>
+        </td>
+        <td><a th:href="@{/espaiPublic/delete/{id}(id=${espaiPublic.id})}">Esborra</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add">Afegeix espai public</a>
+</body>
+</html>

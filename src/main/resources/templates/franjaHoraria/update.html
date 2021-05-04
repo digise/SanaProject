@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar una franja horaria</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2><span th:text="${franjaHoraria.nom}"></span></h2>
+<form action="#" th:action="@{/franjaHoraria/update}"
+      th:object="${franjaHoraria}" method="post">
+    <table>
+        <tr>
+            <td><label>ID</label></td>
+            <td><input type="text" th:field="*{id}" /></td>
+        </tr>
+        <tr>
+            <td><label>IdEspai</label></td>
+            <td><input type="text" th:field="*{idEspai}" /></td>
+        </tr>
+        <tr>
+            <td><label>Descripcio</label></td>
+            <td><input type="text" th:field="*{descripcio}" /></td>
+        </tr>
+        <tr>
+            <td><label>HoraInici</label></td>
+            <td><input type="time" th:field="*{horaInici}"placeholder="dd/MM/yyyy" /></td>
+        </tr>
+        <tr>
+            <td><label>HoraFinal</label></td>
+            <td><input type="time" th:field="*{horaFinal}"placeholder="dd/MM/yyyy" /></td>
+        </tr>
+        <tr>
+            <td><label>DataInici</label></td>
+            <td><input type="date" th:field="*{dataInici}"placeholder="dd/MM/yyyy" /></td>
+        </tr>
+        <tr>
+            <td><label>DataFinal</label></td>
+            <td><input type="data" th:field="*{dataFinal}"placeholder="dd/MM/yyyy" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Editar franja horaria" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
