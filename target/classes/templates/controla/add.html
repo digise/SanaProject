@@ -12,20 +12,20 @@
       th:object="${controla}" method="post">
     <table>
         <tr>
-            <td><label>NIFControlador</label></td>
+            <td><label>NIF Controlador</label></td>
             <td><input type="text" th:field="*{nifControlador}" /></td>
         </tr>
         <tr>
-            <td><label>IdEspai</label></td>
+            <td><label>Id Espai</label></td>
             <td><input type="text" th:field="*{idEspai}" /></td>
         </tr>
         <tr>
-            <td><label>DataInici</label></td>
-            <td><input type="text" th:field="*{dataInici}" /></td>
+            <td><label>Data Inici</label></td>
+            <td><input type="date" th:field="*{dataInici}" /></td>
         </tr>
         <tr>
-            <td><label>DataFinal</label></td>
-            <td><input type="text" th:field="*{cognoms}" /></td>
+            <td><label>Data Final</label></td>
+            <td><input type="date" th:field="*{dataFinal}" /></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Afegeix controla" /></td>

@@ -24,12 +24,12 @@ public class Municipi {
         this.nom = nom;
     }
 
-    public String getProvincia() {
-        return provincia.name();
+    public Provincia getProvincia() {
+        return provincia;
     }
 
-    public void setProvincia(String provincia) {
-        this.provincia = Provincia.valueOf(provincia);
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
     @Override
