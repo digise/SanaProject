@@ -13,7 +13,7 @@ public final class MunicipiRowMapper implements RowMapper<Municipi> {
     public Municipi mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         Municipi municipi = new Municipi();
-        municipi.setIdMunicipi(rs.getString("id"));
+        municipi.setIdMunicipi(rs.getInt("id"));
         municipi.setNom(rs.getString("nom"));
         municipi.setProvincia(Provincia.valueOf(rs.getString("provincia")));
         return municipi;

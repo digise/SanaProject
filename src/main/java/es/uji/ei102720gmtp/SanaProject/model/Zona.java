@@ -1,19 +1,19 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
 public class Zona {
-    private String id;
-    private String idEspai;
+    private int id;
+    private int idEspai;
     private String nom;
     private int capacitat;
     private String coordenades;
 
     public Zona(){}
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getIdEspai() {
+    public int getIdEspai() {
         return idEspai;
     }
 
@@ -29,11 +29,11 @@ public class Zona {
         return coordenades;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setIdEspai(String idEspai) {
+    public void setIdEspai(int idEspai) {
         this.idEspai = idEspai;
     }
 

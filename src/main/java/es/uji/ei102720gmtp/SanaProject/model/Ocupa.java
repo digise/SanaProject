@@ -2,24 +2,24 @@ package es.uji.ei102720gmtp.SanaProject.model;
 
 public class Ocupa {
 
-    private String idReserva;
-    private String idZona;
+    private int idReserva;
+    private int idZona;
 
     public Ocupa(){}
 
-    public String getIdReserva() {
+    public int getIdReserva() {
         return idReserva;
     }
 
-    public void setIdReserva(String idReserva) {
+    public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
     }
 
-    public String getIdZona() {
+    public int getIdZona() {
         return idZona;
     }
 
-    public void setIdZona(String idZona) {
+    public void setIdZona(int idZona) {
         this.idZona = idZona;
     }
 

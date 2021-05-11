@@ -4,15 +4,15 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.Provincia;
 
 public class Municipi {
 
-    private String idMunicipi;
+    private int idMunicipi;
     private String nom;
     private Provincia provincia;
 
-    public String getIdMunicipi() {
+    public int getIdMunicipi() {
         return idMunicipi;
     }
 
-    public void setIdMunicipi(String idMunicipi) {
+    public void setIdMunicipi(int idMunicipi) {
         this.idMunicipi = idMunicipi;
     }
 

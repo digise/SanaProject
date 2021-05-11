@@ -5,18 +5,18 @@ import java.time.LocalTime;
 
 public class PeriodeServeiEspai {
 
-    private String idEspai;
+    private int idEspai;
     private String nomServei;
     private LocalTime horaInici;
     private LocalTime horaFinal;
     private LocalDate dataInici;
     private LocalDate dataFinal;
 
-    public String getIdEspai() {
+    public int getIdEspai() {
         return idEspai;
     }
 
-    public void setIdEspai(String idEspai) {
+    public void setIdEspai(int idEspai) {
         this.idEspai = idEspai;
     }
 

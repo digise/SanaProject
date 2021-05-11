@@ -12,7 +12,7 @@ public final class ServeiInstalatEspaiRowMapper implements RowMapper<ServeiInsta
     @Override
     public ServeiInstalatEspai mapRow(ResultSet rs, int i) throws SQLException {
         ServeiInstalatEspai serveiInstalatEspai = new ServeiInstalatEspai();
-        serveiInstalatEspai.setIdEspai(rs.getString("id_espai"));
+        serveiInstalatEspai.setIdEspai(rs.getInt("id_espai"));
         serveiInstalatEspai.setNomServei(rs.getString("nom_servei"));
         serveiInstalatEspai.setDataApertura(rs.getObject("data_apertura", LocalDate.class));
         return serveiInstalatEspai;

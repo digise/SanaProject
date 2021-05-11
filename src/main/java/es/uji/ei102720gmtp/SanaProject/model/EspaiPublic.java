@@ -5,9 +5,10 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.TipusSol;
 
 public class EspaiPublic
 {
-    private String id;
-    private String idMunicipi;
+    private int id;
+    private int idMunicipi;
     private String nom;
+    private String nomMunicipi;
     private String tipus;
     private TipusSol terreny;
     private TipusAcces tipusAcces;
@@ -17,21 +18,22 @@ public class EspaiPublic
     private String imagen;
     private String descripcio;
 
+
     public EspaiPublic(){}
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getIdMunicipi() {
+    public int getIdMunicipi() {
         return idMunicipi;
     }
 
-    public void setIdMunicipi(String idMunicipi) {
+    public void setIdMunicipi(int idMunicipi) {
         this.idMunicipi = idMunicipi;
     }
 
@@ -41,6 +43,14 @@ public class EspaiPublic
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public String getNomMunicipi() {
+        return nomMunicipi;
+    }
+
+    public void setNomMunicipi(String nomMunicipi) {
+        this.nomMunicipi = nomMunicipi;
     }
 
     public String getTipus() {
