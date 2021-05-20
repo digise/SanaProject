@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
+import es.uji.ei102720gmtp.SanaProject.model.enums.Provincia;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusSol;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,8 +14,8 @@ public class EspaiPublicRowMapper implements RowMapper<EspaiPublic> {
 
     public EspaiPublic mapRow(ResultSet rs, int rowNum) throws SQLException {
         EspaiPublic espaiPublic = new EspaiPublic();
-        espaiPublic.setId(rs.getString("id"));
-        espaiPublic.setIdMunicipi(rs.getString("id_municipi"));
+        espaiPublic.setId(rs.getInt("id"));
+        espaiPublic.setIdMunicipi(rs.getInt("id_municipi"));
         espaiPublic.setNom(rs.getString("nom"));
         espaiPublic.setTipus(rs.getString("tipus"));
         espaiPublic.setTerreny(TipusSol.valueOf(rs.getString("terreny")));

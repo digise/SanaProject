@@ -22,8 +22,8 @@ public class ReservaDao {
 
     /* Afegim la reserva */
     public void addReserva(Reserva reserva) {
-        jdbcTemplate.update("INSERT INTO Reserva VALUES(?, ?, ?, ?, ?, ? ,?)",
-                reserva.getId(), reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja());
+        jdbcTemplate.update("INSERT INTO Reserva VALUES(?, ?, ?, ?, ? ,?)",
+                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja());
     }
 
     /* Esborrem la reserva */

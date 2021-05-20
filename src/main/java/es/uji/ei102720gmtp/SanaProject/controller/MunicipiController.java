@@ -45,7 +45,7 @@ public class MunicipiController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-    public String editMunicipi(Model model, @PathVariable String id){
+    public String editMunicipi(Model model, @PathVariable int id){
         model.addAttribute("municipi", municipiDao.getMunicipi(id));
         return "municipi/update";
     }

@@ -2,16 +2,16 @@ package es.uji.ei102720gmtp.SanaProject.model;
 
 public class Comentari {
 
-    private String idEspaiPublic;
+    private int idEspaiPublic;
     private String nifCiutada;
-    private long contadorComentaris;
+    private int contadorComentaris;
     private String comentari;
 
-    public String getIdEspaiPublic() {
+    public int getIdEspaiPublic() {
         return idEspaiPublic;
     }
 
-    public void setIdEspaiPublic(String idEspaiPublic) {
+    public void setIdEspaiPublic(int idEspaiPublic) {
         this.idEspaiPublic = idEspaiPublic;
     }
 
@@ -23,11 +23,11 @@ public class Comentari {
         this.nifCiutada = nifCiutada;
     }
 
-    public long getContadorComentaris() {
+    public int getContadorComentaris() {
         return contadorComentaris;
     }
 
-    public void setContadorComentaris(long contadorComentaris) {
+    public void setContadorComentaris(int contadorComentaris) {
         this.contadorComentaris = contadorComentaris;
     }
 

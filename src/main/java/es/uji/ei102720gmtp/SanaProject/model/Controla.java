@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class Controla {
     private String nifControlador;
-    private String idEspai;
+    private int idEspai;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataInici;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -23,11 +23,11 @@ public class Controla {
         this.nifControlador = nifControlador;
     }
 
-    public String getIdEspai() {
+    public int getIdEspai() {
         return idEspai;
     }
 
-    public void setIdEspai(String idEspai) {
+    public void setIdEspai(int idEspai) {
         this.idEspai = idEspai;
     }
 

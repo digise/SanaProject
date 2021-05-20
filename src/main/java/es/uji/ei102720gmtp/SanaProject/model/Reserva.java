@@ -6,17 +6,17 @@ import java.time.LocalDate;
 
 public class Reserva {
 
-    private String id;
+    private int id;
     private String codiQr;
     private int nombrePersones;
     private LocalDate dataCreacio;
     private EstatReserva estat;
     private String nifCiutada;
-    private String idFranja;
+    private int idFranja;
 
     public Reserva(){}
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -40,12 +40,12 @@ public class Reserva {
         return nifCiutada;
     }
 
-    public String getIdFranja() {
+    public int getIdFranja() {
         return idFranja;
     }
 
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class Reserva {
         this.nifCiutada = nifCiutada;
     }
 
-    public void setIdFranja(String id_franja) {
+    public void setIdFranja(int id_franja) {
         this.idFranja = id_franja;
     }
 

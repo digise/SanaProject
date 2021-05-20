@@ -13,7 +13,7 @@ public final class PeriodeServeiEspaiRowMapper implements RowMapper<PeriodeServe
     @Override
     public PeriodeServeiEspai mapRow(ResultSet rs, int i) throws SQLException {
         PeriodeServeiEspai periodeServeiEspai = new PeriodeServeiEspai();
-        periodeServeiEspai.setIdEspai(rs.getString("id_espai"));
+        periodeServeiEspai.setIdEspai(rs.getInt("id_espai"));
         periodeServeiEspai.setNomServei(rs.getString("nom_servei"));
         periodeServeiEspai.setHoraInici(rs.getObject("hora_inici", LocalTime.class));
         periodeServeiEspai.setHoraFinal(rs.getObject("hora_final", LocalTime.class));

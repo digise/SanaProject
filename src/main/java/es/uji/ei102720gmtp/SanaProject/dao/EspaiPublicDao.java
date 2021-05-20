@@ -23,9 +23,8 @@ public class EspaiPublicDao
 
     /* Afegim */
     public void addEspaiPublic(EspaiPublic espaiPublic) {
-        jdbcTemplate.update("INSERT INTO espaiPublic VALUES(?, ?, ?, ?, CAST(? AS tipus_sol), CAST(? AS tipus_access),? , ?, ?, ?, ?)",
-                espaiPublic.getId(), espaiPublic.getIdMunicipi(), espaiPublic.getNom(),
-                espaiPublic.getTipus(), espaiPublic.getTerreny().name(), espaiPublic.getTipusAcces().name(),
+        jdbcTemplate.update("INSERT INTO espaiPublic VALUES(?, ?, ?, CAST(? AS tipus_sol), CAST(? AS tipus_access), ?, ?, ?, ?, ?)",
+                espaiPublic.getIdMunicipi(), espaiPublic.getNom(), espaiPublic.getTipus(), espaiPublic.getTerreny().name(), espaiPublic.getTipusAcces().name(),
                 espaiPublic.getLocalitzacio(), espaiPublic.getLongitud(), espaiPublic.getAmplaria(),
                 espaiPublic.getImagen(), espaiPublic.getDescripcio());
     }
@@ -47,7 +46,7 @@ public class EspaiPublicDao
     }
 
     /* Obtenim el espai amb el id. Torna null si no existeix. */
-    public EspaiPublic getEspaiPublic(String idEspai) {
+    public EspaiPublic getEspaiPublic(int idEspai) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM espaiPublic WHERE id = ?",

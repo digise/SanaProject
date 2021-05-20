@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class FranjaHoraria {
-    private String id;
-    private String idEspai;
+    private int id;
+    private int idEspai;
     private String descripcio;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaInici;
@@ -21,19 +21,19 @@ public class FranjaHoraria {
     public FranjaHoraria() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getIdEspai() {
+    public int getIdEspai() {
         return idEspai;
     }
 
-    public void setIdEspai(String idEspai) {
+    public void setIdEspai(int idEspai) {
         this.idEspai = idEspai;
     }
 

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class ServeiInstalatEspai {
 
     private String nomServei;
-    private String idEspai;
+    private int idEspai;
     private LocalDate dataApertura;
 
     public String getNomServei() {
@@ -16,11 +16,11 @@ public class ServeiInstalatEspai {
         this.nomServei = nomServei;
     }
 
-    public String getIdEspai() {
+    public int getIdEspai() {
         return idEspai;
     }
 
-    public void setIdEspai(String idEspai) {
+    public void setIdEspai(int idEspai) {
         this.idEspai = idEspai;
     }
 

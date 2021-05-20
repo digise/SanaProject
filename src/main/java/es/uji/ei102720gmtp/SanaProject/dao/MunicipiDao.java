@@ -24,8 +24,8 @@ public class MunicipiDao {
 
     /* Afegim el municipi */
     public void addMunicipi(Municipi municipi) {
-        jdbcTemplate.update("INSERT INTO Municipi VALUES(?, ?, ?)", //CAST(? AS tipus_provincia))",
-                municipi.getIdMunicipi(), municipi.getNom(), municipi.getProvincia());
+        jdbcTemplate.update("INSERT INTO Municipi VALUES(?, ?)", //CAST(? AS tipus_provincia))",
+                municipi.getNom(), municipi.getProvincia());
     }
 
     /* Esborrem el municipi amb el id*/
@@ -48,7 +48,7 @@ public class MunicipiDao {
     }
 
     /* Obtenim el municipi amb el id. Torna null si no existeix. */
-    public Municipi getMunicipi(String idMunicipi) {
+    public Municipi getMunicipi(int idMunicipi) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Municipi WHERE id = ?",

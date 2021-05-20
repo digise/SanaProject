@@ -3,6 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
+import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +17,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/espaiPublic")
 public class EspaiPublicController {
     private EspaiPublicDao espaiPublicDao;
+    private EspaiPublicService espaiPublicService;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
         this.espaiPublicDao = espaiPublicDao;
     }
 
+    @Autowired
+    public void setEspaiPublicService(EspaiPublicService espaiPublicService){
+        this.espaiPublicService = espaiPublicService;
+    }
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
     public String listEspaiPublic(Model model){
         model.addAttribute("espais", espaiPublicDao.getEspaisPublics());
         return "espaiPublic/list";
+    }
+
+    @RequestMapping("espaisprovincia/{provincia}")
+    public String listEspaiPublicsProvincia(Model model, @PathVariable String provincia){
+        model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerProvincia(provincia));
+        return "espaiPublic/espaisprovincia";
     }
 
     @RequestMapping(value = "/add")
@@ -45,7 +57,7 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
-    public String editEspaiPublic(Model model, @PathVariable String id){
+    public String editEspaiPublic(Model model, @PathVariable int id){
         model.addAttribute("espaiPublic", espaiPublicDao.getEspaiPublic(id));
         return "espaiPublic/update";
     }

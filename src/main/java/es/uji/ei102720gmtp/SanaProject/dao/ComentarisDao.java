@@ -22,8 +22,8 @@ public class ComentarisDao {
 
     /* Afegim el comentari */
     public void addComentari(Comentari comentari) {
-        jdbcTemplate.update("INSERT INTO Comentaris VALUES(?, ?, ?, ?)",
-                comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getContadorComentaris(), comentari.getComentari());
+        jdbcTemplate.update("INSERT INTO Comentaris VALUES(?, ?, ?)",
+                comentari.getIdEspaiPublic(), comentari.getNifCiutada(), comentari.getComentari());
     }
 
     /* Esborrem el comentari amb el id, nif, contador*/

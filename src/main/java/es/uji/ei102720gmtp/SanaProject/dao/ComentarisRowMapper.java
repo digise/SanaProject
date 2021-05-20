@@ -11,9 +11,9 @@ public final class ComentarisRowMapper implements RowMapper<Comentari> {
     public Comentari mapRow(ResultSet rs, int rowNum) throws SQLException
     {
         Comentari comentari = new Comentari();
-        comentari.setIdEspaiPublic(rs.getString("id_espaiPublic"));
+        comentari.setIdEspaiPublic(rs.getInt("id_espaiPublic"));
         comentari.setNifCiutada(rs.getString("nif_ciutada"));
-        comentari.setContadorComentaris(rs.getLong("contador_comentaris"));
+        comentari.setContadorComentaris(rs.getInt("contador_comentaris"));
         comentari.setComentari(rs.getString("comentari"));
         return comentari;
     }

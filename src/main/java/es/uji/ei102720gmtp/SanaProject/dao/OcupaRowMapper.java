@@ -10,8 +10,8 @@ public class OcupaRowMapper implements RowMapper<Ocupa> {
 
     public Ocupa mapRow(ResultSet rs, int rowNum) throws SQLException {
         Ocupa ocupa = new Ocupa();
-        ocupa.setIdReserva(rs.getString("id_reserva"));
-        ocupa.setIdZona(rs.getString("id_zona"));
+        ocupa.setIdReserva(rs.getInt("id_reserva"));
+        ocupa.setIdZona(rs.getInt("id_zona"));
         return ocupa;
     }
 
