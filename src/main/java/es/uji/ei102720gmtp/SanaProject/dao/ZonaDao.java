@@ -22,8 +22,8 @@ public class ZonaDao {
 
     /* Afegim la zona */
     public void addZona(Zona zona) {
-        jdbcTemplate.update("INSERT INTO Zona VALUES(?, ?, ?, ?, ?)",
-                zona.getId(), zona.getIdEspai(), zona.getNom(), zona.getCapacitat(), zona.getCoordenades());
+        jdbcTemplate.update("INSERT INTO Zona VALUES(?, ?, ?, ?)",
+                zona.getIdEspai(), zona.getNom(), zona.getCapacitat(), zona.getCoordenades());
     }
 
     /* Esborrem la zona */

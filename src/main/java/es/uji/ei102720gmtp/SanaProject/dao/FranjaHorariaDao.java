@@ -22,8 +22,8 @@ public class FranjaHorariaDao{
 
     /* Afegim  */
     public void addFranjaHoraria(FranjaHoraria franjaHoraria) {
-        jdbcTemplate.update("INSERT INTO FranjaHoraria VALUES(?, ?, ?, ?, ?, ? ,?)",
-                franjaHoraria.getId(), franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(),
+        jdbcTemplate.update("INSERT INTO FranjaHoraria VALUES(?, ?, ?, ?, ? ,?)",
+                franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(),
                 franjaHoraria.getHoraInici(), franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(),
                 franjaHoraria.getDataFinal());
     }

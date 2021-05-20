@@ -8,7 +8,6 @@ public class EspaiPublic
     private int id;
     private int idMunicipi;
     private String nom;
-    private String nomMunicipi;
     private String tipus;
     private TipusSol terreny;
     private TipusAcces tipusAcces;
@@ -43,14 +42,6 @@ public class EspaiPublic
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public String getNomMunicipi() {
-        return nomMunicipi;
-    }
-
-    public void setNomMunicipi(String nomMunicipi) {
-        this.nomMunicipi = nomMunicipi;
     }
 
     public String getTipus() {
