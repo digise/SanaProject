@@ -13,14 +13,12 @@
 <body>
 <div style="text-align: center" layout:fragment="content">
     <h2>Selecciona la provincia:</h2>
-    <form action="#" th:action="@{/espaiPublic/espaisprovincia}"
-          th:object="${espais}" method="get">
-        <div class="btn-group-vertical">
-            <a th:href="@{/espaiPublic/espaisprovincia/{provincia}(provincia=${espais.provincia})}"><button type="button" class="btn btn-danger">Castello</button></a>
-            <button type="submit" id="VALENCIA" class="btn btn-primary">Valencia</button>
-            <button type="submii" id="ALACANT"  class="btn btn-primary">Alacant</button>
-        </div>
-    </form>
+    <div class="btn-group-vertical">
+        <button type="button" class="btn btn-danger">Castello</button>
+        <button type="button" class="btn btn-primary">Valencia</button>
+        <button type="button" class="btn btn-primary">Alacant</button>
+    </div>
+
 </div>
 </body>
 </html>
