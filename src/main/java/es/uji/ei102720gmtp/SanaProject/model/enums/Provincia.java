@@ -1,6 +1,5 @@
 package es.uji.ei102720gmtp.SanaProject.model.enums;
 
-import java.util.Locale;
 
 public enum Provincia {
     VALENCIA("Valencia"),
