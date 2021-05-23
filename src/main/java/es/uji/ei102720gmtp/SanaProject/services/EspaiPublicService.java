@@ -24,7 +24,7 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
         List<EspaiPublic> espaisPublicsPerProvincia = new ArrayList<>();
         for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()){
             Municipi municipi = municipiDao.getMunicipi(espaiPublic.getIdMunicipi());
-            if (municipi.getProvincia().name().equals(provincia))
+            if (municipi.getProvincia().toString().equals(provincia))
                 espaisPublicsPerProvincia.add(espaiPublic);
         }
         return espaisPublicsPerProvincia;

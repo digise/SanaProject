@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
 
 <div layout:fragment="content">
-    <div class="card border-primary mb-3" style="max-width: 50rem;">
-        <div class="card-header"></div>
-        <div class="row">
-            <div class="col-5 mt-4">
-                <img class="card-img" src="https://cdn.wallpapersafari.com/59/90/g3aQnL.jpg" alt="Card image cap">
-            </div>
-            <div class="col-6 mt-3">
-                <p><b>Localització: </b>Castelló</p>
-                <p style="text-align: justify"><b>Descripció: </b>Està enclavat en una muntanya litoral de la comarca de la Plana Alta, paral·lela a la costa, amb abundants crestes i penyals. Des dels cims més alts, la mola de l''Morico de 694 metres i el Bartolo de 729, el visitant pot gaudir de les meravelloses perspectives que els seus dos pics ofereixen de la costa.</p>
+    <h1 class="my-3">Espais públics de <span th:text="${provincia}"></span></h1>
+    <div class="row" th:each="espai: ${espais}" >
+        <div class="col">
+            <div class="card border-primary mb-3" style="max-width: 50rem;">
+                <div class="card-header"><span th:text="${espai.nom}"></span></div>
+                <div class="row no-gutters">
+                    <div class="col-5 m-4">
+                        <img class="card-img" th:src="${espai.imagen}" alt="Card image cap">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card-body">
+                            <p><b>Localització: </b><span th:text="${espai.localitzacio}"></span></p>
+                            <p style="text-align: justify"><b>Descripció: </b><span th:text="${espai.descripcio}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-3" align="center">
+                    <button type="button" class="btn btn-primary">Elegir la zona</button>
+                </div>
             </div>
         </div>
-        <footer align="center" class="p-3">
-            <button type="button" class="btn btn-primary">Elegir la zona</button>
-        </footer>
+        <div class="w-100"></div>
     </div>
+
+
 </div>
 </body>
 </html>
