@@ -28,4 +28,4 @@ mvnw
 mvnw.cmd
 SanaProject.iml
 .idea
-.target
+target
