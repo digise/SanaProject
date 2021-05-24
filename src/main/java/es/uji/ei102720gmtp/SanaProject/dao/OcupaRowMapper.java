@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class OcupaRowMapper implements RowMapper<Ocupa> {
 
@@ -12,6 +13,8 @@ public class OcupaRowMapper implements RowMapper<Ocupa> {
         Ocupa ocupa = new Ocupa();
         ocupa.setIdReserva(rs.getInt("id_reserva"));
         ocupa.setIdZona(rs.getInt("id_zona"));
+        ocupa.setIdFranja(rs.getInt("id_franja"));
+        ocupa.setDataReserva(rs.getObject("data_reserva", LocalDate.class));
         return ocupa;
     }
 

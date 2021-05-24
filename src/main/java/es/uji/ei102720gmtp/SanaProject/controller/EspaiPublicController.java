@@ -74,7 +74,7 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String processDelete(@PathVariable String id){
+    public String processDelete(@PathVariable int id){
         espaiPublicDao.deleteEspaiPublic(id);
         return "redirect:../list";
     }
