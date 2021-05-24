@@ -78,4 +78,15 @@ public class EspaiPublicController {
         espaiPublicDao.deleteEspaiPublic(id);
         return "redirect:../list";
     }
+
+    @RequestMapping(value = "/informacio/{id}")
+    public String showEspaiPublic(Model model, @PathVariable int id) {
+
+        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+        // Passar municipi i provincia
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        System.out.println(espai);
+
+        return "/espaiPublic/informacio";
+    }
 }

@@ -1,0 +1,26 @@
+.badge-restringit {
+    color: #212529;
+    background-color: #ffc107;
+}
+
+.badge-tancat {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.badge-obert {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-sana {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}

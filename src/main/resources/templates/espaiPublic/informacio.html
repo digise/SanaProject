@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <title>Informació d'un espai public</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-5 m-4">
+            <img class="card-img" th:src="${espai.imagen}" alt="Card image">
+        </div>
+        <div class="col-lg-4 m-4 align-self-center">
+            <p><b>Provincia: </b><span>Indeterminat</span></p>
+            <p><b>Municipi: </b><span>Indeterminat</span></p>
+            <p><b>Tipus: </b><span th:text="${espai.tipus}"></span></p>
+            <p><b>Terreny: </b><span th:text="${espai.terreny}"></span></p>
+            <p><b>Longitut (en metres):</b>
+                <span th:if="${espai.longitud == 0}">Indeterminat</span>
+                <span th:unless="${espai.longitud == 0}" th:text="${espai.longitud}"></span>
+            </p>
+            <p><b>Amplaria (en metres): </b>
+                <span th:if="${espai.amplaria == 0}">Indeterminat</span>
+                <span th:unless="${espai.amplaria == 0}" th:text="${espai.amplaria}"></span>
+            </p>
+            <p style="text-align: justify"><b>Descripcio: </b><span th:text="${espai.descripcio}"></span></p>
+        </div>
+    </div>
+    <div class="row justify-content-center my-4">
+        <div class="col-sm-auto">
+            <h2 class="my-2 text-center">Tipus d'acces:</h2>
+        </div>
+        <div class="col-sm-auto my-1 text-center" th:switch="${espai.tipusAcces.toString()}">
+            <h2 th:case="'Obert'"><span class="badge-sana badge-obert">Obert</span></h2>
+            <h2 th:case="'Restringit'"><span class="badge-sana badge-restringit">Restringit</span></h2>
+            <h2 th:case="'Tancat'"><span class="badge-sana badge-tancat">Tancat</span></h2>
+        </div>
+    </div>
+    <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
+        <div class="row justify-content-center m-3">
+            <div class="col-auto">
+                <p><b>Zona :  </b></p>
+            </div>
+            <div class="col-auto">
+                <form>
+                    <select id="zona" nom="zona">
+                        <option value="1">Zona 1</option>
+                        <option value="2">Zona 2</option>
+                        <option value="3">Zona 3</option>
+                        <option value="4">Zona 4</option>
+                        <option value="5">Zona 5</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center m-3">
+            <div class="col-auto">
+                <h5><u>Franja Horaria</u></h5>
+                <form>
+                    <input type="radio" id="1" name="franjaHoraria" value="9:00 - 12:00">
+                    <label for="1">9:00 - 12:00</label><br>
+                    <input type="radio" id="2" name="franjaHoraria" value="12:00 - 14:00">
+                    <label for="2">12:00 - 14:00</label><br>
+                    <input type="radio" id="3" name="franjaHoraria" value="16:00 - 18:00">
+                    <label for="3">16:00 - 18:00</label><br>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<h1 class="my-3">Espais públics de <span th:text="${espai.nom}"></span></h1>
+<div>
+    <div class="col-5">
+        <img class="card-img" th:src="${espai.imagen}" alt="Card image cap">
+    </div>
+</div>
+</body>
+</html>
