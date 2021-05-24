@@ -39,6 +39,9 @@ public class EspaiPublicController {
     @RequestMapping("espaisprovincia/{provincia}")
     public String listEspaiPublicsProvincia(Model model, @PathVariable String provincia){
         model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerProvincia(provincia));
+        System.out.println(espaiPublicService.getEspaisPublicsPerProvincia(provincia));
+
+        model.addAttribute("provincia", provincia);
         return "espaiPublic/espaisprovincia";
     }
 

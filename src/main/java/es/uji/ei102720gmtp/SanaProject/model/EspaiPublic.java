@@ -121,7 +121,7 @@ public class EspaiPublic
                 ", longitud='" + longitud + '\'' +
                 ", amplaria='" + amplaria + '\'' +
                 ", imagen='" + imagen + '\'' +
-                ", descripciio='" + descripcio + '\'' +
+                ", descripcio='" + descripcio + '\'' +
                 '}';
     }
 }
