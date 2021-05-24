@@ -3,6 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
+import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/espaiPublic")
@@ -82,11 +85,21 @@ public class EspaiPublicController {
     @RequestMapping(value = "/informacio/{id}")
     public String showEspaiPublic(Model model, @PathVariable int id) {
 
-        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
-        // Passar municipi i provincia
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
-        System.out.println(espai);
+        model.addAttribute("espai", espai);
+
+        // Passar municipi i provincia
+
+        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspai(espai.getId());
+        model.addAttribute("zones", zonesEspai);
 
         return "/espaiPublic/informacio";
     }
+
+    @RequestMapping(value = "/informacio", method = RequestMethod.POST)
+    public String showEspaiPublic(@ModelAttribute("zona") Zona zona) {
+       return null;
+    }
+
+
 }

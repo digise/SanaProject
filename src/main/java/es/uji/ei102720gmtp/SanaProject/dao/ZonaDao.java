@@ -68,4 +68,15 @@ public class ZonaDao {
             return new ArrayList<Zona>();
         }
     }
+
+    public List<Zona> getZonesFromEspai(int idEspai) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Zona WHERE id_espai = ?",
+                    new ZonaRowMapper(),
+                    idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Zona>();
+        }
+    }
 }

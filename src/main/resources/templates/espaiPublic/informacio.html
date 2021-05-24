@@ -39,23 +39,31 @@
         </div>
     </div>
     <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
-        <div class="row justify-content-center m-3">
-            <div class="col-auto">
-                <p><b>Zona :  </b></p>
-            </div>
-            <div class="col-auto">
-                <form>
-                    <select id="zona" nom="zona">
-                        <option value="1">Zona 1</option>
-                        <option value="2">Zona 2</option>
-                        <option value="3">Zona 3</option>
-                        <option value="4">Zona 4</option>
-                        <option value="5">Zona 5</option>
+        <form th:action="@{/espaiPublic/informacio/}" th:object="${zona}" method="post">
+            <div class="row justify-content-center m-2">
+                <div class="col-auto">
+                    <p><b>Zona :  </b></p>
+                </div>
+                <div class="col-auto">
+                    <select type="text" id="zona" nom="zona" th:field="*{id}">
+                        <option th:each="zonaOption : ${zones}" th:value="${zonaOption.getId()}" th:text="${'Zona ' + zonaOption.getId()}"></option>
                     </select>
-                </form>
+
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center m-3">
+            <div class="row justify-content-center m-3">
+                <div class="col-auto">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data">
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-auto">
+                    <input type="submit" value="Actualitzar Horaris">
+                </div>
+            </div>
+        </form>
+        <div class="row justify-content-center m-5">
             <div class="col-auto">
                 <h5><u>Franja Horaria</u></h5>
                 <form>
