@@ -46,7 +46,7 @@ public class ZonaDao {
     }
 
     /* Obtenim la zona amb el id. Torna null si no existeix. */
-    public Zona getZona(String idZona) {
+    public Zona getZona(int idZona) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Zona WHERE id = ?",

@@ -1,6 +1,9 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 
 public class Reserva {
@@ -10,8 +13,13 @@ public class Reserva {
     private int nombrePersones;
     private EstatReserva estat;
     private String nifCiutada;
+    private int idFranja;
+    private int idZona;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dataReserva;
 
-    public Reserva(){}
+    public Reserva(){
+    }
 
     public int getId() {
         return id;
@@ -56,6 +64,29 @@ public class Reserva {
         this.nifCiutada = nifCiutada;
     }
 
+    public int getIdFranja() {
+        return idFranja;
+    }
+
+    public int getIdZona() {
+        return idZona;
+    }
+
+    public void setIdFranja(int idFranja) {
+        this.idFranja = idFranja;
+    }
+
+    public void setIdZona(int idZona) {
+        this.idZona = idZona;
+    }
+
+    public LocalDate getDataReserva() {
+        return dataReserva;
+    }
+
+    public void setDataReserva(LocalDate dataReserva) {
+        this.dataReserva = dataReserva;
+    }
 
     @Override
     public String toString() {

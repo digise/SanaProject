@@ -41,7 +41,7 @@ public class FranjaHorariaDao{
     }
 
     /* Obtenim la franja amb el id. Torna null si no existeix. */
-    public FranjaHoraria getFranjaHoraria(String idFranja) {
+    public FranjaHoraria getFranjaHoraria(int idFranja) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM franjaHoraria WHERE id = ?",
