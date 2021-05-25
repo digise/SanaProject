@@ -30,7 +30,7 @@ public class EspaiPublicDao
     }
 
     /* Esborrem  */
-    public void deleteEspaiPublic(String idEspai) {
+    public void deleteEspaiPublic(int idEspai) {
         jdbcTemplate.update("DELETE from espaiPublic where id=?",
                 idEspai);
     }

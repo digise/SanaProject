@@ -15,11 +15,8 @@ public class FranjaHorariaRowMapper implements RowMapper<FranjaHoraria>
         FranjaHoraria franjaHoraria = new FranjaHoraria();
         franjaHoraria.setId(rs.getInt("id"));
         franjaHoraria.setIdEspai(rs.getInt("id_espai"));
-        franjaHoraria.setDescripcio(rs.getString("descripcio"));
         franjaHoraria.setHoraInici(rs.getObject("hora_inici", LocalTime.class));
         franjaHoraria.setHoraFinal(rs.getObject("hora_final", LocalTime.class));
-        franjaHoraria.setDataInici(rs.getObject("data_inici", LocalDate.class));
-        franjaHoraria.setDataFinal(rs.getObject("data_final", LocalDate.class));
         return franjaHoraria;
     }
 }

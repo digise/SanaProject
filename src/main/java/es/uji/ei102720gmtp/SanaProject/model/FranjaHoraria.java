@@ -8,15 +8,11 @@ import java.time.LocalTime;
 public class FranjaHoraria {
     private int id;
     private int idEspai;
-    private String descripcio;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaInici;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaFinal;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataInici;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataFinal;
+
 
     public FranjaHoraria() {
     }
@@ -37,14 +33,6 @@ public class FranjaHoraria {
         this.idEspai = idEspai;
     }
 
-    public String getDescripcio() {
-        return descripcio;
-    }
-
-    public void setDescripcio(String descripcio) {
-        this.descripcio = descripcio;
-    }
-
     public LocalTime getHoraInici() {
         return horaInici;
     }
@@ -61,32 +49,13 @@ public class FranjaHoraria {
         this.horaFinal = horaFinal;
     }
 
-    public LocalDate getDataInici() {
-        return dataInici;
-    }
-
-    public void setDataInici(LocalDate dataInici) {
-        this.dataInici = dataInici;
-    }
-
-    public LocalDate getDataFinal() {
-        return dataFinal;
-    }
-
-    public void setDataFinal(LocalDate dataFinal) {
-        this.dataFinal = dataFinal;
-    }
-
     @Override
     public String toString() {
         return "FranjaHoraria{" +
-                "id='" + id + '\'' +
-                ", idEspai='" + idEspai + '\'' +
-                ", descripcio='" + descripcio + '\'' +
-                ", horaInici='" + horaInici + '\'' +
+                "id=" + id +
+                ", idEspai=" + idEspai +
+                ", horaInici=" + horaInici +
                 ", horaFinal=" + horaFinal +
-                ", dataInici='" + dataInici + '\'' +
-                ", dataFinal='" + dataFinal + '\'' +
                 '}';
     }
 }
