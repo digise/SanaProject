@@ -39,7 +39,7 @@
         </div>
     </div>
     <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
-        <form th:action="@{/espaiPublic/informacio/}" th:object="${zona}" method="post">
+        <form action="#" th:if="${!zones.isEmpty()}" th:action="@{/espaiPublic/informacio/}" th:object="${zona}" method="get">
             <div class="row justify-content-center m-2">
                 <div class="col-auto">
                     <p><b>Zona :  </b></p>
@@ -63,21 +63,22 @@
                 </div>
             </div>
         </form>
-        <div class="row justify-content-center m-5">
-            <div class="col-auto">
-                <h5><u>Franja Horaria</u></h5>
-                <form>
-                    <input type="radio" id="1" name="franjaHoraria" value="9:00 - 12:00">
-                    <label for="1">9:00 - 12:00</label><br>
-                    <input type="radio" id="2" name="franjaHoraria" value="12:00 - 14:00">
-                    <label for="2">12:00 - 14:00</label><br>
-                    <input type="radio" id="3" name="franjaHoraria" value="16:00 - 18:00">
-                    <label for="3">16:00 - 18:00</label><br>
-                </form>
-            </div>
-        </div>
-        <div class="row justify-content-center">
+        <form th:if="${!zones.isEmpty()}">
+            <div class="row justify-content-center m-5">
+                <div class="col-auto">
+                    <h5><u>Franja Horaria</u></h5>
 
+                    <span th:each="franja : ${franges}">
+                        <input type="radio" th:id="${franja.getId()}" name="franjaHoraria" th:value="${franja.getHoraInici() + ',' + franja.getHoraFinal()}">
+                        <label th:for="${franja.getId()}" th:text="${franja.getHoraInici() + ',' + franja.getHoraFinal()}"></label><br>
+                    </span>
+                </div>
+            </div>
+        </form>
+        <div th:if="${zones.isEmpty()}" class="row justify-content-center">
+            <div class="col-auto">
+                <h5><u>No hi ha zones disponibles</u></h5>
+            </div>
         </div>
     </div>
 </div>

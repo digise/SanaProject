@@ -3,6 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
+import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
 import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,7 @@ public class EspaiPublicController {
         return "redirect:../list";
     }
 
-    @RequestMapping(value = "/informacio/{id}")
+    @RequestMapping(value = "/informacio/{id}",method = RequestMethod.GET)
     public String showEspaiPublic(Model model, @PathVariable int id) {
 
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
@@ -92,6 +93,31 @@ public class EspaiPublicController {
 
         List<Zona> zonesEspai = espaiPublicService.getZonesFromEspai(espai.getId());
         model.addAttribute("zones", zonesEspai);
+
+        if ( !zonesEspai.isEmpty() ) {
+            Zona zonaPrimera = zonesEspai.get(0);
+            model.addAttribute("zonaElegida", zonaPrimera);
+
+            List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHorariesDisponibles(id, zonaPrimera.getId());
+            model.addAttribute("franges", frangesZona);
+        }
+
+        return "/espaiPublic/informacio";
+    }
+
+    @RequestMapping(value = "/informacio/{idEspai}/{idZona}", method = RequestMethod.POST)
+    public String showEspaiPublic(Model model, @PathVariable int idEspai, @PathVariable int idZona) {
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
+        model.addAttribute("espai", espai);
+
+        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspai(espai.getId());
+        model.addAttribute("zones", zonesEspai);
+
+        Zona zona = espaiPublicService.getZona(idZona);
+        model.addAttribute("zonaElegida", zona);
+
+        List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHorariesDisponibles(idEspai, idZona);
+        model.addAttribute("franges", frangesZona);
 
         return "/espaiPublic/informacio";
     }

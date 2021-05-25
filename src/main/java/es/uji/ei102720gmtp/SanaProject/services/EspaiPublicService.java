@@ -47,8 +47,13 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     }
 
     @Override
-    public List<FranjaHoraria> getFrangesHorariesDisponibles(int id) {
+    public List<FranjaHoraria> getFrangesHorariesDisponibles(int idEspai, int idZona) {
         List<FranjaHoraria> frangesHoraries;
         return null;
+    }
+
+    @Override
+    public Zona getZona(int idZona) {
+        return zonaDao.getZona(String.valueOf(idZona));
     }
 }

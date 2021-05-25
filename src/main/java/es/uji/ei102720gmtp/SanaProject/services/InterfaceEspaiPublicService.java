@@ -11,5 +11,6 @@ import java.util.Map;
 public interface InterfaceEspaiPublicService {
     public List<EspaiPublic> getEspaisPublicsPerProvincia(String provincia);
     public List<Zona> getZonesFromEspai(int id);
-    public List<FranjaHoraria> getFrangesHorariesDisponibles(int id);
+    public List<FranjaHoraria> getFrangesHorariesDisponibles(int idEspai, int idZona);
+    public Zona getZona(int idZona);
 }
