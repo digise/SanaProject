@@ -1,6 +1,8 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
+import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
+import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.Reserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ReservaController {
 
     private ReservaDao reservaDao;
+    private EspaiPublicDao espaiPublicDao;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
         this.reservaDao = reservaDao;
+    }
+
+    @Autowired
+    public ReservaController(EspaiPublicDao espaiPublicDao) {
+        this.espaiPublicDao = espaiPublicDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -30,8 +38,11 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping(value = "/add")
-    public String addReserva(Model model){
+    @RequestMapping(value = "/add/{idEspai}")
+    public String addReserva(Model model, @PathVariable int idEspai){
+        EspaiPublic espaiPublic = espaiPublicDao.getEspaiPublic(idEspai);
+        model.addAttribute("nom", espaiPublic.getNom());
+
         model.addAttribute("reserva", new Reserva());
         return "reserva/add";
     }

@@ -83,7 +83,7 @@ public class EspaiPublicController {
         return "redirect:../list";
     }
 
-    @RequestMapping(value = "/informacio/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/informacio/{id}")
     public String showEspaiPublic(Model model, @PathVariable int id) {
 
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
@@ -102,10 +102,12 @@ public class EspaiPublicController {
             model.addAttribute("franges", frangesZona);
         }
 
+        model.addAttribute("zona", new Zona());
+
         return "/espaiPublic/informacio";
     }
 
-    @RequestMapping(value = "/informacio/{idEspai}/{idZona}", method = RequestMethod.POST)
+    @RequestMapping(value = "/informacio/{idEspai}/{idZona}")
     public String showEspaiPublic(Model model, @PathVariable int idEspai, @PathVariable int idZona) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
         model.addAttribute("espai", espai);
@@ -118,6 +120,9 @@ public class EspaiPublicController {
 
         List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHorariesDisponibles(idEspai, idZona);
         model.addAttribute("franges", frangesZona);
+
+        model.addAttribute("zona", new Zona());
+
 
         return "/espaiPublic/informacio";
     }

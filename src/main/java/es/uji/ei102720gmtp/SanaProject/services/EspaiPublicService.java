@@ -54,6 +54,6 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
 
     @Override
     public Zona getZona(int idZona) {
-        return zonaDao.getZona(String.valueOf(idZona));
+        return zonaDao.getZona(idZona);
     }
 }
