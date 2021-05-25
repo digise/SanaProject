@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1 class="my-3">Espais públics de <span th:text="${provincia}"></span></h1>
+    <div th:if="${#lists.isEmpty(espais)}">
+        No hi ha espais públics en la base de dades
+    </div>
+    <div th:unless="${#lists.isEmpty(espais)}" class="row" th:each="espai: ${espais}" >
+        <div class="col">
+            <div class="card border-primary mb-3" style="max-width: 50rem;">
+                <div class="card-header"><span th:text="${espai.nom}"></span></div>
+                <div class="row no-gutters">
+                    <div class="col-5 m-4">
+                        <img class="card-img" th:src="${espai.imagen}" alt="Card image cap">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card-body">
+                            <p><b>Localització: </b><span th:text="${espai.localitzacio}"></span></p>
+                            <p style="text-align: justify"><b>Descripció: </b><span th:text="${espai.descripcio}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-3" align="center">
+                    <button type="button" class="btn btn-primary">Elegir la zona</button>
+                </div>
+            </div>
+        </div>
+        <div class="w-100"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

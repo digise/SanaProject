@@ -44,7 +44,7 @@ public class FranjaHorariaController {
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
-    public String editFranjaHoraria(Model model, @PathVariable String id){
+    public String editFranjaHoraria(Model model, @PathVariable int id){
         model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(id));
         return "franjaHoraria/update";
     }
