@@ -11,7 +11,6 @@ public final class ZonaRowMapper implements RowMapper<Zona> {
         Zona zona = new Zona();
         zona.setId(rs.getInt("id"));
         zona.setIdEspai(rs.getInt("id_espai"));
-        zona.setNom(rs.getString("nom"));
         zona.setCapacitat(rs.getInt("capacitat"));
         zona.setCoordenades(rs.getString("coordenades"));
         return zona;
