@@ -53,6 +53,17 @@ public class FranjaHorariaDao{
         }
     }
 
+    public List<FranjaHoraria> getFranjasEspai(int id_espai) {
+        try {
+            return jdbcTemplate.query(
+                   "SELECT * FROM franjaHoraria WHERE id_espai = ?",
+                    new FranjaHorariaRowMapper(),
+                    id_espai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<FranjaHoraria>();
+        }
+    }
+
     /* Obtenim totes les franjes. Torna una llista buida si no n'hi ha cap. */
     public List<FranjaHoraria> getFranjas() {
         try {

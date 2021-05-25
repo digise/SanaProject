@@ -44,17 +44,15 @@
         </div>
     </div> -->
     <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
-        <form action="#" th:if="${!zones.isEmpty()}" th:action="@{/espaiPublic/informacio/}" th:object="${zona}" method="get">
+        <div th:if="${!zones.isEmpty()}">
             <div class="row justify-content-center m-2">
                 <div class="col-auto">
                     <p><b>Zona :  </b></p>
                 </div>
-                <div class="col-auto">
-                    <span th:each="zonaOption : ${zones}"><a class="btn btn-primary" th:href="@{/reserva/add/{idZona}(idZona=${zonaOption.getId()})}" th:text="${'Zona' + zonaOption.getId()}"></a></span>
-                    <select type="text" id="zona" nom="zona" th:field="*{id}">
-                        <option th:each="zonaOption : ${zones}" th:value="${zonaOption.getId()}" th:text="${'Zona ' + zonaOption.getId()}"></option>
-                    </select>
-                </div>
+            </div>
+            <div th:each="zonaOption : ${zones}" class="row justify-content-center text-center">
+                <span><a class="btn btn-primary" th:href="@{/reserva/add/{idZona}(idZona=${zonaOption.getId()})}"
+                         th:text="${'Zona ' + zonaOption.getId() + ' (capacidad ' + zonaOption.getCapacitat() + ')'}"></a></span>
             </div>
             <div class="row justify-content-center m-3">
                 <div class="col-auto">
@@ -62,7 +60,7 @@
                     <input type="date" id="data" name="data">
                 </div>
             </div>
-            <div class="row justify-content-center m-3">
+            <!--<div class="row justify-content-center m-3">
                 <div class="col-auto">
                     <p>Capacitat :  <span th:text="${zonaElegida.getCapacitat()}"></span></p>
                 </div>
@@ -71,9 +69,8 @@
                 <div class="col-auto">
                     <a class="btn btn-primary">Actualitzar horaris</a>
                 </div>
-            </div>
-            <input type="hidden" th:field="*{idEspai}" th:value="${espai.getId()}"/>
-        </form>
+            </div>-->
+        </div>
         <form th:if="${!zones.isEmpty()}">
             <div class="row justify-content-center m-5">
                 <div class="col-auto">
