@@ -35,13 +35,13 @@ public class ReservesClientService implements InterfaceReservesClientService{
         for (Reserva reservaClient : reservesClients){
             reservaClient = reservaDao.getReserva(idReserva);
             Zona zona = zonaDao.getZona(reservaClient.getIdZona());
-            String nomZona = zonaDao.getZona(reservaClient.getIdZona()).getNom();
+            String idZona = String.valueOf(zonaDao.getZona(reservaClient.getIdZona()).getId());
             String horaInici = franjaHorariaDao.getFranjaHoraria(reservaClient.getIdFranja()).getHoraInici().toString();
             String horaFinal = franjaHorariaDao.getFranjaHoraria(reservaClient.getIdFranja()).getHoraFinal().toString();
             String nomEspai = espaiPublicDao.getEspaiPublic(zona.getIdEspai()).getNom();
 
             objetoTablaReserva.add(nomEspai);
-            objetoTablaReserva.add(nomZona);
+            objetoTablaReserva.add(idZona);
             objetoTablaReserva.add(String.valueOf(reservaClient.getNombrePersones()));
             objetoTablaReserva.add(horaInici);
             objetoTablaReserva.add(horaFinal);
