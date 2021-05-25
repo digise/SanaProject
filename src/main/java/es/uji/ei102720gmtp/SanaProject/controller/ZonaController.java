@@ -46,7 +46,7 @@ public class ZonaController {
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
-    public String editZona(Model model, @PathVariable String id){
+    public String editZona(Model model, @PathVariable int id){
         model.addAttribute("zona", zonaDao.getZona(id));
         return "zona/update";
     }
