@@ -14,7 +14,7 @@
     <h2>Accés</h2>
     <form action="#" th:action="@{/login}"
           th:object="${user}" method="post">
-        <div class="form-group">
+        <div class="form-group my-3">
             <label>Nom d'usuari:</label><br>
             <input class="form_control" type="text" th:field="*{username}"/>
             <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
@@ -24,7 +24,7 @@
             <input class="form_control" type="password" th:field="*{password}"/>
             <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         </div>
-        <input type="submit" value="Accedir" />
+        <input class="my-2" type="submit" value="Accedir" />
     </form>
 </div>
 </body>
