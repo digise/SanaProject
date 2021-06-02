@@ -5,14 +5,14 @@ public enum TipusAcces {
     OBERT("Obert"),
     TANCAT("Tancat");
 
-    private final String access;
+    private final String acces;
 
-    TipusAcces(String terreny) {
-        this.access = terreny;
+    TipusAcces(String acces) {
+        this.acces = acces;
     }
 
     @Override
     public String toString(){
-        return access;
+        return acces;
     }
 }

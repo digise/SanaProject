@@ -1,13 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Crear una nova reserva</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+    <title>Reserva d'una espai</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-<h2>Nova reserva</h2>
+
+
+<h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${nom}"></span></h1>
+
+<div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;">
+    <form action="#" th:action="@{/reserva/add/}" th:object="${zona}" method="post">
+        <div class="row justify-content-center m-2">
+            <div class="col-auto">
+                <p><b>Zona :  </b></p>
+            </div>
+            <div class="col-auto">
+                <select type="text" id="zona" nom="zona" th:field="*{id}">
+                    <option th:each="zonaOption : ${zones}" th:value="${zonaOption.getId()}" th:text="${'Zona ' + zonaOption.getId()}"></option>
+                </select>
+
+            </div>
+        </div>
+        <div class="row justify-content-center m-3">
+            <div class="col-auto">
+                <label for="data">Data</label>
+                <input type="date" id="data" name="data">
+            </div>
+        </div>
+        <div class="row justify-content-center m-3">
+            <div class="col-auto">
+                <input type="submit" value="Actualitzar Horaris">
+            </div>
+        </div>
+    </form>
+    <form th:if="${!zones.isEmpty()}">
+        <div class="row justify-content-center m-5">
+            <div class="col-auto">
+                <h5><u>Franja Horaria</u></h5>
+
+                <span th:each="franja : ${franges}">
+                        <input type="radio" th:id="${franja.getId()}" name="franjaHoraria" th:value="${franja.getHoraInici() + ',' + franja.getHoraFinal()}">
+                        <label th:for="${franja.getId()}" th:text="${franja.getHoraInici() + ',' + franja.getHoraFinal()}"></label><br>
+                    </span>
+            </div>
+        </div>
+    </form>
+    <div th:if="${zones.isEmpty()}" class="row justify-content-center">
+        <div class="col-auto">
+            <h5><u>No hi ha zones disponibles</u></h5>
+        </div>
+    </div>
+</div>
+
+
+
 <form action="#" th:action="@{/reserva/add}"
       th:object="${reserva}" method="post">
     <table>
