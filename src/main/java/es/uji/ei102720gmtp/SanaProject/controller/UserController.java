@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/espaiPublic")
+@RequestMapping("/munipi")
 public class UserController {
     private UserDao userDao;
 
@@ -20,7 +20,7 @@ public class UserController {
         this.userDao = userDao;
     }
 
-    @RequestMapping("/seleccionarProvincia")
+    @RequestMapping("")
     public String listProvincies(HttpSession session, Model model) {
         if (session.getAttribute("user") == null)
         {

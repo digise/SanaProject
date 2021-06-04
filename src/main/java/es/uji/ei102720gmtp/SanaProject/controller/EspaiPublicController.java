@@ -7,6 +7,7 @@ import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
 import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -82,11 +84,25 @@ public class EspaiPublicController {
         return "redirect:../list";
     }
 
-    @RequestMapping(value = "/informacio/{id}")
-    public String showEspaiPublic(Model model, @PathVariable int id) {
-
+    @RequestMapping(value= "/informacio/{id}")
+    public String showInformacio(Model model, @PathVariable int id){
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
+        return "/espaiPublic/informacio";
+    }
+
+    @RequestMapping(value = "/elegirZona/{id}")
+    public String showEspaiPublic(Model model, @PathVariable int id, HttpSession session) {
+        //Mirem si está loggeat ja
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
+        String nextUrl = "espaiPulic/elegirZona";
+        if (session.getAttribute("user") == null){
+            session.setAttribute("nextUrl", nextUrl);
+            session.setAttribute("nextEspai", espai);
+            return "redirect:/login";
+        }
+
 
         // Passar municipi i provincia
 
@@ -103,10 +119,10 @@ public class EspaiPublicController {
 
         model.addAttribute("zona", new Zona());
 
-        return "/espaiPublic/informacio";
+        return "/espaiPublic/elegirZona";
     }
 
-    @RequestMapping(value = "/informacio/{idEspai}/{idZona}")
+    @RequestMapping(value = "/elegirZona/{idEspai}/{idZona}")
     public String showEspaiPublic(Model model, @PathVariable int idEspai, @PathVariable int idZona) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
         model.addAttribute("espai", espai);
@@ -121,14 +137,17 @@ public class EspaiPublicController {
         model.addAttribute("franges", frangesZona);
 
         model.addAttribute("zona", new Zona());
-
-
-        return "/espaiPublic/informacio";
+        return "/espaiPublic/elegirZona";
     }
 
     @RequestMapping(value = "/informacio", method = RequestMethod.POST)
     public String showEspaiPublic(@ModelAttribute("zona") Zona zona) {
        return null;
+    }
+
+    @RequestMapping(value = "/seleccionarProvincia")
+    public String mostrarSeleccionarProvincia(){
+        return "/espaiPublic/seleccionarProvincia";
     }
 
 

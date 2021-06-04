@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <title>Informació d'un espai public</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-5 m-4">
+            <img class="card-img" th:src="${espai.imagen}" alt="Card image">
+        </div>
+        <div class="col-lg-4 m-4 align-self-center">
+            <p><b>Provincia: </b><span>Indeterminat</span></p>
+            <p><b>Municipi: </b><span>Indeterminat</span></p>
+            <p><b>Tipus: </b><span th:text="${espai.tipus}"></span></p>
+            <p><b>Terreny: </b><span th:text="${espai.terreny}"></span></p>
+            <p><b>Longitut (en metres):</b>
+                <span th:if="${espai.longitud == 0}">Indeterminat</span>
+                <span th:unless="${espai.longitud == 0}" th:text="${espai.longitud}"></span>
+            </p>
+            <p><b>Amplaria (en metres): </b>
+                <span th:if="${espai.amplaria == 0}">Indeterminat</span>
+                <span th:unless="${espai.amplaria == 0}" th:text="${espai.amplaria}"></span>
+            </p>
+            <p style="text-align: justify"><b>Descripcio: </b><span th:text="${espai.descripcio}"></span></p>
+        </div>
+    </div>
+    <div class="row justify-content-center my-4">
+        <div class="col-sm-auto">
+            <h2 class="my-2 text-center">Tipus d'acces:</h2>
+        </div>
+        <div class="col-sm-auto my-1 text-center" th:switch="${espai.tipusAcces.toString()}">
+            <h2 th:case="'Obert'"><span class="badge-sana badge-obert">Obert</span></h2>
+            <h2 th:case="'Restringit'"><span class="badge-sana badge-restringit">Restringit</span></h2>
+            <h2 th:case="'Tancat'"><span class="badge-sana badge-tancat">Tancat</span></h2>
+        </div>
+    </div>
+    <!--<div class="row justify-content-center" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
+        <div class="col-auto justify-content-center text-center">
+            <a class="btn btn-primary" th:href="@{/reserva/add/{id}(id=${espai.id})}">Reservar</a>
+        </div>
+    </div> -->
+    <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
+        <div th:if="${!zones.isEmpty()}">
+            <div class="row justify-content-center m-2">
+                <div class="col-auto">
+                    <p><b>Zona :  </b></p>
+                </div>
+            </div>
+            <div th:each="zonaOption : ${zones}" class="row justify-content-center text-center">
+                <span><a class="btn btn-primary" th:href="@{/reserva/add/{idZona}(idZona=${zonaOption.getId()})}"
+                         th:text="${'Zona ' + zonaOption.getId() + ' (capacidad ' + zonaOption.getCapacitat() + ')'}"></a></span>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-auto">
+                    <label for="data">Data</label>
+                    <input type="date" id="data" name="data">
+                </div>
+            </div>
+            <!--<div class="row justify-content-center m-3">
+                <div class="col-auto">
+                    <p>Capacitat :  <span th:text="${zonaElegida.getCapacitat()}"></span></p>
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-auto">
+                    <a class="btn btn-primary">Actualitzar horaris</a>
+                </div>
+            </div>-->
+        </div>
+        <form th:if="${!zones.isEmpty()}">
+            <div class="row justify-content-center m-5">
+                <div class="col-auto">
+                    <h5><u>Franja Horaria</u></h5>
+
+                    <span th:each="franja : ${franges}">
+                        <input type="radio" th:id="${franja.getId()}" name="franjaHoraria" th:value="${franja.getHoraInici() + ',' + franja.getHoraFinal()}">
+                        <label th:for="${franja.getId()}" th:text="${franja.getHoraInici() + ',' + franja.getHoraFinal()}"></label><br>
+                    </span>
+                </div>
+            </div>
+        </form>
+        <div th:if="${zones.isEmpty()}" class="row justify-content-center">
+            <div class="col-auto">
+                <h5><u>No hi ha zones disponibles</u></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<h1 class="my-3">Espais públics de <span th:text="${espai.nom}"></span></h1>
+<div>
+    <div class="col-5">
+        <img class="card-img" th:src="${espai.imagen}" alt="Card image cap">
+    </div>
+</div>
+</body>
+</html>

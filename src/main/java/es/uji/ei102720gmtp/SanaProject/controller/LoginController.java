@@ -2,6 +2,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.UserDao;
+import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class LoginController {
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String checkLogin(@ModelAttribute("user") UserDetails user,
-                             BindingResult bindingResult, HttpSession session) {
+                             BindingResult bindingResult, HttpSession session, Model model) {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -66,10 +67,11 @@ public class LoginController {
         // Autenticats correctament.
         // Guardem les dades de l'usuari autenticat a la sessió
         session.setAttribute("user", user);
-        session.setAttribute("nextUrl", "/espaiPublic/seleccionarProvincia");
         // Torna a la pàgina principal
         if (session.getAttribute("nextUrl") != null) {
             String redireccion = (String)session.getAttribute("nextUrl");
+            EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
+            model.addAttribute("espai", espai);
             session.removeAttribute("nextUrl");
             return redireccion;
         }

@@ -2,7 +2,9 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.ControladorDao;
+import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.Controlador;
+import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +18,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/controlador")
 public class ControladorController  {
     private ControladorDao controladorDao;
-
+    private ControladorsPerMunicipiService controladorsPerMunicipiService;
+    private MunicipiDao municipiDao;
     @Autowired
     public void setControladorDao(ControladorDao controladorDao){
         this.controladorDao = controladorDao;
+    }
+
+    @Autowired
+    public void setControladorsPerMunicipiService(ControladorsPerMunicipiService controladorsPerMunicipiService) {
+        this.controladorsPerMunicipiService = controladorsPerMunicipiService;
+    }
+
+    @Autowired
+    public void setMunicipiDao(MunicipiDao municipiDao){
+        this.municipiDao = municipiDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
     public String listControllers(Model model){
-        model.addAttribute("controladors", controladorDao.getlistControlador());
+        model.addAttribute("controladors", controladorDao.getlistControladors());
         return "controlador/list";
+    }
+    @RequestMapping("/controladorsMunicipi/{municipi}")
+    public String listControladorsMunicipi(Model model, @PathVariable int municipi){
+        model.addAttribute("controladors", controladorsPerMunicipiService.controladorsPerMunicipi(municipi));
+        String nomMunicipi = municipiDao.getMunicipi(municipi).getNom();
+        model.addAttribute("municipi", nomMunicipi);
+        return "controladorsMunicipi/municipi";
     }
 
     @RequestMapping(value = "/add")

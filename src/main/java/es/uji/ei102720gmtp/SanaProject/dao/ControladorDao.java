@@ -59,7 +59,7 @@ public class ControladorDao {
     }
 
     /* Obtenim tote els controladors. Torna una llista buida si no n'hi ha cap. */
-    public ArrayList<Controlador> getlistControlador() {
+    public ArrayList<Controlador> getlistControladors() {
         try {
             return (ArrayList<Controlador>) jdbcTemplate.query(
                     "SELECT * FROM Controlador",
