@@ -3,6 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.model;
 public class GestorMunicipal {
 
     private String nif;
+    private String pin;
     private int idMunicipi;
     private String nom;
     private String cognoms;
@@ -16,6 +17,14 @@ public class GestorMunicipal {
 
     public void setNif(String nif) {
         this.nif = nif;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public int getIdMunicipi() {

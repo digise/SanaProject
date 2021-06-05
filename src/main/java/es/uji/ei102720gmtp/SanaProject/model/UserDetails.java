@@ -1,15 +1,15 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
 public class UserDetails {
-    String username;
+    String nif;
     String password;
 
-    public String getUsername() {
-        return username;
+    public String getNif() {
+        return nif;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
     public String getPassword() {

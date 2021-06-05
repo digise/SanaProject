@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>SANA</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-</head>
-<body>
-<ul>
-    <li><a href="/elegirArea.html">Acceder</a></li>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-</ul>
+    <title layout:title-pattern="$CONTENT_TITLE">SANA</title>
+    <link rel="stylesheet" type="text/css" href="/css/estiloGeneral.css"
+          th:href="@{/css/estiloGeneral.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/badgeStyles.css"
+          th:href="@{/css/badgeStyles.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:#6AF47B;">
+<div style="text-align: center" class="container">
+    <h1 class="my-4">Benvingut a l'aplicació SANA - <small class="text-muted">Accés segur a espais naturals</small></h1>
+    <img class="img-thumbnail" src="/imagenes/indexImg.png" alt="Card image cap">
+    <div class="row mt-3">
+        <div class="col">
+            <a class="btn btn-primary" href="@{/espaiPublic/informacio/{id}(id=${espai.id})}">Informació Espais</a>
+            <a class="btn btn-primary" href="/login">Inciar Sessió</a>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

@@ -145,7 +145,7 @@ public class EspaiPublicController {
        return null;
     }
 
-    @RequestMapping(value = "/seleccionarProvincia")
+    @RequestMapping("/seleccionarProvincia")
     public String mostrarSeleccionarProvincia(){
         return "/espaiPublic/seleccionarProvincia";
     }

@@ -1,8 +1,12 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 
+import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.GestorMunicipalDao;
 import es.uji.ei102720gmtp.SanaProject.dao.UserDao;
+import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
+import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +31,7 @@ class UserValidator implements Validator {
         // l'usuari i la contrasenya no estiguen buits
         // ...
         UserDetails userDetails = (UserDetails) obj;
-        if (userDetails.getUsername().trim().equals(""))
+        if (userDetails.getNif().trim().equals(""))
             errors.rejectValue("user", "obligatori",
                     "Cal introduir un valor");
 
@@ -42,6 +46,18 @@ class UserValidator implements Validator {
 public class LoginController {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private CiutadaDao ciutadaDao;
+    @Autowired
+    private GestorMunicipalDao gestorMunicipalDao;
+
+    public void setCiutadaDao(CiutadaDao ciutadaDao) {
+        this.ciutadaDao = ciutadaDao;
+    }
+
+    public void setGestorMunicipalDao(GestorMunicipalDao gestorMunicipalDao) {
+        this.gestorMunicipalDao = gestorMunicipalDao;
+    }
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -59,22 +75,43 @@ public class LoginController {
         }
         // Comprova que el login siga correcte
         // intentant carregar les dades de l'usuari
-        user = userDao.loadUserByUsername(user.getUsername(), user.getPassword());
-        if (user == null) {
-            bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+
+        Ciutada ciutada = ciutadaDao.getCiutada(user.getNif());
+        GestorMunicipal gestorMunicipal = gestorMunicipalDao.getGestorMunicipal(user.getNif());
+        if (ciutada != null ) {
+            if (!ciutada.getPin().equals(user.getPassword())) {
+                bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                return "login";
+            }
+            session.setAttribute("user", user);
+            // Torna a la pàgina principal
+            if (session.getAttribute("nextUrl") != null) {
+                String redireccion = (String)session.getAttribute("nextUrl");
+                EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
+                model.addAttribute("espai", espai);
+                session.removeAttribute("nextUrl");
+                return redireccion;
+            }
+        }else
             return "login";
-        }
-        // Autenticats correctament.
-        // Guardem les dades de l'usuari autenticat a la sessió
-        session.setAttribute("user", user);
-        // Torna a la pàgina principal
-        if (session.getAttribute("nextUrl") != null) {
-            String redireccion = (String)session.getAttribute("nextUrl");
-            EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
-            model.addAttribute("espai", espai);
-            session.removeAttribute("nextUrl");
-            return redireccion;
-        }
+
+        if (gestorMunicipal != null ) {
+            if (!gestorMunicipal.getPin().equals(user.getPassword())) {
+                bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                return "login";
+            }
+            session.setAttribute("user", user);
+            // Torna a la pàgina principal
+            if (session.getAttribute("nextUrl") != null) {
+                String redireccion = (String)session.getAttribute("nextUrl");
+                EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
+                model.addAttribute("espai", espai);
+                session.removeAttribute("nextUrl");
+                return redireccion;
+            }
+        }else
+            return "login";
+
         return "redirect:/";
     }
 
