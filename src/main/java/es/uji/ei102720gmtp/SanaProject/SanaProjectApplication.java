@@ -1,12 +1,15 @@
 package es.uji.ei102720gmtp.SanaProject;
 
 
+import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
+import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Logger;
 
 @SpringBootApplication

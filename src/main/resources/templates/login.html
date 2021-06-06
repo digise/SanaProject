@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
 
 </head>
-<body style="background-color:#6AF47B;">
+<body style="background-color:#6AF4F2;">
 <div class="modal-dialog text-center">
     <div class="col-sm-8 main-section">
         <div class="modal-content">
@@ -29,13 +29,15 @@
             <form class="col-12" th:action="@{/login}" th:object="${user}" method="post">
                 <div class="form-group" id="user-group">
                     <input type="text" class="form-control" placeholder="NIF" th:field="*{nif}"/>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></div>
                 </div>
                 <div class="form-group" id="contrasena-group">
                     <input type="password" class="form-control" placeholder="Contrasenya" th:field="*{password}"/>
+                    <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
             </form>
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
         </div>
     </div>
 </div>

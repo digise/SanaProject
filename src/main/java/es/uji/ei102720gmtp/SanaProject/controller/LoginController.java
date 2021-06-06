@@ -2,12 +2,14 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.GestorMunicipalDao;
 import es.uji.ei102720gmtp.SanaProject.dao.UserDao;
 import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 class UserValidator implements Validator {
     @Override
@@ -45,7 +48,7 @@ class UserValidator implements Validator {
 @Controller
 public class LoginController {
     @Autowired
-    private UserDao userDao;
+    private EspaiPublicDao espaiPublicDao;
     @Autowired
     private CiutadaDao ciutadaDao;
     @Autowired
@@ -59,8 +62,13 @@ public class LoginController {
         this.gestorMunicipalDao = gestorMunicipalDao;
     }
 
+    public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao) {
+        this.espaiPublicDao = espaiPublicDao;
+    }
+
     @RequestMapping("/login")
     public String login(Model model) {
+        System.out.println("asios");
         model.addAttribute("user", new UserDetails());
         return "login";
     }
@@ -75,27 +83,27 @@ public class LoginController {
         }
         // Comprova que el login siga correcte
         // intentant carregar les dades de l'usuari
+        for (Ciutada ciutada : ciutadaDao.getCiutadans()) {
+            if (ciutada.getNif().equals(user.getNif())) {
+                if (!ciutada.getPin().equals(user.getPassword())) {
+                    bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                    return "login";
+                }
+                session.setAttribute("user", user);
+                // Torna a la pàgina principal
+                System.out.println(session.getAttribute("nextUrl"));
+                System.out.println("hola");
+                if (session.getAttribute("nextUrl") != null) {
+                    String redireccion = (String) session.getAttribute("nextUrl");
+                    session.removeAttribute("nextUrl");
+                    return "redirect:" + redireccion;
+                }
+            }
+        }
 
-        Ciutada ciutada = ciutadaDao.getCiutada(user.getNif());
+
         GestorMunicipal gestorMunicipal = gestorMunicipalDao.getGestorMunicipal(user.getNif());
-        if (ciutada != null ) {
-            if (!ciutada.getPin().equals(user.getPassword())) {
-                bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
-                return "login";
-            }
-            session.setAttribute("user", user);
-            // Torna a la pàgina principal
-            if (session.getAttribute("nextUrl") != null) {
-                String redireccion = (String)session.getAttribute("nextUrl");
-                EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
-                model.addAttribute("espai", espai);
-                session.removeAttribute("nextUrl");
-                return redireccion;
-            }
-        }else
-            return "login";
-
-        if (gestorMunicipal != null ) {
+        if (gestorMunicipalDao.getGestorsMunicipals().contains(gestorMunicipal)) {
             if (!gestorMunicipal.getPin().equals(user.getPassword())) {
                 bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                 return "login";
@@ -103,15 +111,11 @@ public class LoginController {
             session.setAttribute("user", user);
             // Torna a la pàgina principal
             if (session.getAttribute("nextUrl") != null) {
-                String redireccion = (String)session.getAttribute("nextUrl");
-                EspaiPublic espai = (EspaiPublic) session.getAttribute("nextEspai");
-                model.addAttribute("espai", espai);
+                String redireccion = (String) session.getAttribute("nextUrl");
                 session.removeAttribute("nextUrl");
-                return redireccion;
+                return "redirect:" + redireccion;
             }
-        }else
-            return "login";
-
+        }
         return "redirect:/";
     }
 

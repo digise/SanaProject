@@ -4,6 +4,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
+import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
 import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,8 +147,17 @@ public class EspaiPublicController {
     }
 
     @RequestMapping("/seleccionarProvincia")
-    public String mostrarSeleccionarProvincia(){
-        return "/espaiPublic/seleccionarProvincia";
+    public String mostrarSeleccionarProvincia(HttpSession session, Model model){
+        String nextUrl = "espaiPublic/seleccionarProvincia";
+        if (session.getAttribute("user") == null)
+        {
+
+            model.addAttribute("user", new UserDetails());
+            session.setAttribute("nextUrl", nextUrl);
+            return "login";
+        }
+        session.setAttribute("nextUrl", nextUrl);
+        return "espaiPublic/seleccionarProvincia";
     }
 
 

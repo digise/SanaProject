@@ -18,14 +18,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color:#6AF47B;">
+<body style="background-color:#6AF4F2;">
 <div style="text-align: center" class="container">
-    <h1 class="my-4">Benvingut a l'aplicació SANA - <small class="text-muted">Accés segur a espais naturals</small></h1>
+    <h1 class="p-4">Benvingut a l'aplicació SANA - <small class="text-muted">Accés segur a espais naturals</small></h1>
     <img class="img-thumbnail" src="/imagenes/indexImg.png" alt="Card image cap">
-    <div class="row mt-3">
+    <div class="row p-4">
         <div class="col">
-            <a class="btn btn-primary" href="@{/espaiPublic/informacio/{id}(id=${espai.id})}">Informació Espais</a>
-            <a class="btn btn-primary" href="/login">Inciar Sessió</a>
+            <a class="btn btn-primary btn-lg" href="@{/espaiPublic/informacio/{id}(id=${espai.id})}">Informació Espais</a>
+            <a class="btn btn-primary btn-lg" href="/espaiPublic/seleccionarProvincia" >Inciar Sessió</a>
         </div>
     </div>
 
