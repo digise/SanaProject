@@ -14,8 +14,8 @@
         No hi ha controladors assignats en aquest espai
     </div>
     <div th:unless="${#lists.isEmpty(controladors)}">
-        <table class="table table-hover">
-            <thead>
+        <table class="table table-responsive table-hover">
+            <thead class="thead-success">
             <tr>
                 <th scope="col">Nif</th>
                 <th scope="col">Nom</th>
@@ -28,7 +28,6 @@
             </thead>
             <tbody>
                 <tr class="table-secondary" th:each="controlador: ${controladors}" >
-                    <th scope="row"></th>
                     <td th:text="${controlador.controlador.nif}"></td>
                     <td th:text="${controlador.controlador.nom}"></td>
                     <td th:text="${controlador.controlador.cognoms}"></td>
@@ -36,7 +35,6 @@
                     <td th:text="${controlador.controlador.email}"></td>
                     <td th:text="${controlador.controlador.telefon}"></td>
                     <td> <span th:text="${controlador.nomEspaiPublic}"></span>, <span th:text="${municipi.nom}"></span></td>
-
                     <td><a class="btn btn-primary" th:href="@{/controlador/update/{nifControlador}(nifControlador=${controlador.controlador.nif})}">Editar</a></td>
                     <td><a class="btn btn-primary" th:href="@{/controlador/delete/{nifControlador}(nifControlador=${controlador.controlador.nif})}">Borrar</a></td>
                 </tr>
