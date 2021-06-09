@@ -14,7 +14,7 @@ public class ControladorRowMapper implements RowMapper<Controlador>
         Controlador controlador = new Controlador();
         controlador.setNif(rs.getString("nif"));
         controlador.setNom(rs.getString("nom"));
-        controlador.setCognom(rs.getString("cognoms"));
+        controlador.setCognoms(rs.getString("cognoms"));
         controlador.setEspecialitat(rs.getString("especialitat"));
         controlador.setEmail(rs.getString("email"));
         controlador.setTelefon(rs.getString("telefon"));

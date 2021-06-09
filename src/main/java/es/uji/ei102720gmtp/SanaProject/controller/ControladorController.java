@@ -4,6 +4,8 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import es.uji.ei102720gmtp.SanaProject.dao.ControladorDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.Controlador;
+import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
+import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/controlador")
@@ -42,12 +46,14 @@ public class ControladorController  {
         model.addAttribute("controladors", controladorDao.getlistControladors());
         return "controlador/list";
     }
-    @RequestMapping("/controladorsMunicipi/{municipi}")
-    public String listControladorsMunicipi(Model model, @PathVariable int municipi){
-        model.addAttribute("controladors", controladorsPerMunicipiService.controladorsPerMunicipi(municipi));
-        String nomMunicipi = municipiDao.getMunicipi(municipi).getNom();
-        model.addAttribute("municipi", nomMunicipi);
-        return "controladorsMunicipi/municipi";
+    @RequestMapping("/controladorsPerMunicipi")
+    public String listControladorsMunicipi(Model model, HttpSession session){
+        GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
+        int idMunicipi = gestorMunicipal.getIdMunicipi();
+        model.addAttribute("controladors", controladorsPerMunicipiService.controladorsPerMunicipi(idMunicipi));
+        Municipi municipi = municipiDao.getMunicipi(idMunicipi);
+        model.addAttribute("municipi", municipi);
+        return "controlador/controladorsPerMunicipi";
     }
 
     @RequestMapping(value = "/add")

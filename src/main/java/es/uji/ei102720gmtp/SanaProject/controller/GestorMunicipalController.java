@@ -4,6 +4,7 @@ import es.uji.ei102720gmtp.SanaProject.dao.GestorMunicipalDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
+import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("gestorMunicipal")
@@ -71,11 +74,11 @@ public class GestorMunicipalController {
         return "redirect:../list";
     }
 
-    @RequestMapping(value= "/indexGestor")
-    public String mostrarIndexGestor(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, Model model){
-        int idMunicipi = gestorMunicipal.getIdMunicipi();
-        String nomMunicipi = municipiDao.getMunicipi(idMunicipi).getNom();
-        model.addAttribute("nomMunicipi", nomMunicipi);
+    @RequestMapping("/indexGestor")
+    public String mostrarIndexGestor(Model model, HttpSession session){
+        GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
+        Municipi municipi = municipiDao.getMunicipi(gestorMunicipal.getIdMunicipi());
+        model.addAttribute("municipi", municipi);
         return "gestorMunicipal/indexGestor";
     }
 }

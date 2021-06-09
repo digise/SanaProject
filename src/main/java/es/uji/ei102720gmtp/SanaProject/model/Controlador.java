@@ -5,7 +5,7 @@ public class Controlador
 {
     private String nif;
     private String nom;
-    private String cognom;
+    private String cognoms;
     private String especialitat;
     private String email;
     private String telefon;
@@ -29,12 +29,12 @@ public class Controlador
         this.nom = nom;
     }
 
-    public String getCognom() {
-        return cognom;
+    public String getCognoms() {
+        return cognoms;
     }
 
-    public void setCognom(String cognom) {
-        this.cognom = cognom;
+    public void setCognoms(String cognoms) {
+        this.cognoms = cognoms;
     }
 
     public String getEspecialitat() {
@@ -67,7 +67,7 @@ public class Controlador
         return "Controlador{" +
                 "nif='" + nif + '\'' +
                 ", nom='" + nom + '\'' +
-                ", cognom='" + cognom + '\'' +
+                ", cognom='" + cognoms + '\'' +
                 ", especialitat='" + especialitat + '\'' +
                 ", email='" + email + '\'' +
                 ", telefon='" + telefon + '\'' +

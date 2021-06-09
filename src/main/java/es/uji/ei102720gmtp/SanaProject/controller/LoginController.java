@@ -68,14 +68,13 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String login(Model model) {
-        System.out.println("asios");
         model.addAttribute("user", new UserDetails());
         return "login";
     }
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String checkLogin(@ModelAttribute("user") UserDetails user,
-                             BindingResult bindingResult, HttpSession session, Model model) {
+                             BindingResult bindingResult, HttpSession session) {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -90,9 +89,9 @@ public class LoginController {
                     return "login";
                 }
                 session.setAttribute("user", user);
+                session.setAttribute("ciutada", ciutada);
+                session.setAttribute("nextUrl", "/espaiPublic/seleccionarProvincia");
                 // Torna a la pàgina principal
-                System.out.println(session.getAttribute("nextUrl"));
-                System.out.println("hola");
                 if (session.getAttribute("nextUrl") != null) {
                     String redireccion = (String) session.getAttribute("nextUrl");
                     session.removeAttribute("nextUrl");
@@ -102,20 +101,22 @@ public class LoginController {
         }
 
 
-        GestorMunicipal gestorMunicipal = gestorMunicipalDao.getGestorMunicipal(user.getNif());
-        if (gestorMunicipalDao.getGestorsMunicipals().contains(gestorMunicipal)) {
-            if (!gestorMunicipal.getPin().equals(user.getPassword())) {
-                bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
-                return "login";
+        for (GestorMunicipal gestorMunicipal : gestorMunicipalDao.getGestorsMunicipals())
+            if (gestorMunicipal.getNif().equals(user.getNif())) {
+                if (!gestorMunicipal.getContrasenya().equals(user.getPassword())) {
+                    bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                    return "login";
+                }
+                session.setAttribute("user", user);
+                session.setAttribute("gestorMunicipal", gestorMunicipal);
+                session.setAttribute("nextUrl", "/gestorMunicipal/indexGestor");
+                // Torna a la pàgina principal
+                if (session.getAttribute("nextUrl") != null) {
+                    String redireccion = (String) session.getAttribute("nextUrl");
+                    session.removeAttribute("nextUrl");
+                    return "redirect:" + redireccion;
+                }
             }
-            session.setAttribute("user", user);
-            // Torna a la pàgina principal
-            if (session.getAttribute("nextUrl") != null) {
-                String redireccion = (String) session.getAttribute("nextUrl");
-                session.removeAttribute("nextUrl");
-                return "redirect:" + redireccion;
-            }
-        }
         return "redirect:/";
     }
 

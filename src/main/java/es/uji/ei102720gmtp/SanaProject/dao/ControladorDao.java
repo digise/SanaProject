@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class ControladorDao {
@@ -23,7 +22,7 @@ public class ControladorDao {
     /* Afegim el controlador */
     public void addControlador(Controlador controlador) {
         jdbcTemplate.update("INSERT INTO Controlador VALUES(?, ?, ?, ?, ?, ? )",
-                controlador.getNif(), controlador.getNom(), controlador.getCognom(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon());
+                controlador.getNif(), controlador.getNom(), controlador.getCognoms(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon());
     }
 
     /* Esborrem el controlador */
@@ -42,7 +41,7 @@ public class ControladorDao {
 
     public void updateControlador(Controlador controlador) {
         jdbcTemplate.update("UPDATE Controlador SET nom = ?, cognoms = ?, especialitat = ?, email = ?, telefon = ? WHERE nif=?",
-                controlador.getNom(), controlador.getCognom(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon(), controlador.getNif());
+                controlador.getNom(), controlador.getCognoms(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon(), controlador.getNif());
     }
 
     /* Obtenim el controlador amb el nif. Torna null si no existeix. */

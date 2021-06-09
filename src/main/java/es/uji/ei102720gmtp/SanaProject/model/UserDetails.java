@@ -4,6 +4,7 @@ public class UserDetails {
     String nif;
     String password;
 
+
     public String getNif() {
         return nif;
     }

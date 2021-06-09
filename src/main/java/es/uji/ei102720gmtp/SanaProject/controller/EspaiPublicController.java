@@ -97,12 +97,7 @@ public class EspaiPublicController {
         //Mirem si está loggeat ja
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
-        String nextUrl = "espaiPulic/elegirZona";
-        if (session.getAttribute("user") == null){
-            session.setAttribute("nextUrl", nextUrl);
-            session.setAttribute("nextEspai", espai);
-            return "redirect:/login";
-        }
+
 
 
         // Passar municipi i provincia
@@ -148,7 +143,7 @@ public class EspaiPublicController {
 
     @RequestMapping("/seleccionarProvincia")
     public String mostrarSeleccionarProvincia(HttpSession session, Model model){
-        String nextUrl = "espaiPublic/seleccionarProvincia";
+        /*String nextUrl = "espaiPublic/seleccionarProvincia";
         if (session.getAttribute("user") == null)
         {
 
@@ -156,7 +151,7 @@ public class EspaiPublicController {
             session.setAttribute("nextUrl", nextUrl);
             return "login";
         }
-        session.setAttribute("nextUrl", nextUrl);
+        session.setAttribute("nextUrl", nextUrl);*/
         return "espaiPublic/seleccionarProvincia";
     }
 

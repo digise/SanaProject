@@ -18,9 +18,16 @@
       <div class="d-flex">
         <ul class="navbar-nav me-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/imagenes/iconoSesion.png" width="40" height="40"></a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Cerrar sesión</a>
+            <div class="users">
+              <div class="container-username">
+                  <span th:if="*{user != null}">
+                      <span th:text="*{ciutada.nom}"></span> <span th:text="*{ciutada.cognoms}"></span>
+                  </span>
+              </div>
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="/imagenes/iconoSesion.png" width="40" height="40"></a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" th:href="@{/logout}">Tancar sesió</a>
+              </div>
             </div>
           </li>
         </ul>

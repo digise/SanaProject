@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/baseGestor}">
+      layout:decorate="~{fragments/base}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,37 +9,40 @@
 <body>
 
 <div layout:fragment="content">
-    <h1 class="my-3">Controladors de <span th:text="${municipi}"></span></h1>
-    <div th:if="${#lists.isEmpty(espais)}">
+    <h1 class="my-3">Controladors de <span th:text="${municipi.nom}"></span></h1>
+    <div th:if="${#lists.isEmpty(controladors)}">
         No hi ha controladors assignats en aquest espai
     </div>
-    <div th:unless="${#lists.isEmpty(controladors)}" class="row" th:each="controlador: ${controladors}" >
-        <div class="col">
-            <div class="card border-primary mb-3" style="max-width: 50rem;">
-                <div class="row no-gutters">
-                    <div class="col-6 m-3">
-                        <p><b>Nif: </b><span th:text="${controlador.controlador.nif}"></span></p>
-                        <p><b>Nom: </b><span th:text="${controlador.controlador.nom}"></span></p>
-                        <p><b>Cognoms: </b><span th:text="${controlador.controlador.cognoms}"></span></p>
-                        <p><b>Especialitat: </b><span th:text="${controlador.controlador.especialitat}"></span></p>
-                    </div>
-                    <div class="col-6 mt-3">
-                        <div class="card-body">
-                            <p><b>Email: </b><span th:text="${controlador.controlador.email}"></span></p>
-                            <p><b>Telefon: </b><span th:text="${controlador.controlador.telefon}"></span></p>
-                            <p><b>Localització: </b><span th:text="${controlador.controlador.nomEspaiPublic}"></span>, <span th:text="${controlador.controlador.nomMunicipi}"></span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/informacio/{id}(id=${espai.id})}">Elegir la zona</a>
-                </div>
-            </div>
-        </div>
-        <div class="w-100"></div>
+    <div th:unless="${#lists.isEmpty(controladors)}">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Nif</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Cognoms</th>
+                <th scope="col">Especialitat</th>
+                <th scope="col">Correu</th>
+                <th scope="col">Telèfon</th>
+                <th scope="col">Localització</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="table-secondary" th:each="controlador: ${controladors}" >
+                    <th scope="row"></th>
+                    <td th:text="${controlador.controlador.nif}"></td>
+                    <td th:text="${controlador.controlador.nom}"></td>
+                    <td th:text="${controlador.controlador.cognoms}"></td>
+                    <td th:text="${controlador.controlador.especialitat}"></td>
+                    <td th:text="${controlador.controlador.email}"></td>
+                    <td th:text="${controlador.controlador.telefon}"></td>
+                    <td> <span th:text="${controlador.nomEspaiPublic}"></span>, <span th:text="${municipi.nom}"></span></td>
+
+                    <td><a class="btn btn-primary" th:href="@{/controlador/update/{nifControlador}(nifControlador=${controlador.controlador.nif})}">Editar</a></td>
+                    <td><a class="btn btn-primary" th:href="@{/controlador/delete/{nifControlador}(nifControlador=${controlador.controlador.nif})}">Borrar</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-
 </div>
 </body>
 </html>

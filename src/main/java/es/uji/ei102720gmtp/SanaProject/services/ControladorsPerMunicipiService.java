@@ -18,9 +18,6 @@ public class ControladorsPerMunicipiService implements InterfaceControladorsPerM
     EspaiPublicDao espaiPublicDao;
 
     @Autowired
-    MunicipiDao municipiDao;
-
-    @Autowired
     ControlaDao controlaDao;
 
     @Autowired
@@ -29,7 +26,6 @@ public class ControladorsPerMunicipiService implements InterfaceControladorsPerM
     @Override
     public List<ControladorAmbEspaiPublic> controladorsPerMunicipi(int idMunicipi) {
         List<ControladorAmbEspaiPublic> res = new ArrayList<>();
-        String nomMunicipi = municipiDao.getMunicipi(idMunicipi).getNom();
         String nomEspai;
         ControladorAmbEspaiPublic controladorAmbEspaiPublic;
         Controlador controlador;
@@ -38,11 +34,12 @@ public class ControladorsPerMunicipiService implements InterfaceControladorsPerM
                 nomEspai = espaiPublic.getNom();
                for (Controla controla : controlaDao.getlistControlaPerEspai(espaiPublic.getId())){
                    controlador = controladorDao.getControlador(controla.getNifControlador());
-                   controladorAmbEspaiPublic = new ControladorAmbEspaiPublic(controlador, nomMunicipi, nomEspai);
+                   controladorAmbEspaiPublic = new ControladorAmbEspaiPublic(controlador, nomEspai);
                    res.add(controladorAmbEspaiPublic);
                }
             }
         }
+        System.out.println(res.toString());
         return res;
     }
 }

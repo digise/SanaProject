@@ -13,7 +13,6 @@ public final class GestorMunicipalRowMapper implements RowMapper<GestorMunicipal
     {
         GestorMunicipal gestorMunicipal = new GestorMunicipal();
         gestorMunicipal.setNif(rs.getString("nif"));
-        gestorMunicipal.setPin(rs.getString("pin"));
         gestorMunicipal.setIdMunicipi(rs.getInt("id_municipi"));
         gestorMunicipal.setNom(rs.getString("nom"));
         gestorMunicipal.setCognoms(rs.getString("cognoms"));

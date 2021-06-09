@@ -7,20 +7,30 @@
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/controlador/controladorsPerMunicipi" th:href="@{/controlador/controladorsPerMunicipi}">Menu treballadors
+                    <a class="nav-link active" href="/gestorMunicipal/indexGestor">Inici
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/reserva/reservesClient}">Menu espais</a>
+                    <a class="nav-link" th:href="@{/controlador/controladorsPerMunicipi}">Menu treballadors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reserva/reservesClient" th:href="@{/reserva/reservesClient}">Menu espais</a>
                 </li>
             </ul>
             <div class="d-flex">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/imagenes/iconoSesion.png" width="40" height="40"></a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Cerrar sesión</a>
+                        <div class="users">
+                            <div class="container-username">
+                                <span th:if="*{user != null}">
+                                    <span th:text="*{gestorMunicipal.nom}"></span> <span th:text="*{gestorMunicipal.cognoms}"></span>
+                                </span>
+                            </div>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="/imagenes/iconoSesion.png" width="40" height="40"></a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" th:href="@{/logout}">Tancar sesió</a>
+                            </div>
                         </div>
                     </li>
                 </ul>
