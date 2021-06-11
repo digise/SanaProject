@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EspaiPublicService implements InterfaceEspaiPublicService{
@@ -42,9 +44,13 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     }
 
     @Override
-    public List<Zona> getZonesDisponibles(int id, LocalDate dia, List<FranjaHoraria> franges) {
-        List<Zona> zonesByEspai = zonaDao.getZonesFromEspai(id);
-        return zonesByEspai;
+    public Map<Integer, List<Zona>> getZonesDisponibles(LocalDate dia, List<FranjaHoraria> franges, int idEspai) {
+        Map<Integer, List<Zona>> zonesDisponibles = new HashMap<>();
+        for (FranjaHoraria franja : franges){
+            List<Zona> zones = zonaDao.getZonesFromFranjaDia(idEspai, franja.getId(), dia);
+            zonesDisponibles.put(franja.getId(), zones);
+        }
+        return zonesDisponibles;
     }
 
     @Override

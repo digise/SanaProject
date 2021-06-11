@@ -81,12 +81,13 @@ public class ZonaDao {
         }
     }
 
-    public List<Zona> getZonesFromFranjaDia(int idFranja, LocalDate dia) {
+    public List<Zona> getZonesFromFranjaDia(int idEspai, int idFranja, LocalDate dia) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM Zona WHERE ",
+                    "SELECT * FROM Zona WHERE id_espai = ? AND id NOT IN ( " +
+                            "SELECT id_espai FROM Ocupa WHERE data_reserva = ? AND id_franja = ?)",
                     new ZonaRowMapper(),
-                    idFranja, dia);
+                    idEspai, dia, idFranja);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<Zona>();
         }
