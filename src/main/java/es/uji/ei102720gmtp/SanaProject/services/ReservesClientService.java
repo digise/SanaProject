@@ -32,6 +32,7 @@ public class ReservesClientService implements InterfaceReservesClientService{
         List<Reserva> reservesClients = reservaDao.getReservesClient(nifCiutada);
         List<String> objetoTablaReserva = new ArrayList<>();
         List<List<String>> res = new ArrayList<>();
+        /*
         for (Reserva reservaClient : reservesClients){
             reservaClient = reservaDao.getReserva(idReserva);
             Zona zona = zonaDao.getZona(reservaClient.getIdZona());
@@ -49,6 +50,7 @@ public class ReservesClientService implements InterfaceReservesClientService{
             res.add(objetoTablaReserva);
         }
 
+         */
         return res;
 
 

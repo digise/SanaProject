@@ -3,10 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
-import es.uji.ei102720gmtp.SanaProject.model.Reserva;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.services.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,6 +48,7 @@ public class ReservaController {
         return "reserva/list";
     }
 
+    /*
     @RequestMapping(value = "/add/{idZona}")
     public String addReserva(Model model, @PathVariable int idZona){
 
@@ -65,11 +63,15 @@ public class ReservaController {
         return "reserva/add";
     }
 
+     */
+
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("reserva") Reserva reserva, BindingResult bindingResult){
+    public String ferReserva(@ModelAttribute("reserva") ReservaDadesCompletes reserva, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "reserva/add";
-        reservaDao.addReserva(reserva);
+
+        // reservaDao.addReserva(reserva);
+        System.out.println(reserva);
         return "redirect:list";
     }
 

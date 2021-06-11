@@ -2,10 +2,8 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
-import es.uji.ei102720gmtp.SanaProject.model.Reserva;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.model.*;
+import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -107,30 +105,36 @@ public class EspaiPublicController {
 
         LocalDate diaDate = LocalDate.now().plus(2, ChronoUnit.DAYS);
         model.addAttribute("dia", diaDate);
-        LocalDate diaElegit = diaDate;
-        model.addAttribute("diaElegit", diaElegit);
 
         Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
         model.addAttribute("zones", zonesDisponibles);
 
-        Reserva reserva = new Reserva();
+        ElegirZonaBean dades = new ElegirZonaBean(espai.getId(), diaDate);
+        model.addAttribute("dades", dades);
+
+        ReservaDadesCompletes reserva = new ReservaDadesCompletes();
+        reserva.setIdEspai(espai.getId());
+        reserva.setEstat(EstatReserva.PENDENTUS);
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        reserva.setNifCiutada(ciutada.getNif());
+        reserva.setDataReserva(diaDate);
         model.addAttribute("reserva", reserva);
 
         return "/espaiPublic/elegirZona";
     }
 
-    @RequestMapping(value ="/elegirZona", method = RequestMethod.POST)
-    public String showEspaiPublicActualitzat(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult)
 
-    @RequestMapping(value = "/elegirZona/{id}/{diaString}")
-    public String showEspaiPublicActualitzat(Model model, @PathVariable int id, @PathVariable String diaString, HttpSession session) {
-        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+    @RequestMapping(value ="/elegirZona", method = RequestMethod.POST)
+    public String showEspaiPublicActualitzat(@ModelAttribute("dades") ElegirZonaBean dades, BindingResult bindingResult, Model model) {
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(dades.getIdEspai());
         model.addAttribute("espai", espai);
+
+        // Passar municipi i provincia
 
         List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
         model.addAttribute("franges", frangesHoraries);
 
-        LocalDate diaDate = LocalDate.parse(diaString);
+        LocalDate diaDate = dades.getDiaElegit();
         model.addAttribute("dia", diaDate);
 
         Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
@@ -139,30 +143,12 @@ public class EspaiPublicController {
         Reserva reserva = new Reserva();
         model.addAttribute("reserva", reserva);
 
-        System.out.println(diaDate.toString());
+        ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
+        model.addAttribute("dades", novesDades);
 
         return "/espaiPublic/elegirZona";
     }
 
-    /*
-    @RequestMapping(value = "/elegirZona/{idEspai}/{idZona}")
-    public String showEspaiPublic(Model model, @PathVariable int idEspai, @PathVariable int idZona) {
-        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
-        model.addAttribute("espai", espai);
-
-        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspaiDia(espai.getId(), );
-        model.addAttribute("zones", zonesEspai);
-
-        Zona zona = espaiPublicService.getZona(idZona);
-        model.addAttribute("zonaElegida", zona);
-
-        List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHoraries(idEspai);
-        model.addAttribute("franges", frangesZona);
-
-        model.addAttribute("zona", new Zona());
-        return "/espaiPublic/elegirZona";
-    }
-     */
 
     @RequestMapping(value = "/informacio", method = RequestMethod.POST)
     public String showEspaiPublic(@ModelAttribute("zona") Zona zona) {
