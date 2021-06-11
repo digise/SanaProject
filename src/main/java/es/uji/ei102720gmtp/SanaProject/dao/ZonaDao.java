@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,17 @@ public class ZonaDao {
                     "SELECT * FROM Zona WHERE id_espai = ?",
                     new ZonaRowMapper(),
                     idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Zona>();
+        }
+    }
+
+    public List<Zona> getZonesFromFranjaDia(int idFranja, LocalDate dia) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Zona WHERE ",
+                    new ZonaRowMapper(),
+                    idFranja, dia);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<Zona>();
         }

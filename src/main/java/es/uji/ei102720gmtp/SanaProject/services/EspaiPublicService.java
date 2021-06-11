@@ -11,6 +11,7 @@ import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +42,15 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     }
 
     @Override
-    public List<Zona> getZonesFromEspai(int id) {
+    public List<Zona> getZonesDisponibles(int id, LocalDate dia, List<FranjaHoraria> franges) {
         List<Zona> zonesByEspai = zonaDao.getZonesFromEspai(id);
         return zonesByEspai;
     }
 
     @Override
-    public List<FranjaHoraria> getFrangesHorariesDisponibles(int idEspai, int idZona) {
-        List<FranjaHoraria> frangesHoraries;
-        return null;
+    public List<FranjaHoraria> getFrangesHoraries(int idEspai) {
+        List<FranjaHoraria> frangesHoraries = franjaHorariaDao.getFranjasEspai(idEspai);
+        return frangesHoraries;
     }
 
     @Override

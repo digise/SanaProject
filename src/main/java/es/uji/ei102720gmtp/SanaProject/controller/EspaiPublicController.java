@@ -4,11 +4,9 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
-import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
 import es.uji.ei102720gmtp.SanaProject.model.Zona;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -94,47 +94,60 @@ public class EspaiPublicController {
 
     @RequestMapping(value = "/elegirZona/{id}")
     public String showEspaiPublic(Model model, @PathVariable int id, HttpSession session) {
-        //Mirem si está loggeat ja
+        //@todo Mirem si está loggeat ja
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
 
-
-
         // Passar municipi i provincia
 
-        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspai(espai.getId());
+        List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
+        model.addAttribute("franges", frangesHoraries);
+
+        LocalDate dia = LocalDate.now().plus(2, ChronoUnit.DAYS);
+        model.addAttribute("dia", dia);
+
+        List<Zona> zonesEspai = espaiPublicService.getZonesDisponibles(espai.getId(), dia, frangesHoraries);
         model.addAttribute("zones", zonesEspai);
-
-        if ( !zonesEspai.isEmpty() ) {
-            Zona zonaPrimera = zonesEspai.get(0);
-            model.addAttribute("zonaElegida", zonaPrimera);
-
-            List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHorariesDisponibles(id, zonaPrimera.getId());
-            model.addAttribute("franges", frangesZona);
-        }
-
-        model.addAttribute("zona", new Zona());
 
         return "/espaiPublic/elegirZona";
     }
 
+    @RequestMapping(value = "/elegirZona/{id}/{dia}")
+    public String showEspaiPublicActualitzat(Model model, @PathVariable int id, @PathVariable String dia, HttpSession session) {
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
+
+        List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
+        model.addAttribute("franges", frangesHoraries);
+
+        LocalDate diaDate = LocalDate.parse(dia);
+        model.addAttribute("dia", diaDate);
+
+        List<Zona> zonesEspai = espaiPublicService.getZonesDisponibles(espai.getId(), diaDate, frangesHoraries);
+        model.addAttribute("zones", zonesEspai);
+
+        return "/espaiPublic/elegirZona";
+    }
+
+    /*
     @RequestMapping(value = "/elegirZona/{idEspai}/{idZona}")
     public String showEspaiPublic(Model model, @PathVariable int idEspai, @PathVariable int idZona) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
         model.addAttribute("espai", espai);
 
-        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspai(espai.getId());
+        List<Zona> zonesEspai = espaiPublicService.getZonesFromEspaiDia(espai.getId(), );
         model.addAttribute("zones", zonesEspai);
 
         Zona zona = espaiPublicService.getZona(idZona);
         model.addAttribute("zonaElegida", zona);
 
-        List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHorariesDisponibles(idEspai, idZona);
+        List<FranjaHoraria> frangesZona = espaiPublicService.getFrangesHoraries(idEspai);
         model.addAttribute("franges", frangesZona);
 
         model.addAttribute("zona", new Zona());
         return "/espaiPublic/elegirZona";
     }
+     */
 
     @RequestMapping(value = "/informacio", method = RequestMethod.POST)
     public String showEspaiPublic(@ModelAttribute("zona") Zona zona) {
