@@ -21,8 +21,8 @@ public class ControladorDao {
 
     /* Afegim el controlador */
     public void addControlador(Controlador controlador) {
-        jdbcTemplate.update("INSERT INTO Controlador VALUES(?, ?, ?, ?, ?, ? )",
-                controlador.getNif(), controlador.getNom(), controlador.getCognoms(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon());
+        jdbcTemplate.update("INSERT INTO Controlador VALUES(?, ?, ?, ?, ?, ?)",
+                controlador.getNif(), controlador.getNom(), controlador.getCognoms(), controlador.getEmail(), controlador.getTelefon(), controlador.getContrasenya());
     }
 
     /* Esborrem el controlador */
@@ -40,8 +40,8 @@ public class ControladorDao {
     //Actualitzem els atributs del controlador
 
     public void updateControlador(Controlador controlador) {
-        jdbcTemplate.update("UPDATE Controlador SET nom = ?, cognoms = ?, especialitat = ?, email = ?, telefon = ? WHERE nif=?",
-                controlador.getNom(), controlador.getCognoms(), controlador.getEspecialitat(), controlador.getEmail(), controlador.getTelefon(), controlador.getNif());
+        jdbcTemplate.update("UPDATE Controlador SET nom = ?, cognoms = ?, email = ?, telefon = ?, contrasenya = ? WHERE nif=?",
+                controlador.getNom(), controlador.getCognoms(), controlador.getEmail(), controlador.getTelefon(), controlador.getContrasenya(), controlador.getNif());
     }
 
     /* Obtenim el controlador amb el nif. Torna null si no existeix. */

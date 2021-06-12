@@ -39,7 +39,38 @@ public class ControladorsPerMunicipiService implements InterfaceControladorsPerM
                }
             }
         }
-        System.out.println(res.toString());
+        return res;
+    }
+
+    @Override
+    public ControladorAmbEspaiPublic getControladorService(String nifControlador, int idMunicipi){
+        List<ControladorAmbEspaiPublic> list = controladorsPerMunicipi(idMunicipi);
+        for (ControladorAmbEspaiPublic controladorAmbEspaiPublic : list){
+            System.out.println(controladorAmbEspaiPublic.toString());
+            if (controladorAmbEspaiPublic.getControlador().getNif().equals(nifControlador))
+                return controladorAmbEspaiPublic;
+        }
+        return null;
+    }
+
+    @Override
+    public EspaiPublic getEspaiPublicDelControlador(int idMunicipi){
+        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()) {
+            if (espaiPublic.getIdMunicipi() == idMunicipi) {
+                return espaiPublic;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<EspaiPublic> getEspaisPublicsPerMunicipi(int idMunicipi){
+        List<EspaiPublic> res = new ArrayList<>();
+        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()){
+            if (espaiPublic.getIdMunicipi() == idMunicipi)
+                res.add(espaiPublic);
+
+        }
         return res;
     }
 }

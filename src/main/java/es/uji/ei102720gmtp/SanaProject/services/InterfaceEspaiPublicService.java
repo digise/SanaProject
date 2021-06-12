@@ -13,4 +13,5 @@ public interface InterfaceEspaiPublicService {
     public Map<Integer, List<Zona>> getZonesDisponibles(LocalDate dia, List<FranjaHoraria> franges, int idEspai);
     public List<FranjaHoraria> getFrangesHoraries(int idEspai);
     public Zona getZona(int idZona);
+    public List<EspaiPublic> getEspaisPublicsPerMunicipi(int idMunicipi);
 }

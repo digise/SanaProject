@@ -2,6 +2,8 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
+import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class EspaiPublicController {
     private EspaiPublicDao espaiPublicDao;
     private EspaiPublicService espaiPublicService;
+    private MunicipiDao municipiDao;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -35,6 +38,14 @@ public class EspaiPublicController {
     public void setEspaiPublicService(EspaiPublicService espaiPublicService){
         this.espaiPublicService = espaiPublicService;
     }
+
+    @Autowired
+    public void setMunicipiDao(MunicipiDao municipiDao) {
+        this.municipiDao = municipiDao;
+    }
+
+
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -49,6 +60,15 @@ public class EspaiPublicController {
 
         model.addAttribute("provincia", provincia);
         return "espaiPublic/espaisprovincia";
+    }
+
+    @RequestMapping("espaisPerMunicipi")
+    public String listEspaiPublicsPerMunicipi(Model model, HttpSession session){
+        GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
+        int idMunicipi = gestorMunicipal.getIdMunicipi();
+        model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerMunicipi(idMunicipi));
+        model.addAttribute("municipi", municipiDao.getMunicipi(idMunicipi));
+        return "espaiPublic/espaisPerMunicipi";
     }
 
     @RequestMapping(value = "/add")
@@ -94,9 +114,11 @@ public class EspaiPublicController {
 
     @RequestMapping(value = "/elegirZona/{id}")
     public String showEspaiPublic(Model model, @PathVariable int id, HttpSession session) {
-        //@todo Mirem si está loggeat ja
+        //Mirem si está loggeat ja
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
+
+
 
         // Passar municipi i provincia
 
@@ -153,7 +175,6 @@ public class EspaiPublicController {
 
         return "/espaiPublic/elegirZona";
     }
-
 
     @RequestMapping(value = "/informacio", method = RequestMethod.POST)
     public String showEspaiPublic(@ModelAttribute("zona") Zona zona) {

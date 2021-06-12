@@ -44,6 +44,16 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     }
 
     @Override
+    public List<EspaiPublic> getEspaisPublicsPerMunicipi(int idMunicipi){
+        List<EspaiPublic> espaisPublicsPerMunicipi = new ArrayList<>();
+        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()){
+            if (espaiPublic.getIdMunicipi() == idMunicipi)
+                espaisPublicsPerMunicipi.add(espaiPublic);
+        }
+        return espaisPublicsPerMunicipi;
+    }
+
+    @Override
     public Map<Integer, List<Zona>> getZonesDisponibles(LocalDate dia, List<FranjaHoraria> franges, int idEspai) {
         Map<Integer, List<Zona>> zonesDisponibles = new HashMap<>();
         for (FranjaHoraria franja : franges){
