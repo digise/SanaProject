@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -28,7 +27,6 @@ public class ControladorController  {
     private MunicipiDao municipiDao;
     private EspaiPublicDao espaiPublicDao;
     private MunicipisPerControladorService municipisPerControladorService;
-    private EspaiPublicService espaiPublicService;
     private ReservesEspaiService reservesEspaiService;
 
     @Autowired
@@ -57,15 +55,9 @@ public class ControladorController  {
     }
 
     @Autowired
-    public void setEspaiPublicService(EspaiPublicService espaiPublicService){
-        this.espaiPublicService = espaiPublicService;
-    }
-
-    @Autowired
     public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
         this.reservesEspaiService = reservesEspaiService;
     }
-
 
     //Operacions: Crear, llistar, actualitzar, esborrar
 
