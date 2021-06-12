@@ -23,7 +23,7 @@ public class ReservaDao {
     /* Afegim la reserva */
     public void addReserva(Reserva reserva) {
         jdbcTemplate.update("INSERT INTO Reserva (codi_qr, nombre_persones, estat, nif_ciutada) VALUES(?, ?, CAST(? AS estat_reserva), ?)",
-                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getEstat(), reserva.getNifCiutada());
+                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getEstat().name(), reserva.getNifCiutada());
     }
 
     /* Esborrem la reserva */
@@ -52,6 +52,18 @@ public class ReservaDao {
                     "SELECT * FROM reserva WHERE id = ?",
                     new ReservaRowMapper(),
                     idReserva);
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public Reserva getReservaFromQR(String codiQR) {
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM reserva WHERE codi_qr = ?",
+                    new ReservaRowMapper(),
+                    codiQR);
         }
         catch(EmptyResultDataAccessException e) {
             return null;

@@ -83,16 +83,16 @@
                                     th:text="${'Zones disponibles de ' + franja.getHoraInici() + ' a ' + franja.getHoraFinal()}"></h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="#" th:action="@{/reserva/add}"
+                            <form th:action="@{/reserva/add}"
                                   th:object="${reserva}" method="post">
-                            <div class="modal-body">
+                            <div class="modal-body" th:if="${!zones.get(franja.getId()).isEmpty()}">
                                 <div class="row justify-content-center pb-2">
                                     <div class="col-auto pb-5">
                                         <input type="hidden" id="idEspai" name="idEspai" th:field="*{idEspai}">
                                         <input type="hidden" id="estat" name="estat" th:field="*{estat}">
                                         <input type="hidden" id="nif" name="nif" th:field="*{nifCiutada}">
                                         <input type="hidden" id="dataReserva" name="dataReserva" th:field="*{dataReserva}">
-                                        <input type="hidden" id="idFranja" name="idFranja" th:field="*{idFranja}" th:value="${franja.getId()}">
+                                        <!--<input type="radio" id="franja2" th:field="*{idFranja}" th:value="${franja.getId()}">-->
                                         <div row justify-content-center pb-2>
                                             <p>Elegeix la zona: </p>
                                             <select class="form_control" th:field="*{idZona}">
@@ -103,16 +103,27 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-auto pt-5">
+                                    <div class="col-auto pt-5 pb-5">
                                         <p>Indica el nombre de persones: </p>
                                         <input type="number" id="persones" name="persones" th:field="*{nombrePersones}">
+                                        <p th:each="err : ${#fields.errors('nombrePersones')}" th:text="${err}" class="error">
+                                    </div>
+                                    <div class="col-auto pt-5">
+                                        <input type="checkbox" th:name="${'Franja' + franja.getId()}" id="franja1" checked th:field="*{idFranja}" th:value="${franja.getId()}" required>
+                                        <label th:for="${'Franja' + franja.getId()}">Acepta respetar les instalacions publiques de l'espai</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                                <div class="modal-body" th:if="${zones.get(franja.getId()).isEmpty()}">
+                                    <h5><u>No hi ha zones disponibles</u></h5>
+                                </div>
+                            <div class="modal-footer" th:if="${!zones.get(franja.getId()).isEmpty()}">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <input class="btn btn-primary" type="submit" value="Reservar">
                             </div>
+                                <div class="modal-footer" th:if="${zones.get(franja.getId()).isEmpty()}">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </form>
                         </div>
                     </div>

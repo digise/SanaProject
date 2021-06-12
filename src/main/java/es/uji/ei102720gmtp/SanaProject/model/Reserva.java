@@ -1,5 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
+import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -70,4 +71,5 @@ public class Reserva {
                 ", nifCiutada='" + nifCiutada + '\'' +
                 '}';
     }
+
 }

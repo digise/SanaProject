@@ -125,7 +125,7 @@ public class EspaiPublicController {
 
 
     @RequestMapping(value ="/elegirZona", method = RequestMethod.POST)
-    public String showEspaiPublicActualitzat(@ModelAttribute("dades") ElegirZonaBean dades, BindingResult bindingResult, Model model) {
+    public String showEspaiPublicActualitzat(@ModelAttribute("dades") ElegirZonaBean dades, BindingResult bindingResult, Model model, HttpSession session) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(dades.getIdEspai());
         model.addAttribute("espai", espai);
 
@@ -140,7 +140,12 @@ public class EspaiPublicController {
         Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
         model.addAttribute("zones", zonesDisponibles);
 
-        Reserva reserva = new Reserva();
+        ReservaDadesCompletes reserva = new ReservaDadesCompletes();
+        reserva.setIdEspai(espai.getId());
+        reserva.setEstat(EstatReserva.PENDENTUS);
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        reserva.setNifCiutada(ciutada.getNif());
+        reserva.setDataReserva(diaDate);
         model.addAttribute("reserva", reserva);
 
         ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
