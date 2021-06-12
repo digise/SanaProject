@@ -63,4 +63,15 @@ public class OcupaDao {
             return new ArrayList<Ocupa>();
         }
     }
+
+    public List<Ocupa> getListaOcupaZona(int idZona){
+        try{
+            return jdbcTemplate.query(
+                    "SELECT * FROM Ocupa WHERE id_zona=?",
+                    new OcupaRowMapper(), idZona
+            );
+        }catch (EmptyResultDataAccessException e){
+            return new ArrayList<Ocupa>();
+        }
+    }
 }

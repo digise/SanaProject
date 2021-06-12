@@ -75,6 +75,16 @@ public class ControlaDao {
         }
     }
 
+    public ArrayList<Controla> getListControlaPerControlador(String nifControlador){
+        try{
+            return (ArrayList<Controla>) jdbcTemplate.query(
+                    "SELECT * FROM Controla WHERE nif_controlador=?",
+                    new ControlaRowMapper(), nifControlador
+            );
+        }catch (EmptyResultDataAccessException e){
+            return new ArrayList<Controla>();
+        }
+    }
 
 }
 

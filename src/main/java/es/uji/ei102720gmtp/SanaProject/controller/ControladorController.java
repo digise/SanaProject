@@ -5,12 +5,8 @@ import es.uji.ei102720gmtp.SanaProject.Validation.ControladorsAmbEspaiPublicVali
 import es.uji.ei102720gmtp.SanaProject.dao.ControladorDao;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
-import es.uji.ei102720gmtp.SanaProject.model.Controlador;
-import es.uji.ei102720gmtp.SanaProject.model.ControladorAmbEspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
-import es.uji.ei102720gmtp.SanaProject.model.Municipi;
-import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
-import es.uji.ei102720gmtp.SanaProject.services.InterfaceControladorsPerMunicipiService;
+import es.uji.ei102720gmtp.SanaProject.model.*;
+import es.uji.ei102720gmtp.SanaProject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +27,9 @@ public class ControladorController  {
     private InterfaceControladorsPerMunicipiService controladorsPerMunicipiService;
     private MunicipiDao municipiDao;
     private EspaiPublicDao espaiPublicDao;
+    private MunicipisPerControladorService municipisPerControladorService;
+    private EspaiPublicService espaiPublicService;
+    private ReservesEspaiService reservesEspaiService;
 
     @Autowired
     public void setControladorDao(ControladorDao controladorDao){
@@ -50,6 +49,21 @@ public class ControladorController  {
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao) {
         this.espaiPublicDao = espaiPublicDao;
+    }
+
+    @Autowired
+    public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
+        this.municipisPerControladorService = municipisPerControladorService;
+    }
+
+    @Autowired
+    public void setEspaiPublicService(EspaiPublicService espaiPublicService){
+        this.espaiPublicService = espaiPublicService;
+    }
+
+    @Autowired
+    public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
+        this.reservesEspaiService = reservesEspaiService;
     }
 
 
@@ -118,5 +132,22 @@ public class ControladorController  {
         int idMunicipi = gestorMunicipal.getIdMunicipi();
         controladorDao.deleteControlador(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
         return "redirect:../list";
+    }
+
+    @RequestMapping("/indexControlador")
+    public String mostrarIndexControlador(Model model, HttpSession session){
+        Controlador controlador = (Controlador) session.getAttribute("controlador");
+        List<EspaiPublic> espaisControlador = municipisPerControladorService.municipisPerControlador(controlador.getNif());
+        model.addAttribute("espaisControlador", espaisControlador);
+        return "controlador/indexControlador";
+    }
+
+    @RequestMapping("/reservesEspai/{idEspai}")
+    public String mostrarReservasEsapi(Model model, @PathVariable int idEspai){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
+        model.addAttribute("espai", espai);
+        List<Reserva> reservesEspai = reservesEspaiService.reservesPerEspai(espai.getId());
+        model.addAttribute("reserves", reservesEspai);
+        return "reserva/list";
     }
 }
