@@ -13,4 +13,5 @@ public interface InterfaceEspaiPublicService {
     public List<Zona> getZonesFromEspai(int id);
     public List<FranjaHoraria> getFrangesHorariesDisponibles(int idEspai, int idZona);
     public Zona getZona(int idZona);
+    public List<EspaiPublic> getEspaisPublicsPerMunicipi(int idMunicipi);
 }

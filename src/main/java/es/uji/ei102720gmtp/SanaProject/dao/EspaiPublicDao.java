@@ -45,6 +45,12 @@ public class EspaiPublicDao
                 espaiPublic.getDescripcio(), espaiPublic.getId());
     }
 
+    public void updateNomEspaiPublic(String nom, EspaiPublic espaiPublic){
+        jdbcTemplate.update("UPDATE espaiPublic SET nom = ? WHERE id = ?",
+                nom, espaiPublic.getId());
+
+    }
+
     /* Obtenim el espai amb el id. Torna null si no existeix. */
     public EspaiPublic getEspaiPublic(int idEspai) {
         try {

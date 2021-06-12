@@ -2,13 +2,10 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
-import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +22,7 @@ import java.util.List;
 public class EspaiPublicController {
     private EspaiPublicDao espaiPublicDao;
     private EspaiPublicService espaiPublicService;
+    private MunicipiDao municipiDao;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -35,6 +33,14 @@ public class EspaiPublicController {
     public void setEspaiPublicService(EspaiPublicService espaiPublicService){
         this.espaiPublicService = espaiPublicService;
     }
+
+    @Autowired
+    public void setMunicipiDao(MunicipiDao municipiDao) {
+        this.municipiDao = municipiDao;
+    }
+
+
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -49,6 +55,15 @@ public class EspaiPublicController {
 
         model.addAttribute("provincia", provincia);
         return "espaiPublic/espaisprovincia";
+    }
+
+    @RequestMapping("espaisPerMunicipi")
+    public String listEspaiPublicsPerMunicipi(Model model, HttpSession session){
+        GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
+        int idMunicipi = gestorMunicipal.getIdMunicipi();
+        model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerMunicipi(idMunicipi));
+        model.addAttribute("municipi", municipiDao.getMunicipi(idMunicipi));
+        return "espaiPublic/espaisPerMunicipi";
     }
 
     @RequestMapping(value = "/add")
