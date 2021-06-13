@@ -10,7 +10,15 @@
 <body>
 
 <div layout:fragment="content">
-    <h1 class="my-3">Reserves del espai <span th:text="${espai.nom}"></span></h1>
+    <div class="row">
+        <div class="col-2">
+            <a type="button" class="btn btn-danger" th:href="@{/responsable/indexResponsable}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="col-7">
+            <h1 class="my-3">Reserves del espai <span th:text="${espai.nom}"></span></h1>
+        </div>
+    </div>
+
     <div th:if="${#lists.isEmpty(reserves)}">
         No hi ha reserves en aquest espai
     </div>
@@ -42,7 +50,6 @@
             </tbody>
         </table>
     </div>
-    <a class="btn btn-success" type="submit" th:href="@{/controlador/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir controlador</a>
 </div>
 
 </body>
