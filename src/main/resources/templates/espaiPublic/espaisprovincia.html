@@ -9,6 +9,7 @@
 <body>
 
 <div layout:fragment="content">
+    <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/seleccionarProvincia}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     <h1 class="my-3">Espais públics de <span th:text="${provincia}"></span></h1>
     <div th:if="${#lists.isEmpty(espais)}">
         No hi ha espais públics en la base de dades

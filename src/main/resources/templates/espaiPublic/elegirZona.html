@@ -7,16 +7,23 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    <div class="row">
+        <div class="col-2">
+            <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/espaisprovincia/{provincia}(provincia=${municipi.provincia.getDescripcion()})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="col-7">
+            <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+        </div>
+    </div>
     <div class="row justify-content-md-center">
         <div class="col-lg-5 m-4">
             <img class="card-img" th:src="${espai.imagen}" alt="Card image">
         </div>
         <div class="col-lg-4 m-4 align-self-center">
-            <p><b>Provincia: </b><span>Indeterminat</span></p>
-            <p><b>Municipi: </b><span>Indeterminat</span></p>
+            <p><b>Provincia: </b><span th:text="${municipi.provincia.getDescripcion()}"></span></p>
+            <p><b>Municipi: </b><span th:text="${municipi.nom}"></span></p>
             <p><b>Tipus: </b><span th:text="${espai.tipus}"></span></p>
-            <p><b>Terreny: </b><span th:text="${espai.terreny}"></span></p>
+            <p><b>Terreny: </b><span th:text="${espai.tipusTerreny.getDescripcion()}"></span></p>
             <p><b>Longitut (en metres):</b>
                 <span th:if="${espai.longitud == 0}">Indeterminat</span>
                 <span th:unless="${espai.longitud == 0}" th:text="${espai.longitud}"></span>
@@ -32,7 +39,7 @@
         <div class="col-sm-auto">
             <h2 class="my-2 text-center">Tipus d'acces:</h2>
         </div>
-        <div class="col-sm-auto my-1 text-center" th:switch="${espai.tipusAcces.toString()}">
+        <div class="col-sm-auto my-1 text-center" th:switch="${espai.tipusAcces.getDescripcion()}">
             <h2 th:case="'Obert'"><span class="badge-sana badge-obert">Obert</span></h2>
             <h2 th:case="'Restringit'"><span class="badge-sana badge-restringit">Restringit</span></h2>
             <h2 th:case="'Tancat'"><span class="badge-sana badge-tancat">Tancat</span></h2>
@@ -41,7 +48,7 @@
 
 
     <!-- Elecció per a la reserva-->
-    <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
+    <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.getDescripcion() == 'Restringit'}">
         <div th:if="${!franges.isEmpty()}">
             <div class="row justify-content-center pb-2">
                 <div class="col-auto">
@@ -71,10 +78,10 @@
                 </div>
             </div>
             <div th:each="franja : ${franges}" class="row justify-content-center text-center m-1">
-                <span><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#zonesModal"
-                         th:text="${franja.getHoraInici() + ' - ' + franja.getHoraFinal()}"></button></span>
+                <span><a class="btn btn-primary" th:text="${franja.getHoraInici() + ' - ' + franja.getHoraFinal()}"
+                         th:href="@{/reserva/add/{idEspai}/{idFranja}/{data}(idFranja=${franja.id}, idEspai=${espai.id}, data=${dia.toString()})}"></a></span>
 
-                <!-- Modal -->
+                <!-- Modal
                 <div class="modal fade" id="zonesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -92,7 +99,6 @@
                                         <input type="hidden" id="estat" name="estat" th:field="*{estat}">
                                         <input type="hidden" id="nif" name="nif" th:field="*{nifCiutada}">
                                         <input type="hidden" id="dataReserva" name="dataReserva" th:field="*{dataReserva}">
-                                        <!--<input type="radio" id="franja2" th:field="*{idFranja}" th:value="${franja.getId()}">-->
                                         <div row justify-content-center pb-2>
                                             <p>Elegeix la zona: </p>
                                             <select class="form_control" th:field="*{idZona}">
@@ -127,7 +133,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
 
