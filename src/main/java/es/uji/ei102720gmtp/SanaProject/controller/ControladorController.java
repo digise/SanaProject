@@ -32,7 +32,7 @@ public class ControladorController  {
     private MunicipiDao municipiDao;
     private EspaiPublicDao espaiPublicDao;
     private MunicipisPerControladorService municipisPerControladorService;
-    private ReservesEspaiService reservesEspaiService;
+
 
     @Autowired
     public void setControladorDao(ControladorDao controladorDao){
@@ -57,11 +57,6 @@ public class ControladorController  {
     @Autowired
     public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
         this.municipisPerControladorService = municipisPerControladorService;
-    }
-
-    @Autowired
-    public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
-        this.reservesEspaiService = reservesEspaiService;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -138,12 +133,4 @@ public class ControladorController  {
         return "controlador/indexControlador";
     }
 
-    @RequestMapping("/reservesEspai/{idEspai}")
-    public String mostrarReservasEsapi(Model model, @PathVariable int idEspai){
-        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
-        model.addAttribute("espai", espai);
-        List<Reserva> reservesEspai = reservesEspaiService.reservesPerEspai(espai.getId());
-        model.addAttribute("reserves", reservesEspai);
-        return "reserva/list";
-    }
 }

@@ -1,17 +1,13 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
-import com.google.zxing.*;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import es.uji.ei102720gmtp.SanaProject.Validation.ReservaValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
-import es.uji.ei102720gmtp.SanaProject.services.ReservaService;
-import es.uji.ei102720gmtp.SanaProject.services.ReservesEspaiService;
+import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +37,7 @@ public class ReservaController {
     private OcupaDao ocupaDao;
     private ZonaDao zonaDao;
     private FranjaHorariaDao franjaHorariaDao;
-    private ReservesEspaiService reservesEspaiService;
+    private InterfaceReservesService reservesService;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -66,6 +60,11 @@ public class ReservaController {
     }
 
     @Autowired
+    public void setReservesService(InterfaceReservesService reservesService) {
+        this.reservesService = reservesService;
+    }
+
+    @Autowired
     public void setOcupaDao(OcupaDao ocupaDao) {
         this.ocupaDao = ocupaDao;
     }
@@ -73,11 +72,6 @@ public class ReservaController {
     @Autowired
     public void setFranjaHorariaDao(FranjaHorariaDao franjaHorariaDao) {
         this.franjaHorariaDao = franjaHorariaDao;
-    }
-
-    @Autowired
-    public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
-        this.reservesEspaiService = reservesEspaiService;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -88,11 +82,10 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping("/mostrarReserves/{id}")
+    @RequestMapping(value = "/mostrarReserves/{id}", method = RequestMethod.GET)
     public String mostrarReserves(Model model, @PathVariable int id){
-        model.addAttribute("reserves", reservaDao.getReserves());
-        reservesEspaiService.reservesPerEspai(id);
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+        model.addAttribute("reserves", reservesService.reservesPerEspai(id));
         return "reserva/mostrarReserves";
     }
 

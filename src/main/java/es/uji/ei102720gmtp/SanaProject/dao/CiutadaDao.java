@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class CiutadaDao {
@@ -23,7 +22,7 @@ public class CiutadaDao {
     /* Afegim el ciutada */
     public void addCiutada(Ciutada ciutada) {
         jdbcTemplate.update("INSERT INTO Ciutada VALUES(?, ?, ?, ?, ?, ? ,? ,?, ?)",
-                ciutada.getNif(), ciutada.getNom(), ciutada.getCognoms(), ciutada.getTelefon(), ciutada.getEmail(), ciutada.getDomicili(), ciutada.getLocalitat(), ciutada.getPais(), ciutada.getPin());
+                ciutada.getNif(), ciutada.getNom(), ciutada.getCognoms(), ciutada.getTelefon(), ciutada.getEmail(), ciutada.getDomicili(), ciutada.getLocalitat(), ciutada.getPais(), ciutada.getContrasenya());
     }
 
     /* Esborrem el ciutada */
@@ -42,7 +41,7 @@ public class CiutadaDao {
        (excepte el nom, que és la clau primària) */
     public void updateReserva(Ciutada ciutada) {
         jdbcTemplate.update("UPDATE Ciutada SET nom = ?, cognoms = ?, telefon = ?, email = ?, domicili = ?, localitat = ?, pais = ?, pin = ? WHERE nif = ?",
-                ciutada.getNom(), ciutada.getCognoms(), ciutada.getTelefon(), ciutada.getEmail(), ciutada.getDomicili(), ciutada.getLocalitat(), ciutada.getPais(), ciutada.getPin(), ciutada.getNif());
+                ciutada.getNom(), ciutada.getCognoms(), ciutada.getTelefon(), ciutada.getEmail(), ciutada.getDomicili(), ciutada.getLocalitat(), ciutada.getPais(), ciutada.getContrasenya(), ciutada.getNif());
     }
 
     /* Obtenim el ciutada amb el nif. Torna null si no existeix. */

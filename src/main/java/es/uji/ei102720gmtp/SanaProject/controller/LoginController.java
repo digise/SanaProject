@@ -3,7 +3,6 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
-import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 class UserValidator implements Validator {
     @Override
@@ -33,7 +31,7 @@ class UserValidator implements Validator {
                     "Cal introduir un valor");
 
         if (userDetails.getPassword().trim().equals(""))
-            errors.rejectValue("password", "eobligatori" ,
+            errors.rejectValue("password", "obligatori" ,
                     "Cal introduir un valor");
 
     }
@@ -90,7 +88,7 @@ public class LoginController {
         // intentant carregar les dades de l'usuari
         for (Ciutada ciutada : ciutadaDao.getCiutadans()) {
             if (ciutada.getNif().equals(user.getNif())) {
-                if (!ciutada.getPin().equals(user.getPassword())) {
+                if (!ciutada.getContrasenya().equals(user.getPassword())) {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                     return "login";
                 }
