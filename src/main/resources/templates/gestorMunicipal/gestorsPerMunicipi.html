@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+
+</head>
+<body>
+
+<div layout:fragment="content">
+  <h1 class="my-3">Gestors de <span th:text="${municipi.nom}"></span></h1>
+  <div th:if="${#lists.isEmpty(gestors)}">
+    No hi ha gestors assignats en aquest municipi
+  </div>
+  <div th:unless="${#lists.isEmpty(gestors)}">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nif</th>
+        <th scope="col">Id municipi</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Cognoms</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telèfon</th>
+        <th scope="col">Localització</th>
+        <th scope="col">Acció</th>
+      </tr>
+      </thead>
+      <tr class="table-light" th:each="gestor: ${gestors}" th:object="${gestor}">
+        <td th:text="${gestor.nif}"></td>
+        <td th:text="${gestor.idMunicipi}"></td>
+        <td th:text="${gestor.nom}"></td>
+        <td th:text="${gestor.cognoms}"></td>
+        <td th:text="${gestor.email}"></td>
+        <td th:text="${gestor.telefon}"></td>
+        <td><span th:text="${municipi.nom}"></span></td>
+        <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/gestorMunicipal/update/{nif}(nif=${gestor.nif})}"><i class="fa fa-edit"></i> Editar</a>
+          <a class="btn btn-danger btn-sm" th:href="@{/gestorMunicipal/delete/{nif}(nif=${gestor.nif})}"><i class="fas fa-trash"></i> Borrar</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <a class="btn btn-success" type="submit" th:href="@{/gestorMunicipal/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir gestorMunicipal</a>
+</div>
+
+</body>
+</html>

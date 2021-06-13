@@ -5,6 +5,7 @@ import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
+import es.uji.ei102720gmtp.SanaProject.services.GestorsPerMunicipiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 public class GestorMunicipalController {
     private GestorMunicipalDao gestorMunicipalDao;
     private MunicipiDao municipiDao;
+    private GestorsPerMunicipiService gestorsPerMunicipiService;
     @Autowired
     public void setGestorMunicipalDao(GestorMunicipalDao gestorMunicipalDao){
         this.gestorMunicipalDao = gestorMunicipalDao;
@@ -31,6 +33,10 @@ public class GestorMunicipalController {
         this.municipiDao = municipiDao;
     }
 
+    @Autowired
+    public void setGestorsPerMunicipiService(GestorsPerMunicipiService gestorsPerMunicipiService){
+        this.gestorsPerMunicipiService = gestorsPerMunicipiService;
+    }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
 
@@ -80,5 +86,13 @@ public class GestorMunicipalController {
         Municipi municipi = municipiDao.getMunicipi(gestorMunicipal.getIdMunicipi());
         model.addAttribute("municipi", municipi);
         return "gestorMunicipal/indexGestor";
+    }
+
+    @RequestMapping("/gestorsPerMunicipi/{id}")
+    public String listGestorsMunicipi(Model model, @PathVariable int id){
+        model.addAttribute("gestors", gestorsPerMunicipiService.getGestorsPerMunicipi(id));
+        Municipi municipi = municipiDao.getMunicipi(id);
+        model.addAttribute("municipi", municipi);
+        return "gestorMunicipal/gestorsPerMunicipi";
     }
 }

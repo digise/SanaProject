@@ -201,7 +201,7 @@ public class ReservaController {
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
-    public String editReserva(Model model, @PathVariable String id){
+    public String editReserva(Model model, @PathVariable int id){
         model.addAttribute("reserva", reservaDao.getReserva(id));
         return "reserva/update";
     }
@@ -215,7 +215,7 @@ public class ReservaController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String processDelete(@PathVariable String id){
+    public String processDelete(@PathVariable int id){
         reservaDao.deleteReserva(id);
         return "redirect:../list";
     }

@@ -1,14 +1,8 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 
-import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.GestorMunicipalDao;
-import es.uji.ei102720gmtp.SanaProject.dao.UserDao;
-import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
-import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,6 +47,10 @@ public class LoginController {
     private CiutadaDao ciutadaDao;
     @Autowired
     private GestorMunicipalDao gestorMunicipalDao;
+    @Autowired
+    private ControladorDao controladorDao;
+    @Autowired
+    private FakeUser fakeUser;
 
     public void setCiutadaDao(CiutadaDao ciutadaDao) {
         this.ciutadaDao = ciutadaDao;
@@ -64,6 +62,14 @@ public class LoginController {
 
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao) {
         this.espaiPublicDao = espaiPublicDao;
+    }
+
+    public void setControladorDao(ControladorDao controladorDao){
+        this.controladorDao = controladorDao;
+    }
+
+    public void setFakeUser(FakeUser fakeUser) {
+        this.fakeUser = fakeUser;
     }
 
     @RequestMapping("/login")
@@ -101,7 +107,7 @@ public class LoginController {
         }
 
 
-        for (GestorMunicipal gestorMunicipal : gestorMunicipalDao.getGestorsMunicipals())
+        for (GestorMunicipal gestorMunicipal : gestorMunicipalDao.getGestorsMunicipals()) {
             if (gestorMunicipal.getNif().equals(user.getNif())) {
                 if (!gestorMunicipal.getContrasenya().equals(user.getPassword())) {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
@@ -117,6 +123,39 @@ public class LoginController {
                     return "redirect:" + redireccion;
                 }
             }
+        }
+        for (Controlador controlador : controladorDao.getlistControladors()) {
+            if (controlador.getNif().equals(user.getNif())) {
+                if (!controlador.getContrasenya().equals(user.getPassword())) {
+                    bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                    return "login";
+                }
+                session.setAttribute("user", user);
+                session.setAttribute("controlador", controlador);
+                session.setAttribute("nextUrl", "/controlador/indexControlador");
+                // Torna a la pàgina principal
+                if (session.getAttribute("nextUrl") != null) {
+                    String redireccion = (String) session.getAttribute("nextUrl");
+                    session.removeAttribute("nextUrl");
+                    return "redirect:" + redireccion;
+                }
+            }
+        }
+        if (user.getNif().equals("87346182H")){
+            if (!user.getPassword().equals("647")){
+                bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
+                return "login";
+            }
+            session.setAttribute("user", user);
+            session.setAttribute("responsable", fakeUser);
+            session.setAttribute("nextUrl", "/responsable/indexResponsable");
+            // Torna a la pàgina principal
+            if (session.getAttribute("nextUrl") != null) {
+                String redireccion = (String) session.getAttribute("nextUrl");
+                session.removeAttribute("nextUrl");
+                return "redirect:" + redireccion;
+            }
+        }
         return "redirect:/";
     }
 

@@ -27,7 +27,7 @@ public class ReservaDao {
     }
 
     /* Esborrem la reserva */
-    public void deleteReserva(String idReserva) {
+    public void deleteReserva(int idReserva) {
         jdbcTemplate.update("DELETE from Reserva where id=?",
                 idReserva);
     }
@@ -46,7 +46,7 @@ public class ReservaDao {
     }
 
     /* Obtenim la reserva amb el id. Torna null si no existeix. */
-    public Reserva getReserva(String idReserva) {
+    public Reserva getReserva(int idReserva) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM reserva WHERE id = ?",

@@ -10,6 +10,8 @@ import es.uji.ei102720gmtp.SanaProject.model.ControladorAmbEspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceControladorsPerMunicipiService;
+import es.uji.ei102720gmtp.SanaProject.model.*;
+import es.uji.ei102720gmtp.SanaProject.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/controlador")
@@ -28,6 +31,8 @@ public class ControladorController  {
     private InterfaceControladorsPerMunicipiService controladorsPerMunicipiService;
     private MunicipiDao municipiDao;
     private EspaiPublicDao espaiPublicDao;
+    private MunicipisPerControladorService municipisPerControladorService;
+    private ReservesEspaiService reservesEspaiService;
 
     @Autowired
     public void setControladorDao(ControladorDao controladorDao){
@@ -49,6 +54,15 @@ public class ControladorController  {
         this.espaiPublicDao = espaiPublicDao;
     }
 
+    @Autowired
+    public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
+        this.municipisPerControladorService = municipisPerControladorService;
+    }
+
+    @Autowired
+    public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
+        this.reservesEspaiService = reservesEspaiService;
+    }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
 
@@ -81,6 +95,7 @@ public class ControladorController  {
     public String processAddSubmit(@ModelAttribute("controlador") ControladorAmbEspaiPublic controladorAmbEspaiPublic, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "controlador/add";
+        System.out.println(controladorAmbEspaiPublic.toString());
         controladorDao.addControlador(controladorAmbEspaiPublic.getControlador());
         return "redirect:controladorsPerMunicipi";
     }
@@ -112,8 +127,24 @@ public class ControladorController  {
     public String processDelete(@PathVariable String nifControlador, HttpSession session){
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
         int idMunicipi = gestorMunicipal.getIdMunicipi();
-        System.out.println(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
         controladorDao.deleteControlador(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
         return "redirect:../controladorsPerMunicipi";
+    }
+
+    @RequestMapping("/indexControlador")
+    public String mostrarIndexControlador(Model model, HttpSession session){
+        Controlador controlador = (Controlador) session.getAttribute("controlador");
+        List<EspaiPublic> espaisControlador = municipisPerControladorService.municipisPerControlador(controlador.getNif());
+        model.addAttribute("espaisControlador", espaisControlador);
+        return "controlador/indexControlador";
+    }
+
+    @RequestMapping("/reservesEspai/{idEspai}")
+    public String mostrarReservasEsapi(Model model, @PathVariable int idEspai){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
+        model.addAttribute("espai", espai);
+        List<Reserva> reservesEspai = reservesEspaiService.reservesPerEspai(espai.getId());
+        model.addAttribute("reserves", reservesEspai);
+        return "reserva/list";
     }
 }
