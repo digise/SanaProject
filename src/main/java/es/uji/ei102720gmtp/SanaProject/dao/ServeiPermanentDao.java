@@ -36,8 +36,8 @@ public class ServeiPermanentDao {
     }
 
     public void updateServeiPermanent(ServeiPermanent servei) {
-        jdbcTemplate.update("UPDATE ServeiPermanent SET tipus=?",
-                servei.getTipus());
+        jdbcTemplate.update("UPDATE ServeiPermanent SET tipus=? WHERE nom = ?",
+                servei.getTipus(), servei.getNom());
     }
 
     public ServeiPermanent getServeiPermanent(String nom) {

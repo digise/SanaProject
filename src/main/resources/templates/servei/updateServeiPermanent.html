@@ -7,30 +7,31 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div>
-    <a type="button" class="btn btn-danger" th:href="@{/servei/listServeiPermanent}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
-</div>
-<div class="modal-header">
-    <h2><span th:text="${servei.nom}"></span></h2>
-</div>
-<form action="#" th:action="@{/servei/updateServeiPermanent}"
-      th:object="${servei}" method="post">
-    <div class="modal-body">
-        <div class="form-group">
-            <label>Nom</label>
-            <input type="text" th:field="*{nom}"/>
-            <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+    <form action="#" th:action="@{/servei/updateServeiPermanent}"
+          th:object="${servei}" method="post">
+        <div>
+            <a type="button" class="btn btn-danger" th:href="@{/servei/listServeiPermanent}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
         </div>
-        <div class="form-group">
-            <td><label>Tipus</label></td>
-            <td><input type="text" th:field="*{tipus}" /></td>
-            <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+        <div class="modal-header">
+            <h2><span th:text="${servei.nom}"></span></h2>
         </div>
-    </div>
-    <div class="modal-footer">
-        <input class="btn btn-success" type="submit" value="Editar servei" /></td>
-    </div>
-</form>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="nom">Nom</label>
+                <input type="text" class="form-control" placeholder="nom" id="nom" th:field="*{nom}" name="nom"/>
+                <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" >Tipus</label>
+                <input type="text" class="form-control" placeholder="tipus" id="tipus" th:field="*{tipus}" name="tipus"/>
+                <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value="Editar servei" /></td>
+        </div>
+    </form>
 </div>
 </body>
 </html>

@@ -42,6 +42,7 @@ public class ServeiController {
         return "servei/listServeiPermanent";
     }
 
+    // Serveis Permanents
     @RequestMapping(value = "/addServeiPermanent", method = RequestMethod.GET)
     public String addServeiPermanent(Model model){
         model.addAttribute("serveiPermanent", new ServeiPermanent());
@@ -70,9 +71,13 @@ public class ServeiController {
         return "redirect:listServeiPermanent";
     }
 
+    @RequestMapping(value = "/deleteServeiPermanent/{nom}")
+    public String deleteServeiPermanent(Model model, @PathVariable String nom){
+        serveiPermanentDao.deleteServeiPermanent(nom);
+        return "redirect:../listServeiPermanent";
+    }
 
-
-
+    // Servei estacional
 
 
 
