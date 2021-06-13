@@ -206,6 +206,4 @@ public class EspaiPublicController {
         session.setAttribute("nextUrl", nextUrl);*/
         return "espaiPublic/seleccionarProvincia";
     }
-
-
 }

@@ -3,12 +3,10 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import es.uji.ei102720gmtp.SanaProject.Validation.ReservaValidator;
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.OcupaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
@@ -22,7 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -40,6 +41,7 @@ public class ReservaController {
     private EspaiPublicService espaiPublicService;
     private OcupaDao ocupaDao;
     private ZonaDao zonaDao;
+    private FranjaHorariaDao franjaHorariaDao;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -64,6 +66,11 @@ public class ReservaController {
     @Autowired
     public void setOcupaDao(OcupaDao ocupaDao) {
         this.ocupaDao = ocupaDao;
+    }
+
+    @Autowired
+    public void setFranjaHorariaDao(FranjaHorariaDao franjaHorariaDao) {
+        this.franjaHorariaDao = franjaHorariaDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -97,7 +104,7 @@ public class ReservaController {
 
      */
 
-    @RequestMapping(value="/add", method= RequestMethod.POST)
+    @RequestMapping(value="/reservaFeta", method= RequestMethod.POST)
     public String ferReserva(@ModelAttribute("reserva") ReservaDadesCompletes reserva, BindingResult bindingResult, Model model, HttpSession session){
         System.out.println(reserva);
         reserva.setZonaDao(zonaDao);
@@ -135,45 +142,62 @@ public class ReservaController {
         reservaSimple.setEstat(reserva.getEstat());
         reservaSimple.setNifCiutada(reserva.getNifCiutada());
 
-        String data = "localhost:8080/reserva/" + reserva.getIdEspai() + reserva.getIdFranja()
-                + reserva.getIdZona() + reserva.getDataReserva().toString();
-        String path = "imagenes/reserva" + reserva.getIdEspai() + reserva.getIdFranja()
-                + reserva.getIdZona() + reserva.getDataReserva().toString() + ".png";
-        String charset= "UTF-8";
-        Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+        String dadesCodiQr = String.valueOf(reserva.getIdEspai()) + String.valueOf(reserva.getIdFranja()) + String.valueOf(reserva.getIdZona()) + reserva.getDataReserva().toString();
+        File f = new File("src/main/resources/static/imagenes/reserva" + dadesCodiQr + ".png");
+        String data = "localhost:8080/reserva/" + dadesCodiQr;
+
+        System.out.println(f.getPath());
         try {
-            createQR(data, path, charset, hashMap, 200, 200);
-            reservaSimple.setCodiQr(path);
+            createQR(f, data, 300, 300);
+            System.out.println("Codi QR creat");
+            reservaSimple.setCodiQr("imagenes/reserva" + dadesCodiQr + ".png");
         } catch (Exception e){
             System.out.println("No s'ha pogut crear el codi QR");
-            path = "";
-            reservaSimple.setCodiQr(path);
+            reservaSimple.setCodiQr("");
         }
 
+
         reservaDao.addReserva(reservaSimple);
-        Reserva reservaGuardada = reservaDao.getReservaFromQR(path);
+        Reserva reservaGuardada = reservaDao.getReservaFromQR("imagenes/reserva" + dadesCodiQr + ".png");
 
         Ocupa ocupa = new Ocupa();
         ocupa.setDataReserva(reserva.getDataReserva());
         ocupa.setIdFranja(reserva.getIdFranja());
         ocupa.setIdZona(reserva.getIdZona());
         ocupa.setIdReserva(reservaGuardada.getId());
+
         ocupaDao.addOcupa(ocupa);
 
-        return "redirect:/espaiPublic/seleccionarProvincia";
+        model.addAttribute("dades", reserva);
+        model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()));
+        model.addAttribute("zona", zonaDao.getZona(reserva.getIdZona()));
+        return "/reserva/reservaFeta";
     }
 
-    private static void createQR(String data, String path, String charset, Map hashMap, int height, int width)
-            throws WriterException, IOException, NotFoundException {
-        BitMatrix matrix = new MultiFormatWriter().encode(
-                new String(data.getBytes(charset), charset),
-                BarcodeFormat.QR_CODE, width, height);
+    private File createQR(File file, String data, int height, int width)
+            throws Exception {
+        QRCodeWriter writer = new QRCodeWriter();
+        BitMatrix matrix = writer.encode(data, com.google.zxing.BarcodeFormat.QR_CODE, width, height);
 
-        MatrixToImageWriter.writeToFile(
-                matrix,
-                path.substring(path.lastIndexOf('.') + 1),
-                new File(path));
+        BufferedImage image = new BufferedImage(matrix.getWidth(), matrix.getHeight(), BufferedImage.TYPE_INT_RGB);
+        image.createGraphics();
+
+        Graphics2D graphics = (Graphics2D) image.getGraphics();
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, matrix.getWidth(), matrix.getHeight());
+        graphics.setColor(Color.BLACK);
+
+        for (int i = 0; i < matrix.getWidth(); i++) {
+            for (int j = 0; j < matrix.getHeight(); j++) {
+                if (matrix.get(i, j)) {
+                    graphics.fillRect(i, j, 1, 1);
+                }
+            }
+        }
+
+        ImageIO.write(image, "png", file);
+
+        return file;
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
