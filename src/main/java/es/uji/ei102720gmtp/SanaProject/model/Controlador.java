@@ -5,10 +5,10 @@ public class Controlador
 {
     private String nif;
     private String nom;
-    private String cognom;
-    private String especialitat;
+    private String cognoms;
     private String email;
     private String telefon;
+    private String contrasenya;
 
     public Controlador(){}
 
@@ -29,21 +29,14 @@ public class Controlador
         this.nom = nom;
     }
 
-    public String getCognom() {
-        return cognom;
+    public String getCognoms() {
+        return cognoms;
     }
 
-    public void setCognom(String cognom) {
-        this.cognom = cognom;
+    public void setCognoms(String cognoms) {
+        this.cognoms = cognoms;
     }
 
-    public String getEspecialitat() {
-        return especialitat;
-    }
-
-    public void setEspecialitat(String especialitat) {
-        this.especialitat = especialitat;
-    }
 
     public String getEmail() {
         return email;
@@ -61,14 +54,20 @@ public class Controlador
         this.telefon = telefon;
     }
 
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
 
     @Override
     public String toString() {
         return "Controlador{" +
                 "nif='" + nif + '\'' +
                 ", nom='" + nom + '\'' +
-                ", cognom='" + cognom + '\'' +
-                ", especialitat='" + especialitat + '\'' +
+                ", cognoms='" + cognoms + '\'' +
                 ", email='" + email + '\'' +
                 ", telefon='" + telefon + '\'' +
                 '}';

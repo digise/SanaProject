@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class ZonaDao {
 
     /* Afegim la zona */
     public void addZona(Zona zona) {
-        jdbcTemplate.update("INSERT INTO Zona VALUES(?, ?, ?, ?)",
-                zona.getIdEspai(), zona.getNom(), zona.getCapacitat(), zona.getCoordenades());
+        jdbcTemplate.update("INSERT INTO Zona VALUES(?, ?, ?)",
+                zona.getIdEspai(), zona.getCapacitat(), zona.getCoordenades());
     }
 
     /* Esborrem la zona */
@@ -41,12 +42,12 @@ public class ZonaDao {
     /* Actualitzem els atributs de la zona
        (excepte el nom, que és la clau primària) */
     public void updateZona(Zona zona) {
-        jdbcTemplate.update("UPDATE Zona SET id_espai = ?, nom = ?, capacitat = ?, coordenades = ? WHERE id = ?",
-                zona.getIdEspai(), zona.getNom(), zona.getCapacitat(), zona.getCoordenades(), zona.getId());
+        jdbcTemplate.update("UPDATE Zona SET id_espai = ?, capacitat = ?, coordenades = ? WHERE id = ?",
+                zona.getIdEspai(), zona.getCapacitat(), zona.getCoordenades(), zona.getId());
     }
 
     /* Obtenim la zona amb el id. Torna null si no existeix. */
-    public Zona getZona(String idZona) {
+    public Zona getZona(int idZona) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Zona WHERE id = ?",
@@ -64,6 +65,29 @@ public class ZonaDao {
             return jdbcTemplate.query(
                     "SELECT * FROM Zona",
                     new ZonaRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Zona>();
+        }
+    }
+
+    public List<Zona> getZonesFromEspai(int idEspai) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Zona WHERE id_espai = ?",
+                    new ZonaRowMapper(),
+                    idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Zona>();
+        }
+    }
+
+    public List<Zona> getZonesFromFranjaDia(int idEspai, int idFranja, LocalDate dia) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM Zona WHERE id_espai = ? AND id NOT IN ( " +
+                            "SELECT id_espai FROM Ocupa WHERE data_reserva = ? AND id_franja = ?)",
+                    new ZonaRowMapper(),
+                    idEspai, dia, idFranja);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<Zona>();
         }

@@ -22,10 +22,8 @@ public class FranjaHorariaDao{
 
     /* Afegim  */
     public void addFranjaHoraria(FranjaHoraria franjaHoraria) {
-        jdbcTemplate.update("INSERT INTO FranjaHoraria VALUES(?, ?, ?, ?, ? ,?)",
-                franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(),
-                franjaHoraria.getHoraInici(), franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(),
-                franjaHoraria.getDataFinal());
+        jdbcTemplate.update("INSERT INTO FranjaHoraria (id_espai, hora_inici, hora_final) VALUES(?, ?, ?)",
+                franjaHoraria.getIdEspai(), franjaHoraria.getHoraInici(), franjaHoraria.getHoraFinal());
     }
 
     /* Esborrem */
@@ -37,14 +35,13 @@ public class FranjaHorariaDao{
     /* Actualitzem els atributs
        (excepte el id, que és la clau primària) */
     public void updateFranjaHoraria(FranjaHoraria franjaHoraria) {
-        jdbcTemplate.update("UPDATE franjaHoraria SET id_espai = ?, descripcio = ?, hora_inici = ?, hora_final = ?, data_inici = ?, data_final = ?  WHERE id = ?",
-                franjaHoraria.getIdEspai(), franjaHoraria.getDescripcio(), franjaHoraria.getHoraInici(),
-                franjaHoraria.getHoraFinal(), franjaHoraria.getDataInici(), franjaHoraria.getDataFinal(),
-                franjaHoraria.getId());
+        jdbcTemplate.update("UPDATE franjaHoraria SET id_espai = ?, hora_inici = ?, hora_final = ? WHERE id = ?",
+                franjaHoraria.getIdEspai(), franjaHoraria.getHoraInici(),
+                franjaHoraria.getHoraFinal(), franjaHoraria.getId());
     }
 
     /* Obtenim la franja amb el id. Torna null si no existeix. */
-    public FranjaHoraria getFranjaHoraria(String idFranja) {
+    public FranjaHoraria getFranjaHoraria(int idFranja) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM franjaHoraria WHERE id = ?",
@@ -53,6 +50,17 @@ public class FranjaHorariaDao{
         }
         catch(EmptyResultDataAccessException e) {
             return null;
+        }
+    }
+
+    public List<FranjaHoraria> getFranjasEspai(int id_espai) {
+        try {
+            return jdbcTemplate.query(
+                   "SELECT * FROM franjaHoraria WHERE id_espai = ?",
+                    new FranjaHorariaRowMapper(),
+                    id_espai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<FranjaHoraria>();
         }
     }
 

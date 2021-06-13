@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <title>Informació d'un espai public</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-5 m-4">
+            <img class="card-img" th:src="${espai.imagen}" alt="Card image">
+        </div>
+        <div class="col-lg-4 m-4 align-self-center">
+            <p><b>Provincia: </b><span>Indeterminat</span></p>
+            <p><b>Municipi: </b><span>Indeterminat</span></p>
+            <p><b>Tipus: </b><span th:text="${espai.tipus}"></span></p>
+            <p><b>Terreny: </b><span th:text="${espai.terreny}"></span></p>
+            <p><b>Longitut (en metres):</b>
+                <span th:if="${espai.longitud == 0}">Indeterminat</span>
+                <span th:unless="${espai.longitud == 0}" th:text="${espai.longitud}"></span>
+            </p>
+            <p><b>Amplaria (en metres): </b>
+                <span th:if="${espai.amplaria == 0}">Indeterminat</span>
+                <span th:unless="${espai.amplaria == 0}" th:text="${espai.amplaria}"></span>
+            </p>
+            <p style="text-align: justify"><b>Descripcio: </b><span th:text="${espai.descripcio}"></span></p>
+        </div>
+    </div>
+    <div class="row justify-content-center my-4">
+        <div class="col-sm-auto">
+            <h2 class="my-2 text-center">Tipus d'acces:</h2>
+        </div>
+        <div class="col-sm-auto my-1 text-center" th:switch="${espai.tipusAcces.toString()}">
+            <h2 th:case="'Obert'"><span class="badge-sana badge-obert">Obert</span></h2>
+            <h2 th:case="'Restringit'"><span class="badge-sana badge-restringit">Restringit</span></h2>
+            <h2 th:case="'Tancat'"><span class="badge-sana badge-tancat">Tancat</span></h2>
+        </div>
+    </div>
+
+
+    <!-- Elecció per a la reserva-->
+    <div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;" th:if="${espai.tipusAcces.toString() == 'Restringit'}">
+        <div th:if="${!franges.isEmpty()}">
+            <div class="row justify-content-center pb-2">
+                <div class="col-auto">
+                    <h4><b>Dia de la reserva:</b></h4>
+                </div>
+            </div>
+            <div class="row justify-content-center pb-2">
+                <div class="col-auto">
+                    <form action="#" th:action="@{/espaiPublic/elegirZona}"
+                          th:object="${dades}" method="post">
+                        <label for="data">Data: </label>
+                        <input type="hidden" id="id" name="id" th:field="*{idEspai}">
+                        <input type="date" id="data" th:id="data" name="data" th:field="*{diaElegit}">
+                        <span><input class="btn btn-outline-primary m-0" type="submit" value="Actualitzar"
+                                     style="color: #1a1a1a; border-width: thin; border-color: #1a1a1a" /></span>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-center pb-2">
+                <div class="col-auto">
+                    <p style="color: #777777">Indique el dia i actualitza per a efectuar el canvi</p>
+                </div>
+            </div>
+            <div class="row justify-content-center pt-5">
+                <div class="col-auto">
+                    <h4 th:text="${'Franges horaries ( ' + dia.toString() + ' ):'}"></h4>
+                </div>
+            </div>
+            <div th:each="franja : ${franges}" class="row justify-content-center text-center m-1">
+                <span><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#zonesModal"
+                         th:text="${franja.getHoraInici() + ' - ' + franja.getHoraFinal()}"></button></span>
+
+                <!-- Modal -->
+                <div class="modal fade" id="zonesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"
+                                    th:text="${'Zones disponibles de ' + franja.getHoraInici() + ' a ' + franja.getHoraFinal()}"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form th:action="@{/reserva/add}"
+                                  th:object="${reserva}" method="post">
+                            <div class="modal-body" th:if="${!zones.get(franja.getId()).isEmpty()}">
+                                <div class="row justify-content-center pb-2">
+                                    <div class="col-auto pb-5">
+                                        <input type="hidden" id="idEspai" name="idEspai" th:field="*{idEspai}">
+                                        <input type="hidden" id="estat" name="estat" th:field="*{estat}">
+                                        <input type="hidden" id="nif" name="nif" th:field="*{nifCiutada}">
+                                        <input type="hidden" id="dataReserva" name="dataReserva" th:field="*{dataReserva}">
+                                        <!--<input type="radio" id="franja2" th:field="*{idFranja}" th:value="${franja.getId()}">-->
+                                        <div row justify-content-center pb-2>
+                                            <p>Elegeix la zona: </p>
+                                            <select class="form_control" th:field="*{idZona}">
+                                                <option th:each="zona: ${zones.get(franja.getId())}"
+                                                        th:value="${zona.getId()}"
+                                                        th:text="${'Zona ' + zona.getId() + ' (maxim ' + zona.getCapacitat() + ' persones)'}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto pt-5 pb-5">
+                                        <p>Indica el nombre de persones: </p>
+                                        <input type="number" id="persones" name="persones" th:field="*{nombrePersones}">
+                                        <p th:each="err : ${#fields.errors('nombrePersones')}" th:text="${err}" class="error">
+                                    </div>
+                                    <div class="col-auto pt-5">
+                                        <input type="checkbox" th:name="${'Franja' + franja.getId()}" id="franja1" checked th:field="*{idFranja}" th:value="${franja.getId()}" required>
+                                        <label th:for="${'Franja' + franja.getId()}">Acepta respetar les instalacions publiques de l'espai</label>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="modal-body" th:if="${zones.get(franja.getId()).isEmpty()}">
+                                    <h5><u>No hi ha zones disponibles</u></h5>
+                                </div>
+                            <div class="modal-footer" th:if="${!zones.get(franja.getId()).isEmpty()}">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input class="btn btn-primary" type="submit" value="Reservar">
+                            </div>
+                                <div class="modal-footer" th:if="${zones.get(franja.getId()).isEmpty()}">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div th:if="${franges.isEmpty()}" class="row justify-content-center">
+            <div class="col-auto">
+                <h5><u>No hi ha horaris disponibles</u></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

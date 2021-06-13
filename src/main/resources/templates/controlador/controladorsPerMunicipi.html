@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1 class="my-3">Controladors de <span th:text="${municipi.nom}"></span></h1>
+    <div th:if="${#lists.isEmpty(controladors)}">
+        No hi ha controladors assignats en aquest espai
+    </div>
+    <div th:unless="${#lists.isEmpty(controladors)}">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nif</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Cognoms</th>
+                <th scope="col">Correu</th>
+                <th scope="col">Telèfon</th>
+                <th scope="col">Localització</th>
+                <th scope="col">Acció</th>
+            </tr>
+            </thead>
+                <tr class="table-light" th:each="controlador: ${controladors}" th:object="${controlador}">
+                    <td th:text="${controlador.controlador.nif}"></td>
+                    <td th:text="${controlador.controlador.nom}"></td>
+                    <td th:text="${controlador.controlador.cognoms}"></td>
+                    <td th:text="${controlador.controlador.email}"></td>
+                    <td th:text="${controlador.controlador.telefon}"></td>
+                    <td> <span th:text="${controlador.nomEspaiPublic}"></span>, <span th:text="${municipi.nom}"></span></td>
+                    <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/controlador/update/{nifControlador}(nifControlador=${controlador.controlador.nif})}"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/controlador/delete/{nifControlador}(nifControlador=${controlador.controlador.nif})}"><i class="fas fa-trash"></i> Borrar</a></td>
+
+                    <!-- Modal -->
+                    <!--div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form action="#" th:action="@{/controlador/update}" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><span th:text="*{controlador.nom}"></span> <span th:text="*{controlador.cognoms}"></span></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-2" for="nif">Nif:</label>
+                                            <input type="text" class="form-control" disabled="disabled" placeholder="Default input" id="nif" th:value="*{controlador.nif}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="nom">Nom:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="nom" th:value="*{controlador.nom}" name="nom"/>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="cognoms">Cognoms:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="cognoms" th:value="*{controlador.cognoms}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="especialitat">Especialitat:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="especialitat" th:value="*{controlador.especialitat}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="email">Email:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="email" th:value="*{controlador.email}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="telefon">Telèfon:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="telefon" th:value="*{controlador.telefon}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label mt-4" for="espai">Nom espai públic:</label>
+                                            <input type="text" class="form-control" placeholder="Default input" id="espai" th:value="*{nomEspaiPublic}">
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input class="btn btn-danger" type="submit" value="Actualitzar Dades"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="btn btn-success" type="submit" th:href="@{/controlador/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir controlador</a>
+</div>
+
+</body>
+</html>

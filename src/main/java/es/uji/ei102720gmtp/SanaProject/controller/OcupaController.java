@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.time.LocalDate;
+
 
 @Controller
 @RequestMapping("/ocupa")
@@ -46,9 +48,9 @@ public class OcupaController {
     }
 
 
-    @RequestMapping(value = "/delete/{idReserva}/{idZona}")
-    public String processDelete(@PathVariable String idReserva, @PathVariable String idZona){
-        ocupaDao.deleteOcupa(idReserva, idZona);
+    @RequestMapping(value = "/delete/{idReserva}/{idZona}/{idFranja}/{dataReserva}")
+    public String processDelete(@PathVariable int idReserva, @PathVariable int idZona, @PathVariable int idFranja, @PathVariable LocalDate dataReserva){
+        ocupaDao.deleteOcupa(idReserva, idZona, idFranja, dataReserva);
         return "redirect:../list";
     }
 }

@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Crear controlador</title>
+    <title>Actualitzar un controlador</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+
 </head>
 <body>
-<h2>Nou gestor</h2>
-<form action="#" th:action="@{/controlador/add}"
-      th:object="${controlador}" method="post">
-    <table>
-        <tr>
-            <td><label>NIF</label></td>
-            <td><input type="text" th:field="*{nif}" /></td>
-        </tr>
-        <tr>
-            <td><label>Nom</label></td>
-            <td><input type="text" th:field="*{nom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Cognom</label></td>
-            <td><input type="text" th:field="*{cognom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Especialitat</label></td>
-            <td><input type="text" th:field="*{especialitat}" /></td>
-        </tr>
-        <tr>
-            <td><label>Email</label></td>
-            <td><input type="text" th:field="*{email}" /></td>
-        </tr>
-        <tr>
-            <td><label>Telefon</label></td>
-            <td><input type="text" th:field="*{telefon}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Afegeix controlador" /></td>
-        </tr>
-    </table>
-</form>
+<div layout:fragment="content">
+    <!--EL primer action es si fuera una página estática-->
+    <form action="#" th:action="@{/controlador/add}"
+          th:object="${controlador}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+
+        <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Afegir controlador</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-form-label mt-2" for="nif">Nif:</label>
+                <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{controlador.nif}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="nom">Nom:</label>
+                <input type="text" class="form-control" placeholder="nom" id="nom" th:field="*{controlador.nom}" name="nom"/>
+                <div th:if="${#fields.hasErrors('controlador.nom')}" th:errors="*{controlador.nom}"></div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="cognoms"><b>Cognoms:</b></label>
+                <input type="text" class="form-control" placeholder="cognoms complets" id="cognoms" th:field="*{controlador.cognoms}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="email">Email:</label>
+                <input type="text" class="form-control" placeholder="email" id="email" th:field="*{controlador.email}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="telefon">Telèfon:</label>
+                <input type="text" class="form-control" placeholder="telefon" id="telefon" th:field="*{controlador.telefon}">
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="telefon">Contrasenya:</label>
+                <input type="text" class="form-control" placeholder="Default input" id="contrasenya" th:field="*{controlador.contrasenya}">
+            </div>
+
+            <div class="form-group">
+                <label for="nomEspai" class="form-label mt-4">Nom Espai Public</label>
+                <select class="form-select" id="nomEspai" type="text" th:field="*{nomEspaiPublic}">
+                    <option th:each="espai : ${espaisPerProvincia}" th:text="${espai.nom}" th:value="${espai.nom}"></option>
+                </select>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-success" type="submit" value="Afegir controlador"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

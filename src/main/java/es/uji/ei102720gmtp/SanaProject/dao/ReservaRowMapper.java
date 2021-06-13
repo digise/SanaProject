@@ -16,10 +16,9 @@ public final class ReservaRowMapper implements RowMapper<Reserva> {
         reserva.setId(rs.getInt("id"));
         reserva.setCodiQr(rs.getString("codi_qr"));
         reserva.setNombrePersones(rs.getInt("nombre_persones"));
-        reserva.setDataCreacio(rs.getObject("data_creacio", LocalDate.class));
-        reserva.setEstat(rs.getObject("estat", EstatReserva.class));
+        // reserva.setEstat(rs.getObject("estat", EstatReserva.class));
+        reserva.setEstat(EstatReserva.valueOf(rs.getString("estat")));
         reserva.setNifCiutada(rs.getString("nif_ciutada"));
-        reserva.setIdFranja(rs.getInt("id_franja"));
         return reserva;
     }
 }

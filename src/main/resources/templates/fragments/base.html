@@ -6,16 +6,28 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <title>SANA</title>
+    <title layout:title-pattern="$CONTENT_TITLE">SANA</title>
     <link rel="stylesheet" type="text/css" href="/css/estiloGeneral.css"
           th:href="@{/css/estiloGeneral.css}"/>
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"/>
 
+    <link rel="stylesheet" type="text/css" href="/css/badgeStyles.css"
+          th:href="@{/css/badgeStyles.css}"/>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/f0ba356a84.js" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
-<div th:replace="fragments/nav"></div>
+<div th:object="${session}">
+<!--div th:if="${ciutada != null}" th:replace="fragments/nav"></div-->
+<div th:replace="fragments/navResponsable"></div>
+</div>
 <div class="container mt-4">
     <div layout:fragment="content"></div>
 </div>

@@ -1,0 +1,6 @@
+<div class="loggeduser" th:object="${session}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <p th:if="*{user != null}">
+        Autenticat com <span th:text="*{ciutada.username}"></span> <a
+            href="/logout" th:href="@{/logout}">Tancar Sessió</a>
+    </p>
+</div>

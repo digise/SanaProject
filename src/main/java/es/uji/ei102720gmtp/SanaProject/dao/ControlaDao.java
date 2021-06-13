@@ -63,5 +63,28 @@ public class ControlaDao {
             return new ArrayList<Controla>();
         }
     }
+
+    /* Obtenim lista de controla */
+    public ArrayList<Controla> getlistControlaPerEspai(int idEspai) {
+        try {
+            return (ArrayList<Controla>) jdbcTemplate.query(
+                    "SELECT * FROM Controla WHERE id_espai = ?",
+                    new ControlaRowMapper(), idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Controla>();
+        }
+    }
+
+    public ArrayList<Controla> getListControlaPerControlador(String nifControlador){
+        try{
+            return (ArrayList<Controla>) jdbcTemplate.query(
+                    "SELECT * FROM Controla WHERE nif_controlador=?",
+                    new ControlaRowMapper(), nifControlador
+            );
+        }catch (EmptyResultDataAccessException e){
+            return new ArrayList<Controla>();
+        }
+    }
+
 }
 

@@ -30,7 +30,7 @@ public class EspaiPublicDao
     }
 
     /* Esborrem  */
-    public void deleteEspaiPublic(String idEspai) {
+    public void deleteEspaiPublic(int idEspai) {
         jdbcTemplate.update("DELETE from espaiPublic where id=?",
                 idEspai);
     }
@@ -43,6 +43,12 @@ public class EspaiPublicDao
                 espaiPublic.getTerreny().name(), espaiPublic.getTipusAcces().name(), espaiPublic.getLocalitzacio(),
                 espaiPublic.getLongitud(), espaiPublic.getAmplaria(), espaiPublic.getImagen(),
                 espaiPublic.getDescripcio(), espaiPublic.getId());
+    }
+
+    public void updateNomEspaiPublic(String nom, EspaiPublic espaiPublic){
+        jdbcTemplate.update("UPDATE espaiPublic SET nom = ? WHERE id = ?",
+                nom, espaiPublic.getId());
+
     }
 
     /* Obtenim el espai amb el id. Torna null si no existeix. */
@@ -68,6 +74,7 @@ public class EspaiPublicDao
             return new ArrayList<EspaiPublic>();
         }
     }
+
 
 }
 

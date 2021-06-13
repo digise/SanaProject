@@ -1,44 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Editar un controlador</title>
+    <title>Actualitzar un controlador</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+
 </head>
 <body>
-<h2><span th:text="${controlador.nif}"></span></h2>
-<form action="#" th:action="@{/controlador/update}"
-      th:object="${controlador}" method="post">
-    <table>
-        <tr>
-            <td><label>NIFControlador</label></td>
-            <td><input type="text" th:field="*{nif}" /></td>
-        </tr>
-        <tr>
-            <td><label>Nom</label></td>
-            <td><input type="text" th:field="*{nom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Cognom</label></td>
-            <td><input type="text" th:field="*{cognom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Especialitat</label></td>
-            <td><input type="text" th:field="*{especialitat}" /></td>
-        </tr>
-        <tr>
-            <td><label>Email</label></td>
-            <td><input type="text" th:field="*{email}" /></td>
-        </tr>
-        <tr>
-            <td><label>Telefon</label></td>
-            <td><input type="text" th:field="*{telefon}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Editar controlador" /></td>
-        </tr>
-    </table>
-</form>
+<div layout:fragment="content">
+    <!--EL primer action es si fuera una página estática-->
+    <form action="#" th:action="@{/controlador/update}"
+          th:object="${controlador}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+
+        <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel"><span th:text="*{controlador.nom}"></span> <span th:text="*{controlador.cognoms}"></span></h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-form-label mt-2" for="nif">Nif:</label>
+                <input type="text" class="form-control" maxlength="9" readonly="readonly" placeholder="Default input" id="nif" th:field="*{controlador.nif}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="nom">Nom:</label>
+                <input type="text" value="wrong value" class="form-control is-invalid" placeholder="Default input" id="nom" th:field="*{controlador.nom}" name="nom"/>
+                <div th:if="${#fields.hasErrors('controlador.nom')}" th:errors="*{controlador.nom}"></div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="cognoms"><b>Cognoms:</b></label>
+                <input type="text" class="form-control" placeholder="Default input" id="cognoms" th:field="*{controlador.cognoms}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="email">Email:</label>
+                <input type="text" class="form-control" placeholder="Default input" id="email" th:field="*{controlador.email}">
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="telefon">Telèfon:</label>
+                <input type="text" class="form-control" placeholder="Default input" id="telefon" th:field="*{controlador.telefon}">
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" placeholder="Default input" id="contrasenya" th:field="*{controlador.contrasenya}">
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="espai">Nom espai públic:</label>
+                <input type="text" class="form-control" placeholder="Default input" id="espai" th:field="*{nomEspaiPublic}">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-info" type="submit" value="Actualitzar Dades"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

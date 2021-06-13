@@ -5,6 +5,15 @@
     margin-top: -8px;
 }
 
-.div-seleccionaProvincia{
+.users{
+  text-decoration: none;
+  display:flex;
+  align-items:center;
+}
+
+
+.container-username{
+  display:flex;
+  flex-direction:column;
 
 }

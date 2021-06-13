@@ -22,12 +22,12 @@ public class ReservaDao {
 
     /* Afegim la reserva */
     public void addReserva(Reserva reserva) {
-        jdbcTemplate.update("INSERT INTO Reserva VALUES(?, ?, ?, ?, ? ,?)",
-                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja());
+        jdbcTemplate.update("INSERT INTO Reserva (codi_qr, nombre_persones, estat, nif_ciutada) VALUES(?, ?, CAST(? AS estat_reserva), ?)",
+                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getEstat().name(), reserva.getNifCiutada());
     }
 
     /* Esborrem la reserva */
-    public void deleteReserva(String idReserva) {
+    public void deleteReserva(int idReserva) {
         jdbcTemplate.update("DELETE from Reserva where id=?",
                 idReserva);
     }
@@ -41,17 +41,29 @@ public class ReservaDao {
     /* Actualitzem els atributs de la reserva
        (excepte el nom, que és la clau primària) */
     public void updateReserva(Reserva reserva) {
-        jdbcTemplate.update("UPDATE Reserva SET codi_qr = ?, nombre_persones = ?, data_creacio = ?, estat = ?, nif_ciutada = ?, id_franja = ? WHERE id = ?",
-                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getDataCreacio(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getIdFranja(), reserva.getId());
+        jdbcTemplate.update("UPDATE Reserva SET codi_qr = ?, nombre_persones = ?, estat = ?, nif_ciutada = ? WHERE id = ?",
+                reserva.getCodiQr(), reserva.getNombrePersones(), reserva.getEstat(), reserva.getNifCiutada(), reserva.getId());
     }
 
     /* Obtenim la reserva amb el id. Torna null si no existeix. */
-    public Reserva getReserva(String idReserva) {
+    public Reserva getReserva(int idReserva) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM reserva WHERE id = ?",
                     new ReservaRowMapper(),
                     idReserva);
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public Reserva getReservaFromQR(String codiQR) {
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM reserva WHERE codi_qr = ?",
+                    new ReservaRowMapper(),
+                    codiQR);
         }
         catch(EmptyResultDataAccessException e) {
             return null;
@@ -65,6 +77,16 @@ public class ReservaDao {
                     "SELECT * FROM Reserva",
                     new ReservaRowMapper());
         } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Reserva>();
+        }
+    }
+
+    public List<Reserva> getReservesClient(String nifCiutada) {
+        try{
+            return jdbcTemplate.query(
+                    "SELECT * FROM Reserva WHERE nif_ciutada = ?",
+                    new ReservaRowMapper(), nifCiutada);
+        }catch (EmptyResultDataAccessException e) {
             return new ArrayList<Reserva>();
         }
     }
