@@ -23,7 +23,7 @@ public class EspaiPublicDao
 
     /* Afegim */
     public void addEspaiPublic(EspaiPublic espaiPublic) {
-        jdbcTemplate.update("INSERT INTO espaiPublic VALUES(?, ?, ?, CAST(? AS tipus_sol), CAST(? AS tipus_acces), ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO espaiPublic (id_municipi, nom, tipus, terreny, tipus_acces, localitzacio, longitud, amplaria, imagen, descripcio) VALUES(?, ?, ?, CAST(? AS tipus_sol), CAST(? AS tipus_acces), ?, ?, ?, ?, ?)",
                 espaiPublic.getIdMunicipi(), espaiPublic.getNom(), espaiPublic.getTipus(), espaiPublic.getTipusTerreny().name(), espaiPublic.getTipusAcces().name(),
                 espaiPublic.getLocalitzacio(), espaiPublic.getLongitud(), espaiPublic.getAmplaria(),
                 espaiPublic.getImagen(), espaiPublic.getDescripcio());

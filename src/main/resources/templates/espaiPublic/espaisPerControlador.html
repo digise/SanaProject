@@ -9,6 +9,9 @@
 <body>
 <div layout:fragment="content">
     <div class="row">
+        <div class="col-2">
+            <a type="button" class="btn btn-danger" th:href="@{/controlador/indexControlador}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
         <div class="col-sm-8">
             <h1 class="my-3">Espais a controlar</h1>
         </div>
@@ -32,13 +35,13 @@
                     </div>
                 </div>
                 <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/controlador/reservesEspai/{idEspai}(idEspai=${espai.id})}">Reserves</a>
+                    <a class="btn btn-primary" th:href="@{/reserva/mostrarReserves/{id}(id=${espai.id})}">Reserves</a>
                 </div>
             </div>
         </div>
         <div class="w-100"></div>
     </div>
-    <a type="button" class="btn btn-danger" th:href="@{/controlador/indexControlador}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+
 
 
 </div>

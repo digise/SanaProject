@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/base}">
 <head>
-    <title>Actualitzar un controlador</title>
+    <title>Afegir espai públic</title>
     <meta charset="UTF-8" />
 
 </head>
@@ -10,51 +10,104 @@
 <div layout:fragment="content">
     <!--EL primer action es si fuera una página estática-->
     <form action="#" th:action="@{/espaiPublic/add}"
-          th:object="${controlador}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+          th:object="${espaiPublic}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+        <div class="card border-info mb-3" style="max-width: 50rem;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2 class="card-title">Nou espai públic</h2>
+                    </div>
+                    <div class="col-auto">
+                        <input class="btn btn-success" type="submit" value="Afegir espai públic"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
 
-        <div class="modal-header">
-            <h2 class="modal-title" id="exampleModalLabel">Afegir controlador</h2>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label class="col-form-label mt-2" for="nif">Nif:</label>
-                <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{controlador.nif}">
-            </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="nom">Nom:</label>
-                <input type="text" class="form-control" placeholder="nom" id="nom" th:field="*{controlador.nom}" name="nom"/>
-                <div th:if="${#fields.hasErrors('controlador.nom')}" th:errors="*{controlador.nom}"></div>
+                <div class="form-group">
+                    <label class="col-form-label mt-2" for="nif"><b>Nom espai públic:</b></label>
+                    <input type="text" class="form-control" placeholder="Default input" id="nif"  th:field="*{nom}">
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+                </div>
 
-            </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="cognoms"><b>Cognoms:</b></label>
-                <input type="text" class="form-control" placeholder="cognoms complets" id="cognoms" th:field="*{controlador.cognoms}">
-            </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="email">Email:</label>
-                <input type="text" class="form-control" placeholder="email" id="email" th:field="*{controlador.email}">
-            </div>
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="telefon">Telèfon:</label>
-                <input type="text" class="form-control" placeholder="telefon" id="telefon" th:field="*{controlador.telefon}">
-            </div>
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="nom"><b>Tipus:</b></label>
+                    <input type="text" class="form-control" placeholder="Default input" id="nom" th:field="*{tipus}" name="nom"/>
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('tipus')}" th:errors="*{tipus}"></td></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tipusTerreny" class="form-label mt-4"><b>Tipus Terreny:</b></label>
+                            <select class="form-select" id="tipusTerreny" type="text" th:field="*{tipusTerreny}">
+                                <option th:each="tipusTerreny : ${T(es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny).values()}"
+                                        th:value="${tipusTerreny}">
+                                    <span th:text="${tipusTerreny.getDescripcion()}"></span>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label class="col-form-label mt-4" for="telefon">Contrasenya:</label>
-                <input type="text" class="form-control" placeholder="Default input" id="contrasenya" th:field="*{controlador.contrasenya}">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tipusAcces" class="form-label mt-4"><b>Tipus Accés:</b></label>
+                            <select class="form-select" id="tipusAcces" type="text" th:field="*{tipusAcces}">
+                                <option th:each="tipusAcces : ${T(es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces).values()}"
+                                        th:value="${tipusAcces}">
+                                    <span th:text="${tipusAcces.getDescripcion()}"></span>
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="localitzacio">Localització:</label>
+                    <input type="text" class="form-control" placeholder="email" id="localitzacio" th:field="*{localitzacio}">
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('localitzacio')}" th:errors="*{localitzacio}"></td></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="longitud"><b>Longitud (en metres):</b></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="Default input" id="longitud" th:field="*{longitud}">
+                            </div>
+                            <div class="text-danger"><td th:if="${#fields.hasErrors('longitud')}" th:errors="*{longitud}"></td></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="amplaria"><b>Amplária (en metres):</b></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="Default input" id="amplaria" th:field="*{amplaria}">
+                            </div>
+                            <div class="text-danger"><td th:if="${#fields.hasErrors('amplaria')}" th:errors="*{amplaria}"></td></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="municipi" class="form-label mt-4"><b>Municipi:</b></label>
+                    <select class="form-select" id="municipi" type="text" th:field="*{idMunicipi}">
+                        <option th:each="municipi : ${municipis}"
+                                th:value="${municipi.id}"
+                                th:text="${municipi.nom + ' - ' + municipi.provincia.toString()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="imatge"><b>Imatge:</b></label>
+                    <input type="text" class="form-control" placeholder="Default input" id="imatge" th:field="*{imagen}">
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('imagen')}" th:errors="*{imagen}"></td></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcio" class="form-label mt-4"><b>Descripció:</b></label>
+                    <textarea class="form-control" id="descripcio" rows="3" th:field="*{descripcio}"></textarea>
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('descripcio')}" th:errors="*{descripcio}"></td></div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="nomEspai" class="form-label mt-4">Nom Espai Public</label>
-                <select class="form-select" id="nomEspai" type="text" th:field="*{nomEspaiPublic}">
-                    <option th:each="espai : ${espaisPerProvincia}" th:text="${espai.nom}" th:value="${espai.nom}"></option>
-                </select>
-            </div>
-
-
-        </div>
-        <div class="modal-footer">
-            <input class="btn btn-success" type="submit" value="Afegir controlador"/>
         </div>
     </form>
 </div>

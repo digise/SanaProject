@@ -29,7 +29,7 @@
             <tr class="table-light" th:each="municipi: ${municipis}" th:object="${municipi}">
                 <td th:text="${municipi.id}"></td>
                 <td th:text="${municipi.nom}"></td>
-                <td th:text="${municipi.provincia}"></td>
+                <td th:text="${municipi.provincia.getDescripcion()}"></td>
                 <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Gestionar els gestors</a>
                     <a type="button" class="btn btn-info btn-sm"  th:href="@{/municipi/update/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Editar</a>
                     <a class="btn btn-danger btn-sm" th:href="@{/municipi/delete/{id}(id=${municipi.id})}"><i class="fas fa-trash"></i> Borrar</a></td>

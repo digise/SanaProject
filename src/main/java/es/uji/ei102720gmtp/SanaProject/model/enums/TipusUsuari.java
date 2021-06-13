@@ -3,17 +3,16 @@ package es.uji.ei102720gmtp.SanaProject.model.enums;
 public enum TipusUsuari {
 
     CIUTADA("Ciutada"),
-    GESTORMUNICIPAL("Gestor Municipal");
+    GESTORMUNICIPAL("Gestor Municipal"),
+    RESPONSABLE("Responsable de medi ambient"),
+    CONTROLADOR("Controlador");
 
 
-    private final String tipusCiutada;
+    private String descripcion;
 
-    TipusUsuari(String tipusCiutada){
-        this.tipusCiutada = tipusCiutada;
+    TipusUsuari(String descripcion){
+        this.descripcion = descripcion;
     }
 
-    @Override
-    public String toString() {
-        return tipusCiutada;
-    }
+
 }
