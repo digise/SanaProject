@@ -1,8 +1,5 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -67,35 +64,5 @@ public class ReservaTablas extends Reserva{
 
     public void setDataReserva(LocalDate dataReserva) {
         this.dataReserva = dataReserva;
-    }
-
-    private EspaiPublicDao espaiPublicDao;
-
-    private MunicipiDao municipiDao;
-
-    public EspaiPublicDao getEspaiPublicDao() {
-        return espaiPublicDao;
-    }
-
-    public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao) {
-        this.espaiPublicDao = espaiPublicDao;
-    }
-
-    public MunicipiDao getMunicipiDao() {
-        return municipiDao;
-    }
-
-    public void setMunicipiDao(MunicipiDao municipiDao) {
-        this.municipiDao = municipiDao;
-    }
-
-    public String nomEspaiCiutadaReserva(int idEspai){
-        String nomEspai = espaiPublicDao.getEspaiPublic(idEspai).getNom();
-        return nomEspai;
-    }
-
-    public String nomLocalitzacioCiutadaReserva(int idEspai){
-        String localitzacio = municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getProvincia().getDescripcion();
-        return localitzacio;
     }
 }

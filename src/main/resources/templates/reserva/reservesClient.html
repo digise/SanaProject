@@ -1,53 +1,43 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/base}">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-
+    <title>Reserves del client</title>
+    <meta charset="UTF-8" />
 
 </head>
 <body>
-
-<div layout:fragment="content">
-    <h1 class="my-3">Reserves</h1>
-    <div th:if="${#lists.isEmpty(reserves)}">
-        No hi ha reserves en aquest espai
-    </div>
-    <div th:unless="${#lists.isEmpty(reserves)}">
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">id Reserva</th>
-                <th scope="col">Nom espai</th>
-                <th scope="col">Localització</th>
-                <th scope="col">id Zona</th>
-                <th scope="col">Nombre Persones</th>
-                <th scope="col">Hora inici</th>
-                <th scope="col">Hora final</th>
-                <th scope="col">Data reserva</th>
-                <th scope="col">Estat de la reserva</th>
-                <th scope="col">Acció</th>
-            </tr>
-            </thead>
-            <tr class="table-light" th:each="reserva: ${reserves}">
-                <td th:text="${reserva.reserva.id}"></td>
-                <td th:text="${reserva.nomEspaiCiutadaReserva(reserva.idEspai)}"></td>
-                <td th:text="${reserva.nomLocalitzacioCiutadaReserva(reserva.idEspai)}"></td>
-                <td th:text="${reserva.idZona}"></td>
-                <td th:text="${reserva.reserva.nombrePersones}"></td>
-                <td th:text="$reserva.horaInici}"></td>
-                <td th:text="${reserva.horaFinal}"></td>
-                <td th:text="${reserva.dataReserva}"></td>
-                <td th:text="${reserva.estatReserva.getDescripcion()}"></td>
-                <td><a class="btn btn-info btn-sm"  th:href="@{/reserva/update/{idReserva}(idReserva=${reserva.reserva.id})}"><i class="fa fa-edit"></i> Editar</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{/reserva/delete/{idReserva}(idReserva=${reserva.reserva.idReserva})}"><i class="fas fa-trash"></i> Borrar</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <a class="btn btn-success" type="submit" th:href="@{/controlador/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir controlador</a>
-</div>
-
+<h1>Llista de Reserves</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id reserva</th>
+        <th>Codi Qr</th>
+        <th>Nombre persones</th>
+        <th>Data creacio</th>
+        <th>Estat</th>
+        <th>NIF ciutada</th>
+        <th>Id Franja</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reserva: ${reserves}">
+        <td th:text="${reserva.id}"></td>
+        <td th:text="${reserva.codiQr}"></td>
+        <td th:text="${reserva.nombrePersones}"></td>
+        <td th:text="${reserva.dataCreacio}"></td>
+        <td th:text="${reserva.estat}"></td>
+        <td th:text="${reserva.nifCiutada}"></td>
+        <td th:text="${reserva.idFranja}"></td>
+        <td><a th:href="@{/reserva/update/{id}(id=${reserva.id})}"><button type="button" class="btn btn-danger">Edita</button></a>
+        </td>
+        <td><a th:href="@{/reserva/delete/{id}(id=${reserva.id})}"><button type="button" class="btn btn-danger">Esborra</button></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="add"><button type="button" class="btn btn-success">Afegeix reserva</button></a>
 </body>
 </html>
