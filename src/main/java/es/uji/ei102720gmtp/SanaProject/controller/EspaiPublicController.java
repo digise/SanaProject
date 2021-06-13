@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -98,11 +99,13 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         espaiPublic.setLocalitzacio(municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getProvincia().toString());
         if (bindingResult.hasErrors()) {
             return "espaiPublic/update";
         }
+        String msg = String.format("Les dades de l'espai amb nom: " + espaiPublic.getNom() + " se han actualitzat correctament");
+        redirectAttributes.addFlashAttribute("alert", msg);
         espaiPublicDao.updateEspaiPublic(espaiPublic);
         return "redirect:espaisPerMunicipi";
     }

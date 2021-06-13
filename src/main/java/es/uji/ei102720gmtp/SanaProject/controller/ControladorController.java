@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -105,7 +106,7 @@ public class ControladorController  {
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("controlador") ControladorAmbEspaiPublic controladorAmbEspaiPublic, BindingResult bindingResult, HttpSession session){
+    public String processUpdateSubmit(@ModelAttribute("controlador") ControladorAmbEspaiPublic controladorAmbEspaiPublic, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes){
         ControladorsAmbEspaiPublicValidator controladorsAmbEspaiPublicValidator = new ControladorsAmbEspaiPublicValidator();
         controladorsAmbEspaiPublicValidator.validate(controladorAmbEspaiPublic, bindingResult);
         if (bindingResult.hasErrors())
