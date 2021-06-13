@@ -10,24 +10,27 @@
 <body>
 
 <div layout:fragment="content">
-    <h1 class="my-3">Reserves del espai <span th:text="${}"></span></h1>
-    <div th:if="${#lists.isEmpty(controladors)}">
-        No hi ha controladors assignats en aquest espai
+    <h1 class="my-3">Reserves del espai <span th:text="${espai.nom}"></span></h1>
+    <div th:if="${#lists.isEmpty(reserves)}">
+        No hi ha reserves en aquest espai
     </div>
-    <div th:unless="${#lists.isEmpty(controladors)}">
+    <div th:unless="${#lists.isEmpty(reserves)}">
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Nif</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Cognoms</th>
-                <th scope="col">Correu</th>
-                <th scope="col">Telèfon</th>
-                <th scope="col">Localització</th>
+                <th scope="col">Id reserva</th>
+                <th scope="col">Nom espai</th>
+                <th scope="col">Id zona</th>
+                <th scope="col">Nombre persones</th>
+                <th scope="col">Hora inici</th>
+                <th scope="col">Hora final</th>
+                <th scope="col">Data reserva</th>
+                <th scope="col">Estat</th>
+                <th scope="col">Nif ciutadà</th>
                 <th scope="col">Acció</th>
             </tr>
             </thead>
-            <tr class="table-light" th:each="controlador: ${controladors}" th:object="${controlador}">
+            <tr class="table-light" th:each="reserva: ${reserves}" th:object="${reserva}">
                 <td th:text="${controlador.controlador.nif}"></td>
                 <td th:text="${controlador.controlador.nom}"></td>
                 <td th:text="${controlador.controlador.cognoms}"></td>

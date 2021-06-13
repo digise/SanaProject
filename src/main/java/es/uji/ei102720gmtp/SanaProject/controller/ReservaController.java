@@ -11,6 +11,7 @@ import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.ReservaService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesEspaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ public class ReservaController {
     private OcupaDao ocupaDao;
     private ZonaDao zonaDao;
     private FranjaHorariaDao franjaHorariaDao;
+    private ReservesEspaiService reservesEspaiService;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -73,6 +75,11 @@ public class ReservaController {
         this.franjaHorariaDao = franjaHorariaDao;
     }
 
+    @Autowired
+    public void setReservesEspaiService(ReservesEspaiService reservesEspaiService){
+        this.reservesEspaiService = reservesEspaiService;
+    }
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -81,10 +88,12 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping("/mostrarReserves")
-    public String mostrarReserves(Model model){
+    @RequestMapping("/mostrarReserves/{id}")
+    public String mostrarReserves(Model model, @PathVariable int id){
         model.addAttribute("reserves", reservaDao.getReserves());
-        return "reserva/list";
+        reservesEspaiService.reservesPerEspai(id);
+        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+        return "reserva/mostrarReserves";
     }
 
     /*

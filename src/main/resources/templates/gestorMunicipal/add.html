@@ -11,7 +11,9 @@
     <!--EL primer action es si fuera una página estática-->
     <form action="#" th:action="@{/gestorMunicipal/add}"
           th:object="${gestorMunicipal}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
-
+        <div>
+            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
         <div class="modal-header">
             <h2 class="modal-title" id="exampleModalLabel">Afegir gestor</h2>
         </div>
@@ -53,7 +55,7 @@
         </div>
 
         <div class="modal-footer">
-            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+
             <input class="btn btn-success" type="submit" value="Afegir gestor municipal"/>
         </div>
     </form>

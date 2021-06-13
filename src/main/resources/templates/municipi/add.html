@@ -7,11 +7,13 @@
 
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" >
     <!--EL primer action es si fuera una página estática-->
     <form action="#" th:action="@{/municipi/add}"
           th:object="${municipi}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
-
+        <div >
+            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
         <div class="modal-header">
             <h2 class="modal-title" id="exampleModalLabel">Afegir municipi</h2>
         </div>
@@ -33,7 +35,7 @@
         </div>
 
         <div class="modal-footer">
-            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+
             <input class="btn btn-success" type="submit" value="Afegir municipi"/>
         </div>
     </form>

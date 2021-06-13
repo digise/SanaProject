@@ -9,8 +9,14 @@
 </head>
 <body>
 
-<div layout:fragment="content">
-  <h1 class="my-3">Gestors de <span th:text="${municipi.nom}"></span></h1>
+<div layout:fragment="content" class="row">
+  <div class="col-2">
+    <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+  </div>
+  <div class="col-7">
+    <h1 class="my-3">Gestors de <span th:text="${municipi.nom}"></span></h1>
+  </div>
+
   <div th:if="${#lists.isEmpty(gestors)}">
     No hi ha gestors assignats en aquest municipi
   </div>
@@ -42,8 +48,10 @@
       </tbody>
     </table>
   </div>
-  <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
-  <a class="btn btn-success" type="submit" th:href="@{/gestorMunicipal/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir gestorMunicipal</a>
+  <div class="col-2">
+    <a class="btn btn-success" type="submit" th:href="@{/gestorMunicipal/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir gestorMunicipal</a>
+  </div>
+
 </div>
 
 </body>

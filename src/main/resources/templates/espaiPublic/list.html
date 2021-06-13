@@ -10,8 +10,11 @@
 <div layout:fragment="content">
 
     <div class="row">
-        <div class="col-sm-8">
-            <h1 class="my-3">Espais públics</h1>
+        <div class="col-2">
+            <a type="button" class="btn btn-danger" th:href="@{/responsable/indexResponsable}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="col-8">
+            <h1 class="my-3 text-center">Espais públics</h1>
         </div>
     </div>
 
@@ -34,13 +37,13 @@
                     </div>
                 </div>
                 <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Reserves</a>
+                    <a class="btn btn-primary" th:href="@{/reserva/mostrarReserves/{id}(id=${espai.id})}">Reserves</a>
                 </div>
             </div>
         </div>
         <div class="w-100"></div>
     </div>
-    <a type="button" class="btn btn-danger" th:href="@{/responsable/indexResponsable}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+
 
 
 </div>

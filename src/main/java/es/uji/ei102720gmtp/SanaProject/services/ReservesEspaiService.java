@@ -4,10 +4,7 @@ import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.OcupaDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.Ocupa;
-import es.uji.ei102720gmtp.SanaProject.model.Reserva;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
