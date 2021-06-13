@@ -46,7 +46,6 @@ public class ControladorsPerMunicipiService implements InterfaceControladorsPerM
     public ControladorAmbEspaiPublic getControladorService(String nifControlador, int idMunicipi){
         List<ControladorAmbEspaiPublic> list = controladorsPerMunicipi(idMunicipi);
         for (ControladorAmbEspaiPublic controladorAmbEspaiPublic : list){
-            System.out.println(controladorAmbEspaiPublic.toString());
             if (controladorAmbEspaiPublic.getControlador().getNif().equals(nifControlador))
                 return controladorAmbEspaiPublic;
         }

@@ -1,7 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
-import es.uji.ei102720gmtp.SanaProject.model.enums.TipusSol;
+import es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny;
 
 public class EspaiPublic
 {
@@ -9,7 +9,7 @@ public class EspaiPublic
     private int idMunicipi;
     private String nom;
     private String tipus;
-    private TipusSol terreny;
+    private TipusTerreny tipusTerreny;
     private TipusAcces tipusAcces;
     private String localitzacio;
     private Integer longitud;
@@ -52,12 +52,12 @@ public class EspaiPublic
         this.tipus = tipus;
     }
 
-    public TipusSol getTerreny() {
-        return terreny;
+    public TipusTerreny getTipusTerreny() {
+        return tipusTerreny;
     }
 
-    public void setTerreny(TipusSol terreny) {
-        this.terreny = terreny;
+    public void setTipusTerreny(TipusTerreny tipusTerreny) {
+        this.tipusTerreny = tipusTerreny;
     }
 
     public TipusAcces getTipusAcces() {
@@ -111,15 +111,15 @@ public class EspaiPublic
     @Override
     public String toString() {
         return "EspaiPublic{" +
-                "id='" + id + '\'' +
-                ", idMunicipi='" + idMunicipi + '\'' +
+                "id=" + id +
+                ", idMunicipi=" + idMunicipi +
                 ", nom='" + nom + '\'' +
                 ", tipus='" + tipus + '\'' +
-                ", terreny=" + terreny +
-                ", tipusAcces='" + tipusAcces + '\'' +
+                ", tipusTerreny=" + tipusTerreny +
+                ", tipusAcces=" + tipusAcces +
                 ", localitzacio='" + localitzacio + '\'' +
-                ", longitud='" + longitud + '\'' +
-                ", amplaria='" + amplaria + '\'' +
+                ", longitud=" + longitud +
+                ", amplaria=" + amplaria +
                 ", imagen='" + imagen + '\'' +
                 ", descripcio='" + descripcio + '\'' +
                 '}';

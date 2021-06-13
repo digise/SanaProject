@@ -1,16 +1,16 @@
 package es.uji.ei102720gmtp.SanaProject.model.enums;
 
+public enum TipusTerreny {
+    SORRA("Sorra"),
+    PEDRA("Pedra"),
+    ROCAM("Rocam");
 
-public enum Provincia {
-    VALENCIA("Valencia"),
-    CASTELLO("Castelló"),
-    ALACANT("Alacant");
+    private String descripcion;
 
-    private  String descripcion;
-
-    Provincia(String descripcion) {
+    TipusTerreny(String descripcion) {
         this.descripcion = descripcion;
     }
+
 
     public String getDescripcion() {
         return descripcion;

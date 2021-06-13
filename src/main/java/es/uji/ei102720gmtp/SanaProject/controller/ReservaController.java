@@ -74,6 +74,12 @@ public class ReservaController {
         return "reserva/list";
     }
 
+    @RequestMapping("/mostrarReserves")
+    public String mostrarReserves(Model model){
+        model.addAttribute("reserves", reservaDao.getReserves());
+        return "reserva/list";
+    }
+
     /*
     @RequestMapping(value = "/add/{idZona}")
     public String addReserva(Model model, @PathVariable int idZona){

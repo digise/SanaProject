@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <title>Editar espacio público</title>
+    <meta charset="UTF-8" />
+
+</head>
+<body>
+<div layout:fragment="content">
+    <!--EL primer action es si fuera una página estática-->
+    <form action="#" th:action="@{/espaiPublic/update}"
+          th:object="${espaiPublic}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+        <div class="card border-info mb-3" style="max-width: 50rem;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h2 class="card-title"  th:text="*{nom}"></h2>
+                    </div>
+                    <div class="col-auto">
+                        <input class="btn btn-success" type="submit" value="Actualitzar Dades"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" maxlength="9" placeholder="Default input" id="id"  th:field="*{id}">
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label mt-2" for="nif"><b>Nom espai públic:</b></label>
+                    <input type="text" class="form-control" maxlength="9" placeholder="Default input" id="nif"  th:field="*{nom}">
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="nom"><b>Tipus:</b></label>
+                    <input type="text" class="form-control" placeholder="Default input" id="nom" th:field="*{tipus}" name="nom"/>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tipusTerreny" class="form-label mt-4"><b>Tipus Terreny:</b></label>
+                                <select class="form-select" id="tipusTerreny" type="text" th:field="*{tipusTerreny}">
+                                    <option th:each="tipusTerreny : ${T(es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny).values()}"
+                                            th:value="${tipusTerreny}">
+                                            <span th:text="${tipusTerreny.getDescripcion()}"></span>
+                                    </option>
+                                </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="tipusAcces" class="form-label mt-4"><b>Tipus Accés:</b></label>
+                                <select class="form-select" id="tipusAcces" type="text" th:field="*{tipusAcces}">
+                                    <option th:each="tipusAcces : ${T(es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces).values()}"
+                                            th:value="${tipusAcces}">
+                                            <span th:text="${tipusAcces.getDescripcion()}"></span>
+                                    </option>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="longitud"><b>Longitud (en metres):</b></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="Default input" id="longitud" th:field="*{longitud}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="col-form-label mt-4" for="amplaria"><b>Amplária (en metres):</b></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="Default input" id="amplaria" th:field="*{amplaria}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="municipi" class="form-label mt-4"><b>Municipi:</b></label>
+                    <select class="form-select" id="municipi" type="text" th:field="*{idMunicipi}">
+                        <option th:each="municipi : ${municipis}"
+                                th:value="${municipi.id}"
+                                th:text="${municipi.nom + ' - ' + municipi.provincia.toString()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-form-label mt-4" for="imatge"><b>Imatge:</b></label>
+                    <input type="text" class="form-control" placeholder="Default input" id="imatge" th:field="*{imagen}">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcio" class="form-label mt-4"><b>Descripció:</b></label>
+                    <textarea class="form-control" id="descripcio" rows="3" th:field="*{descripcio}"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

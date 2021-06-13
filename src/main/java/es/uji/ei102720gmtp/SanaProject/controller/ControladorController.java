@@ -9,7 +9,6 @@ import es.uji.ei102720gmtp.SanaProject.model.Controlador;
 import es.uji.ei102720gmtp.SanaProject.model.ControladorAmbEspaiPublic;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
-import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceControladorsPerMunicipiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/controlador")
@@ -84,7 +81,6 @@ public class ControladorController  {
     public String processAddSubmit(@ModelAttribute("controlador") ControladorAmbEspaiPublic controladorAmbEspaiPublic, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return "controlador/add";
-        System.out.println(controladorAmbEspaiPublic.toString());
         controladorDao.addControlador(controladorAmbEspaiPublic.getControlador());
         return "redirect:controladorsPerMunicipi";
     }
@@ -92,7 +88,7 @@ public class ControladorController  {
     @RequestMapping(value="/update/{nifControlador}", method = RequestMethod.GET)
     public String editControlador(Model model, HttpSession session, @PathVariable String nifControlador) {
         GestorMunicipal gestorMunicipal = (GestorMunicipal)  session.getAttribute("gestorMunicipal");
-        int idMunicipi = municipiDao.getMunicipi(gestorMunicipal.getIdMunicipi()).getIdMunicipi();
+        int idMunicipi = municipiDao.getMunicipi(gestorMunicipal.getIdMunicipi()).getId();
         model.addAttribute("controlador", controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
         return "controlador/update";
     }
@@ -116,7 +112,8 @@ public class ControladorController  {
     public String processDelete(@PathVariable String nifControlador, HttpSession session){
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
         int idMunicipi = gestorMunicipal.getIdMunicipi();
+        System.out.println(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
         controladorDao.deleteControlador(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
-        return "redirect:../list";
+        return "redirect:../controladorsPerMunicipi";
     }
 }

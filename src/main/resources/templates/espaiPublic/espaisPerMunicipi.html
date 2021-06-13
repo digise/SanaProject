@@ -9,8 +9,14 @@
 
 <div layout:fragment="content">
 
-    <h1 class="my-3">Espais públics de <span th:text="${municipi.nom}"></span></h1>
-    <a class="btn btn-success mb-5" type="submit" ><i class="fa fa-plus" aria-hidden="true"></i> Afegir espai</a>
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="my-3">Espais públics de <span th:text="${municipi.nom}"></span></h1>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-success mb-3" type="submit" ><i class="fa fa-plus"></i> Afegir espai</a>
+        </div>
+    </div>
 
     <div th:if="${#lists.isEmpty(espais)}">
         No hi ha espais públics en la base de dades
@@ -31,9 +37,10 @@
                     </div>
                 </div>
                 <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Modificar espai</a>
+                    <a class="btn btn-primary" th:href="@{/espaiPublic/informacioEspai/{id}(id=${espai.id})}">Més infromació del espai</a>
                     <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Reserves</a>
                     <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Serveis Espai</a>
+                    <a class="btn btn-info" th:href="@{/espaiPublic/update/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Modificar espai</a>
                 </div>
             </div>
         </div>

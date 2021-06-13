@@ -8,14 +8,13 @@ public enum EstatReserva {
     CANCELADACONTROLADOR("Cancelada pel controlador"),
     CANCELADAGESTORMUNICIPAL("Cancelada pel gestor municipal");
 
-    private final String estatReserva;
+    private String descripcion;
 
-    EstatReserva(String estatReserva){
-        this.estatReserva = estatReserva;
+    EstatReserva(String descripcion){
+        this.descripcion = descripcion;
     }
 
-    @Override
-    public String toString() {
-        return estatReserva;
+    public String getDescripcion() {
+        return descripcion;
     }
 }
