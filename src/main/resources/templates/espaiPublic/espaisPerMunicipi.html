@@ -10,7 +10,8 @@
 <div layout:fragment="content">
 
     <h1 class="my-3">Espais públics de <span th:text="${municipi.nom}"></span></h1>
-
+    <div th:if="${alert != null}" th:text="${alert}" class="alert alert-success" role="alert">
+    </div>
     <div th:if="${#lists.isEmpty(espais)}">
         No hi ha reserves d'aquest espai
     </div>
