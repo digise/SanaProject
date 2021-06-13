@@ -134,8 +134,7 @@ public class ControladorController  {
     @RequestMapping("/indexControlador")
     public String mostrarIndexControlador(Model model, HttpSession session){
         Controlador controlador = (Controlador) session.getAttribute("controlador");
-        List<EspaiPublic> espaisControlador = municipisPerControladorService.municipisPerControlador(controlador.getNif());
-        model.addAttribute("espaisControlador", espaisControlador);
+        model.addAttribute("controlador", controlador);
         return "controlador/indexControlador";
     }
 

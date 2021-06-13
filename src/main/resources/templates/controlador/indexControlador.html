@@ -1,40 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/base}">
-
 <head>
   <meta charset="UTF-8">
-  <title>SANA</title>
+  <title>Controlador</title>
 
 </head>
 <body>
 <div style="text-align: center" layout:fragment="content">
-  <h1>Tus espacios a controlar</h1>
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Tipus</th>
-      <th>Terreny</th>
-      <th>TipusAcces</th>
-      <th>Localitzacio</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="espaiPublic: ${espaisControlador}">
-      <td th:text="${espaiPublic.nom}"></td>
-      <td th:text="${espaiPublic.tipus}"></td>
-      <td th:text="${espaiPublic.terreny}"></td>
-      <td th:text="${espaiPublic.tipusAcces}"></td>
-      <td th:text="${espaiPublic.localitzacio}"></td>
-      <td><a th:href="@{/controlador/reservesEspai/{idEspai}(idEspai=${espaiPublic.id})}">Llista de reserves</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <h1>Benvingut <span th:text="${controlador.nom}"></span></h1>
 </div>
-
 </body>
 </html>

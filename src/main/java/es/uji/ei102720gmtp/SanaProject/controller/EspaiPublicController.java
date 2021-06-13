@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 
+import es.uji.ei102720gmtp.SanaProject.Validation.ControladorsAmbEspaiPublicValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.*;
@@ -8,6 +9,7 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
+import es.uji.ei102720gmtp.SanaProject.services.MunicipisPerControladorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ public class EspaiPublicController {
     private EspaiPublicDao espaiPublicDao;
     private EspaiPublicService espaiPublicService;
     private MunicipiDao municipiDao;
+    private MunicipisPerControladorService municipisPerControladorService;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -45,7 +48,10 @@ public class EspaiPublicController {
         this.municipiDao = municipiDao;
     }
 
-
+    @Autowired
+    public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
+        this.municipisPerControladorService = municipisPerControladorService;
+    }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
 
@@ -80,6 +86,7 @@ public class EspaiPublicController {
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult){
+
         if(bindingResult.hasErrors())
             return "espaiPublic/add";
         espaiPublicDao.addEspaiPublic(espaiPublic);
@@ -205,5 +212,13 @@ public class EspaiPublicController {
         }
         session.setAttribute("nextUrl", nextUrl);*/
         return "espaiPublic/seleccionarProvincia";
+    }
+
+    @RequestMapping("/espaisPerControlador")
+    public String mostrarEspaisPerControlador(Model model, HttpSession session){
+        Controlador controlador = (Controlador) session.getAttribute("controlador");
+        List<EspaiPublic> espaisControlador = municipisPerControladorService.municipisPerControlador(controlador.getNif());
+        model.addAttribute("espaisControlador", espaisControlador);
+        return "espaiPublic/espaisPerControlador";
     }
 }

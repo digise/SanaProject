@@ -17,26 +17,26 @@ public class ControladorsAmbEspaiPublicValidator implements Validator{
         ControladorAmbEspaiPublic controladorAmbEspaiPublic = (ControladorAmbEspaiPublic) obj;
         if (controladorAmbEspaiPublic.getControlador().getNom().trim().equals("")){
 
-            errors.rejectValue("controlador.nom", "obligatori", "Cal introduir un valor");
+            errors.rejectValue("nom", "obligatori", "Cal introduir un valor");
         }
         if (controladorAmbEspaiPublic.getControlador().getCognoms().trim().equals("")){
 
-            errors.rejectValue("controlador.cognoms", "obligatori", "Cal introduir un valor");
+            errors.rejectValue("cognoms", "obligatori", "Cal introduir un valor");
         }
         if (controladorAmbEspaiPublic.getControlador().getEmail().trim().equals("")){
 
-            errors.rejectValue("controlador.email", "obligatori", "Cal introduir un valor");
+            errors.rejectValue("email", "obligatori", "Cal introduir un valor");
         }
         if (controladorAmbEspaiPublic.getControlador().getTelefon().trim().equals("")){
 
-            errors.rejectValue("controlador.telefon", "obligatori", "Cal introduir un valor");
+            errors.rejectValue("telefon", "obligatori", "Cal introduir un valor");
         }
         //Afegeix ací la validació per nif <= 9
          if(controladorAmbEspaiPublic.getControlador().getNif().length() != 9)
-            errors.rejectValue("controlador.nif", "nif.noPermitit" , "EL nif ha de tindre 9 caràcters");
+            errors.rejectValue("nif", "no permitit" , "EL nif ha de tindre 9 caràcters");
         // Afegeix ací la validació per a carc telefon < 9
         if (Integer.parseInt(controladorAmbEspaiPublic.getControlador().getTelefon()) != 9)
-            errors.rejectValue("telefon", "telefon.noPermitit" , "El número de telèfon deu tindre 9 dígits");
+            errors.rejectValue("telefon", "noPermitit" , "El número de telèfon deu tindre 9 dígits");
 
     }
 }

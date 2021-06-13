@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Gestionar municipis</title>
+    <title>Llista municipis</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 </head>
 <body>
-<h1>Llista de municipis</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id municipi</th>
-        <th>Nom</th>
-        <th>Provincia</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="municipi: ${municipis}">
-        <td th:text="${municipi.idMunicipi}"></td>
-        <td th:text="${municipi.nom}"></td>
-        <td th:text="${municipi.provincia}"></td>
-        <td><a th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${municipi.idMunicipi})}"><button type="button" class="btn btn-warning">Gestionar els gestors municipals</button></a>
-        </td>
-        <td><a th:href="@{/municipi/update/{id}(id=${municipi.idMunicipi})}"><button type="button" class="btn btn-warning">Edita</button></a>
-        </td>
-        <td><a th:href="@{/municipi/delete/{id}(id=${municipi.idMunicipi})}"><button type="button" class="btn btn-danger">Esborra</button></a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="add"><button type="button" class="btn btn-success">Afegeix municipi</button></a>
+<div layout:fragment="content">
+    <h1 class="my-3">Llista de municipis</h1>
+    <div th:if="${#lists.isEmpty(municipis)}">
+        No hi ha municipis
+    </div>
+    <div th:unless="${#lists.isEmpty(municipis)}">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id municipi</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Provincia</th>
+
+            </tr>
+            </thead>
+            <tr class="table-light" th:each="municipi: ${municipis}" th:object="${municipi}">
+                <td th:text="${municipi.id}"></td>
+                <td th:text="${municipi.nom}"></td>
+                <td th:text="${municipi.provincia}"></td>
+                <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Gestionar els gestors</a>
+                    <a type="button" class="btn btn-info btn-sm"  th:href="@{/municipi/update/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/municipi/delete/{id}(id=${municipi.id})}"><i class="fas fa-trash"></i> Borrar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a type="button" class="btn btn-danger" th:href="@{/responsable/indexResponsable}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    <a class="btn btn-success" type="submit" th:href="@{/municipi/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir municipi</a>
+
+</div>
+
 </body>
 </html>

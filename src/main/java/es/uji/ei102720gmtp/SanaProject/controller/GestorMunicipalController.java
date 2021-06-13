@@ -1,5 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
+import es.uji.ei102720gmtp.SanaProject.Validation.GestorMunicipalValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.GestorMunicipalDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
@@ -54,6 +55,8 @@ public class GestorMunicipalController {
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+        GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
+        gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
         if(bindingResult.hasErrors())
             return "gestorMunicipal/add";
         gestorMunicipalDao.addGestorMunicipal(gestorMunicipal);
