@@ -55,6 +55,8 @@ public class MunicipiController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@ModelAttribute("municipi") Municipi municipi, BindingResult bindingResult){
+        MunicipiValidator municipiValidator = new MunicipiValidator();
+        municipiValidator.validate(municipi, bindingResult);
         if (bindingResult.hasErrors())
             return "municipi/update";
         municipiDao.updateMunicipi(municipi);

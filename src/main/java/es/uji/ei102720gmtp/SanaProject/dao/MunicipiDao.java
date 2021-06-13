@@ -22,8 +22,8 @@ public class MunicipiDao {
 
     /* Afegim el municipi */
     public void addMunicipi(Municipi municipi) {
-        jdbcTemplate.update("INSERT INTO Municipi VALUES(?, ?)", //CAST(? AS tipus_provincia))",
-                municipi.getNom(), municipi.getProvincia());
+        jdbcTemplate.update("INSERT INTO Municipi (nom, provincia) VALUES(?, CAST (? AS tipus_provincia))", //CAST(? AS tipus_provincia))",
+                municipi.getNom(), municipi.getProvincia().name());
     }
 
     /* Esborrem el municipi amb el id*/
@@ -41,8 +41,8 @@ public class MunicipiDao {
     /* Actualitzem els atributs del municipi
        (excepte el id, que és la clau primària) */
     public void updateMunicipi(Municipi municipi) {
-        jdbcTemplate.update("UPDATE Municipi SET nom = ?, provincia = ? WHERE id = ?",
-                municipi.getNom(), municipi.getProvincia(), municipi.getId());
+        jdbcTemplate.update("UPDATE Municipi SET nom = ?, provincia = CAST (? AS tipus_provincia) WHERE id = ?",
+                municipi.getNom(), municipi.getProvincia().getDescripcion(), municipi.getId());
     }
 
     /* Obtenim el municipi amb el id. Torna null si no existeix. */

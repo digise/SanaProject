@@ -1,8 +1,11 @@
 package es.uji.ei102720gmtp.SanaProject.model;
 
+import es.uji.ei102720gmtp.SanaProject.model.enums.TipusUsuari;
+
 public class UserDetails {
     String nif;
     String password;
+    TipusUsuari tipusUsuari;
 
 
     public String getNif() {
@@ -19,6 +22,14 @@ public class UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public TipusUsuari getTipusUsuari() {
+        return tipusUsuari;
+    }
+
+    public void setTipusUsuari(TipusUsuari tipusUsuari) {
+        this.tipusUsuari = tipusUsuari;
     }
 
     @Override

@@ -3,6 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
+import es.uji.ei102720gmtp.SanaProject.model.enums.TipusUsuari;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,6 +93,7 @@ public class LoginController {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                     return "login";
                 }
+                user.setTipusUsuari(TipusUsuari.CIUTADA);
                 session.setAttribute("user", user);
                 session.setAttribute("ciutada", ciutada);
                 session.setAttribute("nextUrl", "/espaiPublic/seleccionarProvincia");
@@ -111,6 +113,7 @@ public class LoginController {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                     return "login";
                 }
+                user.setTipusUsuari(TipusUsuari.GESTORMUNICIPAL);
                 session.setAttribute("user", user);
                 session.setAttribute("gestorMunicipal", gestorMunicipal);
                 session.setAttribute("nextUrl", "/gestorMunicipal/indexGestor");
@@ -128,6 +131,7 @@ public class LoginController {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                     return "login";
                 }
+                user.setTipusUsuari(TipusUsuari.CONTROLADOR);
                 session.setAttribute("user", user);
                 session.setAttribute("controlador", controlador);
                 session.setAttribute("nextUrl", "/controlador/indexControlador");
@@ -144,6 +148,7 @@ public class LoginController {
                 bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                 return "login";
             }
+            user.setTipusUsuari(TipusUsuari.RESPONSABLE);
             session.setAttribute("user", user);
             session.setAttribute("responsable", fakeUser);
             session.setAttribute("nextUrl", "/responsable/indexResponsable");

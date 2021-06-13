@@ -60,7 +60,7 @@ public class GestorMunicipalController {
         if(bindingResult.hasErrors())
             return "gestorMunicipal/add";
         gestorMunicipalDao.addGestorMunicipal(gestorMunicipal);
-        return "redirect:list";
+        return "redirect:gestorsPerMunicipi";
     }
 
     @RequestMapping(value="/update/{nif}", method = RequestMethod.GET)
@@ -71,16 +71,18 @@ public class GestorMunicipalController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+        GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
+        gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
         if (bindingResult.hasErrors())
             return "gestorMunicipal/update";
         gestorMunicipalDao.updateGestorMunicipal(gestorMunicipal);
-        return "redirect:list";
+        return "redirect:gestorsPerMunicipi";
     }
 
     @RequestMapping(value = "/delete/{nif}")
     public String processDelete(@PathVariable String nif){
         gestorMunicipalDao.deleteGestorMunicipal(gestorMunicipalDao.getGestorMunicipal(nif));
-        return "redirect:../list";
+        return "redirect:../gestorsPerMunicipi";
     }
 
     @RequestMapping("/indexGestor")

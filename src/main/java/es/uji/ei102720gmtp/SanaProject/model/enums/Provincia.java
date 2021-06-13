@@ -3,7 +3,7 @@ package es.uji.ei102720gmtp.SanaProject.model.enums;
 
 public enum Provincia {
     VALENCIA("Valencia"),
-    CASTELLO("Castelló"),
+    CASTELLO("Castello"),
     ALACANT("Alacant");
 
     private  String descripcion;
