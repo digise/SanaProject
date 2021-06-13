@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+  <title>Codi QR</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+  <h1 class="my-5 text-center" style="font-size: xxx-large">Codi QR de la teua reserva</h1>
+  <div class="row justify-content-md-center">
+    <div class="col-lg-4 m-4 align-self-center">
+      <img th:src="${dades.codiQR}" alt="Card image">
+      <p>
+        <b>Reserva: </b>
+        <span th:text="${espai.nom + ' - Zona ' + dades.idZona + ' - ' + franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString()}"></span>
+      </p>
+      <p><b>Estat: </b><span th:text="${dades.estat.getDescripcion()}"></span></p>
+      <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id} (id=${dades.idEspai})}">Tornar a l'espai</a>
+      <img class="card-img" th:src="${dades.codiQR}" alt="Card image">
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-lg-4 m-4 align-self-center">
+      <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id} (id=${dades.idEspai})}">Tornar a l'espai</a>
+    </div>
+  </div>
+</div>

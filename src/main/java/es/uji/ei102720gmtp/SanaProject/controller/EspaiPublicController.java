@@ -68,6 +68,11 @@ public class EspaiPublicController {
         return "espaiPublic/espaisprovincia";
     }
 
+    @RequestMapping("/seleccionarProvincia")
+    public String listEspaiPublicsProvincia(Model model){
+        return "espaiPublic/seleccionarProvincia";
+    }
+
     @RequestMapping("espaisPerMunicipi")
     public String listEspaiPublicsPerMunicipi(Model model, HttpSession session){
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");

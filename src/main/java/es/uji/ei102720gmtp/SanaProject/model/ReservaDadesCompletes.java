@@ -8,31 +8,31 @@ import java.time.LocalDate;
 
 public class ReservaDadesCompletes {
 
-    private int idEspai;
-    private int idReserva;
+    private String idEspai;
+    private String idReserva;
     private String codiQR;
     private int nombrePersones;
     private EstatReserva estat;
     private String nifCiutada;
-    private int idZona;
-    private int idFranja;
+    private String idZona;
+    private String idFranja;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataReserva;
 
-    public int getIdEspai() {
+    public String getIdEspai() {
         return idEspai;
     }
 
-    public void setIdEspai(int idEspai) {
+    public void setIdEspai(String idEspai) {
         this.idEspai = idEspai;
     }
 
-    public int getIdReserva() {
+    public String getIdReserva() {
         return idReserva;
     }
 
-    public void setIdReserva(int idReserva) {
+    public void setIdReserva(String idReserva) {
         this.idReserva = idReserva;
     }
 
@@ -68,19 +68,19 @@ public class ReservaDadesCompletes {
         this.nifCiutada = nifCiutada;
     }
 
-    public int getIdZona() {
+    public String getIdZona() {
         return idZona;
     }
 
-    public void setIdZona(int idZona) {
+    public void setIdZona(String idZona) {
         this.idZona = idZona;
     }
 
-    public int getIdFranja() {
+    public String getIdFranja() {
         return idFranja;
     }
 
-    public void setIdFranja(int idFranja) {
+    public void setIdFranja(String idFranja) {
         this.idFranja = idFranja;
     }
 
@@ -96,6 +96,7 @@ public class ReservaDadesCompletes {
     public String toString() {
         return "NovaReserva{" +
                 "idEspai=" + idEspai +
+                "idReserva=" + idReserva +
                 ", codiQR='" + codiQR + '\'' +
                 ", nombrePersones=" + nombrePersones +
                 ", estat=" + estat +

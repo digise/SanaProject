@@ -19,7 +19,7 @@ public class ReservaValidator implements Validator{
         if (reserva.getNombrePersones() <= 0)
             errors.rejectValue("nombrePersones", "Massa baix", "Cal que el nombre siga al menys 1");
         ZonaDao zonaDao = reserva.getZonaDao();
-        int capacitat = zonaDao.getZona(reserva.getIdZona()).getCapacitat();
+        int capacitat = zonaDao.getZona(Integer.valueOf(reserva.getIdZona())).getCapacitat();
         if (reserva.getNombrePersones() > capacitat )
             errors.rejectValue("nombrePersones", "Massa alt", "Cal que el nombre siga menor o igual a la capacitat");
     }
