@@ -130,9 +130,8 @@ public class EspaiPublicController {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
 
-
-
-        // Passar municipi i provincia
+        Municipi municipi = municipiDao.getMunicipi( espai.getIdMunicipi() );
+        model.addAttribute("municipi", municipi);
 
         List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
         model.addAttribute("franges", frangesHoraries);
@@ -140,19 +139,8 @@ public class EspaiPublicController {
         LocalDate diaDate = LocalDate.now().plus(2, ChronoUnit.DAYS);
         model.addAttribute("dia", diaDate);
 
-        Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
-        model.addAttribute("zones", zonesDisponibles);
-
         ElegirZonaBean dades = new ElegirZonaBean(espai.getId(), diaDate);
         model.addAttribute("dades", dades);
-
-        ReservaDadesCompletes reserva = new ReservaDadesCompletes();
-        reserva.setIdEspai(espai.getId());
-        reserva.setEstat(EstatReserva.PENDENTUS);
-        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
-        reserva.setNifCiutada(ciutada.getNif());
-        reserva.setDataReserva(diaDate);
-        model.addAttribute("reserva", reserva);
 
         return "/espaiPublic/elegirZona";
     }
@@ -164,6 +152,8 @@ public class EspaiPublicController {
         model.addAttribute("espai", espai);
 
         // Passar municipi i provincia
+        Municipi municipi = municipiDao.getMunicipi( espai.getIdMunicipi() );
+        model.addAttribute("municipi", municipi);
 
         List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
         model.addAttribute("franges", frangesHoraries);
@@ -171,16 +161,6 @@ public class EspaiPublicController {
         LocalDate diaDate = dades.getDiaElegit();
         model.addAttribute("dia", diaDate);
 
-        Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
-        model.addAttribute("zones", zonesDisponibles);
-
-        ReservaDadesCompletes reserva = new ReservaDadesCompletes();
-        reserva.setIdEspai(espai.getId());
-        reserva.setEstat(EstatReserva.PENDENTUS);
-        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
-        reserva.setNifCiutada(ciutada.getNif());
-        reserva.setDataReserva(diaDate);
-        model.addAttribute("reserva", reserva);
 
         ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
         model.addAttribute("dades", novesDades);

@@ -37,7 +37,7 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
         List<EspaiPublic> espaisPublicsPerProvincia = new ArrayList<>();
         for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()){
             Municipi municipi = municipiDao.getMunicipi(espaiPublic.getIdMunicipi());
-            if (municipi.getProvincia().toString().equals(provincia))
+            if (municipi.getProvincia().getDescripcion().equals(provincia))
                 espaisPublicsPerProvincia.add(espaiPublic);
         }
         return espaisPublicsPerProvincia;
@@ -54,12 +54,8 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     }
 
     @Override
-    public Map<Integer, List<Zona>> getZonesDisponibles(LocalDate dia, List<FranjaHoraria> franges, int idEspai) {
-        Map<Integer, List<Zona>> zonesDisponibles = new HashMap<>();
-        for (FranjaHoraria franja : franges){
-            List<Zona> zones = zonaDao.getZonesFromFranjaDia(idEspai, franja.getId(), dia);
-            zonesDisponibles.put(franja.getId(), zones);
-        }
+    public List<Zona> getZonesDisponibles(LocalDate dia, FranjaHoraria franjaHoraria, int idEspai) {
+        List<Zona> zonesDisponibles = zonaDao.getZonesFromFranjaDia(idEspai, franjaHoraria.getId(), dia);
         return zonesDisponibles;
     }
 

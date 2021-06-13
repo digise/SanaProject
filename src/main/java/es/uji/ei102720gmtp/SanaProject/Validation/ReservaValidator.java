@@ -14,8 +14,8 @@ public class ReservaValidator implements Validator{
     }
 
     @Override
-    public void validate(Object obj, Errors errors) {
-        ReservaDadesCompletes reserva = (ReservaDadesCompletes) obj;
+    public void validate(Object target, Errors errors) {
+        ReservaDadesCompletes reserva = (ReservaDadesCompletes) target;
         if (reserva.getNombrePersones() <= 0)
             errors.rejectValue("nombrePersones", "Massa baix", "Cal que el nombre siga al menys 1");
         ZonaDao zonaDao = reserva.getZonaDao();

@@ -2,103 +2,62 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/base}">
 <head>
-    <title>Reserva d'una espai</title>
+    <title>Informació de la reserva</title>
     <meta charset="UTF-8">
 </head>
 <body>
-
-
-<h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${nom}"></span></h1>
-
-<div  class="col card border-primary pt-3" style="max-width: 25rem; border-width: medium;">
-    <form action="#" th:action="@{/reserva/add/}" th:object="${zona}" method="post">
-        <div class="row justify-content-center m-2">
-            <div class="col-auto">
-                <p><b>Zona :  </b></p>
+<div layout:fragment="content">
+    <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    <h1 class="my-5 text-center" style="font-size: xxx-large"
+        th:text="${'Reservar a la franja ' + franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString() + ' (' + reservaDadesCompletes.dataReserva.toString() + ')'}"></h1>
+    <div class="col card" style="max-width: 40rem;">
+        <form th:action="@{/reserva/reservaFeta}" th:object="${reservaDadesCompletes}" method="post" th:if="${!zones.isEmpty()}">
+            <div class="row justify-content-md-center pb-3">
+                <div class="col-md-auto">
+                    <label for="zona"><b>Selecciona la zona: </b></label>
+                </div>
+                <div class="col-md-auto">
+                    <select  id="zona" name="zona" th:field="*{idZona}">
+                        <option th:each="zona: ${zones}"
+                                th:value="${zona.getId()}"
+                                th:text="${'Zona ' + zona.getId() + ' (maxim ' + zona.getCapacitat() + ' persones)'}">
+                        </option>
+                    </select>
+                </div>
             </div>
+            <div class="row justify-content-md-center pt-3 pb-3">
+                <div class="col-md-auto">
+                    <label for="nombrePersones"><b>Indica el nombre de persones: </b></label>
+                </div>
+                <div class="col-md-auto">
+                    <input type="number" id="nombrePersones" name="nombrePersones" th:field="*{nombrePersones}">
+                </div>
+                <div class="row text-danger"><p th:if="${#fields.hasErrors('nombrePersones')}" th:errors="*{nombrePersones}"></p></div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-6 align-self-center offset-md-3 pt-3">
+                    <input class="btn btn-success" type="submit" value="Reservar">
+                </div>
+            </div>
+            <input type="hidden" th:field="*{idEspai}">
+            <input type="hidden" th:field="*{idFranja}">
+            <input type="hidden" th:field="*{dataReserva}">
+        </form>
+    </div>
+    <div th:if="${zones.isEmpty()}">
+        <div class="row justify-content-center pb-3">
             <div class="col-auto">
-                <select type="text" id="zona" nom="zona" th:field="*{id}">
-                    <option th:each="zonaOption : ${zones}" th:value="${zonaOption.getId()}" th:text="${'Zona ' + zonaOption.getId()}"></option>
-                </select>
-
+                <h5><u>No hi ha zones disponibles al dia i a la franja horaria seleccionades</u></h5>
             </div>
         </div>
-        <div class="row justify-content-center m-3">
+        <div class="row justify-content-center pt-3">
             <div class="col-auto">
-                <label for="data">Data</label>
-                <input type="date" id="data" name="data">
+                <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${reservaDadesCompletes.idEspai})}">Tornar a l'espai</a>
             </div>
-        </div>
-        <div class="row justify-content-center m-3">
-            <div class="col-auto">
-                <input type="submit" value="Actualitzar Horaris">
-            </div>
-        </div>
-    </form>
-    <form th:if="${!zones.isEmpty()}">
-        <div class="row justify-content-center m-5">
-            <div class="col-auto">
-                <h5><u>Franja Horaria</u></h5>
-
-                <span th:each="franja : ${franges}">
-                        <input type="radio" th:id="${franja.getId()}" name="franjaHoraria" th:value="${franja.getHoraInici() + ',' + franja.getHoraFinal()}">
-                        <label th:for="${franja.getId()}" th:text="${franja.getHoraInici() + ',' + franja.getHoraFinal()}"></label><br>
-                    </span>
-            </div>
-        </div>
-    </form>
-    <div th:if="${zones.isEmpty()}" class="row justify-content-center">
-        <div class="col-auto">
-            <h5><u>No hi ha zones disponibles</u></h5>
         </div>
     </div>
 </div>
 
 
-
-<form action="#" th:action="@{/reserva/add}"
-      th:object="${reserva}" method="post">
-    <table>
-        <tr>
-            <td><label>Id Reserva</label></td>
-            <td><input type="text" th:field="*{id}" /></td>
-        </tr>
-        <tr>
-            <td><label>Codi Qr</label></td>
-            <td><input type="text" th:field="*{codiQr}" /></td>
-        </tr>
-        <tr>
-            <td><label>Nombre persones</label></td>
-            <td><input type="text" th:field="*{nombrePersones}" /></td>
-        </tr>
-        <tr>
-            <td><label>Data crecio</label></td>
-            <td><input type="date" th:field="*{dataCreacio}" /></td>
-        </tr>
-        <tr>
-            <td><label>Estat</label></td>
-            <td><select class="form_control" type="text" th:field="*{estat}">
-                <option value="CASTELLO">Pendent ús</option>
-                <option value="VALENCIA">En ús</option>
-                <option value="ALACANT">Fi ús</option>
-                <option value="ALACANT">Cancelada per un ciutada</option>
-                <option value="ALACANT">Candelada per un controlador</option>
-                <option value="ALACANT">cancelada per gestor un municipal</option>
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td><label>Nif ciutada</label></td>
-            <td><input type="text" th:field="*{nifCiutada}" /></td>
-        </tr>
-        <tr>
-            <td><label>Id franja</label></td>
-            <td><input type="text" th:field="*{idFranja}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Afegeix nova reserva" /></td>
-        </tr>
-    </table>
-</form>
 </body>
 </html>
