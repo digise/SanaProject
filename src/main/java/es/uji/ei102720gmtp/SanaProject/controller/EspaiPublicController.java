@@ -178,6 +178,9 @@ public class EspaiPublicController {
         ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
         model.addAttribute("dades", novesDades);
 
+        String registrat = "Registrat";
+        model.addAttribute("registrat", registrat);
+
         return "/espaiPublic/elegirZona";
     }
 
