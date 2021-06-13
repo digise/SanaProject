@@ -16,7 +16,6 @@ public class ReservaDadesCompletes {
     private String nifCiutada;
     private int idZona;
     private int idFranja;
-    private ZonaDao zonaDao;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataReserva;
@@ -106,6 +105,8 @@ public class ReservaDadesCompletes {
                 ", dataReserva=" + dataReserva +
                 '}';
     }
+
+    private ZonaDao zonaDao;
 
     public ZonaDao getZonaDao() {
         return zonaDao;

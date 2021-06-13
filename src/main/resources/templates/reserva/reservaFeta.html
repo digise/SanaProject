@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
+    <title>Informació de la reserva</title>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+<div layout:fragment="content">
+    <h1 class="my-5 text-center" style="font-size: xxx-large">Aquesta es la informació de la teua reserva</h1>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 m-4 align-self-center">
+            <p><b>Nombre de persones: </b><span th:text="${dades.nombrePersones}"></span></p>
+            <p><b>Estat: </b><span th:text="${dades.estat.toString()}"></span></p>
+            <p><b>Zona: </b><span th:text="${'Zona ' + dades.idZona}"></span></p>
+            <p><b>Franja horaria: </b><span th:text="${franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString()}"></span></p>
+            <p><b>Data de la reserva: </b><span th:text="${dades.dataReserva.toString()}"></span></p>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 m-4 align-self-center">
+            <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id} (id=${dades.idEspai})}">Tornar a l'espai</a>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

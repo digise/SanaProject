@@ -6,10 +6,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import es.uji.ei102720gmtp.SanaProject.Validation.ReservaValidator;
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.OcupaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
@@ -44,6 +41,7 @@ public class ReservaController {
     private EspaiPublicService espaiPublicService;
     private OcupaDao ocupaDao;
     private ZonaDao zonaDao;
+    private FranjaHorariaDao franjaHorariaDao;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -68,6 +66,11 @@ public class ReservaController {
     @Autowired
     public void setOcupaDao(OcupaDao ocupaDao) {
         this.ocupaDao = ocupaDao;
+    }
+
+    @Autowired
+    public void setFranjaHorariaDao(FranjaHorariaDao franjaHorariaDao) {
+        this.franjaHorariaDao = franjaHorariaDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -95,7 +98,7 @@ public class ReservaController {
 
      */
 
-    @RequestMapping(value="/add", method= RequestMethod.POST)
+    @RequestMapping(value="/reservaFeta", method= RequestMethod.POST)
     public String ferReserva(@ModelAttribute("reserva") ReservaDadesCompletes reserva, BindingResult bindingResult, Model model, HttpSession session){
         System.out.println(reserva);
         reserva.setZonaDao(zonaDao);
@@ -133,30 +136,36 @@ public class ReservaController {
         reservaSimple.setEstat(reserva.getEstat());
         reservaSimple.setNifCiutada(reserva.getNifCiutada());
 
-        File f = new File("imagenes/reserva" + reserva.getIdEspai() + reserva.getIdFranja()
-                + reserva.getIdZona() + reserva.getDataReserva().toString() + ".png");
-        String data = "localhost:8080/reserva/" + reserva.getIdEspai() + reserva.getIdFranja()
-                + reserva.getIdZona() + reserva.getDataReserva().toString();
+        String dadesCodiQr = String.valueOf(reserva.getIdEspai()) + String.valueOf(reserva.getIdFranja()) + String.valueOf(reserva.getIdZona()) + reserva.getDataReserva().toString();
+        File f = new File("src/main/resources/static/imagenes/reserva" + dadesCodiQr + ".png");
+        String data = "localhost:8080/reserva/" + dadesCodiQr;
 
+        System.out.println(f.getPath());
         try {
             createQR(f, data, 300, 300);
             System.out.println("Codi QR creat");
+            reservaSimple.setCodiQr("imagenes/reserva" + dadesCodiQr + ".png");
         } catch (Exception e){
             System.out.println("No s'ha pogut crear el codi QR");
+            reservaSimple.setCodiQr("");
         }
-        reservaSimple.setCodiQr(f.getPath());
+
 
         reservaDao.addReserva(reservaSimple);
-        Reserva reservaGuardada = reservaDao.getReservaFromQR(f.getPath());
+        Reserva reservaGuardada = reservaDao.getReservaFromQR("imagenes/reserva" + dadesCodiQr + ".png");
 
         Ocupa ocupa = new Ocupa();
         ocupa.setDataReserva(reserva.getDataReserva());
         ocupa.setIdFranja(reserva.getIdFranja());
         ocupa.setIdZona(reserva.getIdZona());
         ocupa.setIdReserva(reservaGuardada.getId());
+
         ocupaDao.addOcupa(ocupa);
 
-        return "redirect:/espaiPublic/seleccionarProvincia";
+        model.addAttribute("dades", reserva);
+        model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()));
+        model.addAttribute("zona", zonaDao.getZona(reserva.getIdZona()));
+        return "/reserva/reservaFeta";
     }
 
     private File createQR(File file, String data, int height, int width)
