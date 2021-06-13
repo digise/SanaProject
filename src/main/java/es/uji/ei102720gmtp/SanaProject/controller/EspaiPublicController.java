@@ -68,11 +68,6 @@ public class EspaiPublicController {
         return "espaiPublic/espaisprovincia";
     }
 
-    @RequestMapping("/seleccionarProvincia")
-    public String listEspaiPublicsProvincia(Model model){
-        return "espaiPublic/seleccionarProvincia";
-    }
-
     @RequestMapping("espaisPerMunicipi")
     public String listEspaiPublicsPerMunicipi(Model model, HttpSession session){
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
@@ -154,6 +149,12 @@ public class EspaiPublicController {
         ElegirZonaBean dades = new ElegirZonaBean(espai.getId(), diaDate);
         model.addAttribute("dades", dades);
 
+        String registrat = "No registrat";
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        if (!(ciutada == null))
+            registrat = "Registrat";
+
+        model.addAttribute("registrat", registrat);
         return "/espaiPublic/elegirZona";
     }
 
