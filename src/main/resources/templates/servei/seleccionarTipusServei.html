@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Eleccio de tipus de servei</title>
+
+</head>
+<body>
+<div style="text-align: center" layout:fragment="content">
+  <h2 class="my-4">Selecciona la provincia:</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col mb-3">
+        <a th:href="@{/servei/listServeiPermanent}"><button type="button" class="btn btn-primary btn-lg">Serveis permanents</button></a>
+      </div>
+      <div class="w-100"></div>
+      <div class="col mb-3">
+        <a th:href="@{/servei/listServeiEstacional}"><button type="button" class="btn btn-primary btn-lg">Serveis estacionals</button></a>
+      </div>
+      <div class="w-100"></div>
+    </div>
+  </div>
+  <div class="btn-group-vertical">
+  </div>
+</div>
+</body>
+</html>

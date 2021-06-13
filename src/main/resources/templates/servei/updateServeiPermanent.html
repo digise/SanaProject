@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+    <title>Editar un servei</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div layout:fragment="content">
+<div>
+    <a type="button" class="btn btn-danger" th:href="@{/servei/listServeiPermanent}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+</div>
+<div class="modal-header">
+    <h2><span th:text="${servei.nom}"></span></h2>
+</div>
+<form action="#" th:action="@{/servei/updateServeiPermanent}"
+      th:object="${servei}" method="post">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Nom</label>
+            <input type="text" th:field="*{nom}"/>
+            <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+        </div>
+        <div class="form-group">
+            <td><label>Tipus</label></td>
+            <td><input type="text" th:field="*{tipus}" /></td>
+            <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value="Editar servei" /></td>
+    </div>
+</form>
+</div>
+</body>
+</html>
