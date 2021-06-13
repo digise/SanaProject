@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
+<head>
+  <title>Afegir nou servei</title>
+  <meta charset="UTF-8" />
+
+</head>
+<body>
+<div layout:fragment="content" >
+  <!--EL primer action es si fuera una página estática-->
+
+    <div >
+      <a type="button" class="btn btn-danger" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    </div>
+    <div class="modal-header">
+      <h2 class="modal-title" id="exampleModalLabel">Afegir servei</h2>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" th:each="servei: ${serveis}">
+        <a class="btn btn-success" type="button" th:href="@{/servei/addServeiPermanentGestor/{id}/{nom}(id=${espai.id}, nom=${servei.nom})}" th:text="${servei.nom}"></a>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>
