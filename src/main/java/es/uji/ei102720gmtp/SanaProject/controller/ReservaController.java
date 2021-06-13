@@ -6,12 +6,15 @@ import es.uji.ei102720gmtp.SanaProject.Validation.ReservaValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
+import es.uji.ei102720gmtp.SanaProject.model.ReservaDadesCompletes;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +41,7 @@ public class ReservaController {
     private ZonaDao zonaDao;
     private FranjaHorariaDao franjaHorariaDao;
     private InterfaceReservesService reservesService;
+    private ReservesClientService reservesClientService;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -74,6 +78,11 @@ public class ReservaController {
         this.franjaHorariaDao = franjaHorariaDao;
     }
 
+    @Autowired
+    public void setReservesClientService(ReservesClientService reservesClientService) {
+        this.reservesClientService = reservesClientService;
+    }
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -89,43 +98,52 @@ public class ReservaController {
         return "reserva/mostrarReserves";
     }
 
-    /*
-    @RequestMapping(value = "/add/{idZona}")
-    public String addReserva(Model model, @PathVariable int idZona){
+    @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}")
+    public String addReserva(Model model, @PathVariable String idEspai, @PathVariable String idFranja, @PathVariable String dia, HttpSession session){
 
-        Zona zona = zonaDao.getZona(idZona);
+        LocalDate data = LocalDate.parse(dia);
 
-        EspaiPublic espaiPublic = espaiPublicDao.getEspaiPublic(zona.getIdEspai());
-        model.addAttribute("nom", espaiPublic.getNom());
+        ReservaDadesCompletes reservaCompleta = new ReservaDadesCompletes();
 
-        //List<FranjaHoraria> frangesDisponibles = reservaService.getFrangesHorariesDisponibles();
+        reservaCompleta.setIdEspai(idEspai);
 
-        model.addAttribute("reserva", new Reserva());
+        reservaCompleta.setIdFranja(idFranja);
+
+        reservaCompleta.setDataReserva(data);
+
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        reservaCompleta.setNifCiutada(ciutada.getNif());
+
+        model.addAttribute("reservaDadesCompletes", reservaCompleta);
+
+        FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(idFranja));
+        model.addAttribute("franjaHoraria", franjaHoraria);
+
+        List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(data, franjaHoraria, Integer.valueOf(idEspai));
+        model.addAttribute("zones", zonesDisponibles);
+
         return "reserva/add";
     }
 
-     */
-
     @RequestMapping(value="/reservaFeta", method= RequestMethod.POST)
-    public String ferReserva(@ModelAttribute("reserva") ReservaDadesCompletes reserva, BindingResult bindingResult, Model model, HttpSession session){
-        System.out.println(reserva);
-        reserva.setZonaDao(zonaDao);
-        ReservaValidator reservaValidator = new ReservaValidator();
-        reservaValidator.validate(reserva, bindingResult);
+    public String ferReserva(@ModelAttribute("reservaDadesCompletes") ReservaDadesCompletes reservaDadesCompletes, BindingResult bindingResult, Model model, HttpSession session){
+        System.out.println(reservaDadesCompletes);
+        reservaDadesCompletes.setZonaDao(zonaDao);
+        Validator reservaValidator = new ReservaValidator();
+        reservaValidator.validate(reservaDadesCompletes, bindingResult);
         if(bindingResult.hasErrors()){
 
-            EspaiPublic espai = espaiPublicDao.getEspaiPublic(reserva.getIdEspai());
-            model.addAttribute("espai", espai);
+            if (bindingResult.hasErrors())
+                System.out.println(bindingResult.getFieldError("nombrePersones").toString());
+            model.addAttribute("reserva", reservaDadesCompletes);
 
-            List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
-            model.addAttribute("franges", frangesHoraries);
+            FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+            model.addAttribute("franjaHoraria", franjaHoraria);
 
-            LocalDate diaDate = reserva.getDataReserva();
-            model.addAttribute("dia", diaDate);
-
-            Map<Integer, List<Zona>> zonesDisponibles = espaiPublicService.getZonesDisponibles(diaDate, frangesHoraries, espai.getId());
+            List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(reservaDadesCompletes.getDataReserva(), franjaHoraria, Integer.valueOf(reservaDadesCompletes.getIdEspai()));
             model.addAttribute("zones", zonesDisponibles);
 
+            /*
             reserva = new ReservaDadesCompletes();
             reserva.setIdEspai(espai.getId());
             reserva.setEstat(EstatReserva.PENDENTUS);
@@ -134,17 +152,18 @@ public class ReservaController {
             reserva.setDataReserva(diaDate);
             model.addAttribute("reserva", reserva);
 
-            ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), reserva.getDataReserva());
-            model.addAttribute("dades", novesDades);
-            return "redirect:/espaiPublic/elegirZona";
+             */
+
+            return "redirect:/reserva/add/" + reservaDadesCompletes.getIdEspai() + '/' + reservaDadesCompletes.getIdFranja() + '/' + reservaDadesCompletes.getDataReserva().toString();
         }
 
         Reserva reservaSimple = new Reserva();
-        reservaSimple.setNombrePersones(reserva.getNombrePersones());
-        reservaSimple.setEstat(reserva.getEstat());
-        reservaSimple.setNifCiutada(reserva.getNifCiutada());
+        reservaSimple.setNombrePersones(reservaDadesCompletes.getNombrePersones());
+        reservaSimple.setEstat(EstatReserva.PENDENTUS);
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        reservaSimple.setNifCiutada(ciutada.getNif());
 
-        String dadesCodiQr = String.valueOf(reserva.getIdEspai()) + String.valueOf(reserva.getIdFranja()) + String.valueOf(reserva.getIdZona()) + reserva.getDataReserva().toString();
+        String dadesCodiQr = String.valueOf(reservaDadesCompletes.getIdEspai()) + String.valueOf(reservaDadesCompletes.getIdFranja()) + String.valueOf(reservaDadesCompletes.getIdZona()) + reservaDadesCompletes.getDataReserva().toString();
         File f = new File("src/main/resources/static/imagenes/reserva" + dadesCodiQr + ".png");
         String data = "localhost:8080/reserva/" + dadesCodiQr;
 
@@ -152,27 +171,38 @@ public class ReservaController {
         try {
             createQR(f, data, 300, 300);
             System.out.println("Codi QR creat");
-            reservaSimple.setCodiQr("imagenes/reserva" + dadesCodiQr + ".png");
+            reservaSimple.setCodiQr("/imagenes/reserva" + dadesCodiQr + ".png");
+            reservaDadesCompletes.setCodiQR("/imagenes/reserva" + dadesCodiQr + ".png");
         } catch (Exception e){
             System.out.println("No s'ha pogut crear el codi QR");
             reservaSimple.setCodiQr("");
+            reservaDadesCompletes.setCodiQR("");
         }
 
 
+        System.out.println(reservaDadesCompletes);
+        System.out.println(reservaSimple);
+
         reservaDao.addReserva(reservaSimple);
-        Reserva reservaGuardada = reservaDao.getReservaFromQR("imagenes/reserva" + dadesCodiQr + ".png");
+        Reserva reservaGuardada = reservaDao.getReservaFromQR("/imagenes/reserva" + dadesCodiQr + ".png");
 
         Ocupa ocupa = new Ocupa();
-        ocupa.setDataReserva(reserva.getDataReserva());
-        ocupa.setIdFranja(reserva.getIdFranja());
-        ocupa.setIdZona(reserva.getIdZona());
+        ocupa.setDataReserva(reservaDadesCompletes.getDataReserva());
+        ocupa.setIdFranja(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+        ocupa.setIdZona(Integer.valueOf(reservaDadesCompletes.getIdZona()));
         ocupa.setIdReserva(reservaGuardada.getId());
-
         ocupaDao.addOcupa(ocupa);
 
-        model.addAttribute("dades", reserva);
-        model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()));
-        model.addAttribute("zona", zonaDao.getZona(reserva.getIdZona()));
+        reservaDadesCompletes.setEstat(EstatReserva.PENDENTUS);
+        reservaDadesCompletes.setNifCiutada(ciutada.getNif());
+        reservaDadesCompletes.setIdReserva(String.valueOf(reservaGuardada.getId()));
+
+        EspaiPublic espaiPublic = espaiPublicDao.getEspaiPublic(Integer.valueOf(reservaDadesCompletes.getIdEspai()));
+        model.addAttribute("nomEspai", espaiPublic.getNom());
+
+        model.addAttribute("dades", reservaDadesCompletes);
+        model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja())));
+        model.addAttribute("zona", zonaDao.getZona(Integer.valueOf(reservaDadesCompletes.getIdZona())));
         return "/reserva/reservaFeta";
     }
 
@@ -200,6 +230,21 @@ public class ReservaController {
         ImageIO.write(image, "png", file);
 
         return file;
+    }
+
+    @RequestMapping(value = "/mostrarQR/{idReserva}/{idEspai}")
+    public String mostrarCodiQR(@PathVariable String idReserva, @PathVariable int idEspai, Model model){
+        System.out.println("Es va a mostrar el QR");
+
+        ReservaDadesCompletes reservaDadesCompletes = reservesClientService.getReservaDadesCompletes(idReserva);
+        FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+        EspaiPublic espaiPublic = espaiPublicDao.getEspaiPublic(idEspai);
+
+        model.addAttribute("dades", reservaDadesCompletes);
+        model.addAttribute("franjaHoraria", franjaHoraria);
+        model.addAttribute("espai", espaiPublic);
+
+        return "/reserva/mostrarQR";
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)

@@ -53,6 +53,18 @@ public class OcupaDao {
         }
     }
 
+    public Ocupa getOcupaFromIdReserva(int idReserva) {
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM Ocupa WHERE id_reserva=?",
+                    new OcupaRowMapper(),
+                    idReserva);
+        }
+        catch(EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
     /* Obtenim tots els objectes ocupa. Torna una llista buida si no n'hi ha cap. */
     public List<Ocupa> getOcupes() {
         try {

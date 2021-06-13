@@ -1,48 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
     <title>Crear nou gestor municipal</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+
 </head>
 <body>
-<h2>Nou gestor</h2>
-<form action="#" th:action="@{/gestorMunicipal/add}"
-      th:object="${gestorMunicipal}" method="post">
-    <table>
-        <tr>
-            <td><label>NIF</label></td>
-            <td><input type="text" th:field="*{nif}" maxlength="9"/></td>
-        </tr>
-        <tr>
-            <td><label>IdMunicipi</label></td>
-            <td><input type="text" th:field="*{idMunicipi}" /></td>
-        </tr>
-        <tr>
-            <td><label>Nom</label></td>
-            <td><input type="text" th:field="*{nom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Cognoms</label></td>
-            <td><input type="text" th:field="*{cognoms}" /></td>
-        </tr>
-        <tr>
-            <td><label>Email</label></td>
-            <td><input type="text" th:field="*{email}" /></td>
-        </tr>
-        <tr>
-            <td><label>Telefon</label></td>
-            <td><input type="text" th:field="*{telefon}" /></td>
-        </tr>
-        <tr>
-            <td><label>Contrasenya</label></td>
-            <td><input type="text" th:field="*{contrasenya}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Afegeix gestor municipal" /></td>
-        </tr>
-    </table>
-</form>
+<div layout:fragment="content">
+    <!--EL primer action es si fuera una página estática-->
+    <form action="#" th:action="@{/gestorMunicipal/add}"
+          th:object="${gestorMunicipal}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+        <div>
+            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Afegir gestor</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-form-label mt-2" for="nif">Nif:</label>
+                <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{nif}">
+                <div class="text-danger"><td th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4">Id municipi:</label>
+                <input type="text" class="form-control" placeholder="id municipi" id="idMunicipi" th:field="*{idMunicipi}" name="nom"/>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="nom">Nom:</label>
+                <input type="text" class="form-control" placeholder="nom" id="nom" th:field="*{nom}" name="nom"/>
+                <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="cognoms">Cognoms:</label>
+                <input type="text" class="form-control" placeholder="cognoms complets" id="cognoms" th:field="*{cognoms}">
+                <div class="text-danger"><td th:if="${#fields.hasErrors('cognoms')}" th:errors="*{cognoms}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="email">Email:</label>
+                <input type="text" class="form-control" placeholder="email" id="email" th:field="*{email}">
+                <div class="text-danger"><td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="telefon">Telèfon:</label>
+                <input type="text" class="form-control" placeholder="telefon" id="telefon" th:field="*{telefon}">
+                <div class="text-danger"><td th:if="${#fields.hasErrors('telefon')}" th:errors="*{telefon}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="telefon">Contrasenya:</label>
+                <input type="text" class="form-control" placeholder="Default input" id="contrasenya" th:field="*{contrasenya}">
+                <div class="text-danger"><td th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}"></td></div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+
+            <input class="btn btn-success" type="submit" value="Afegir gestor municipal"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Crear nou municipi</title>
+    <title>Crear un nou municipi</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
+
 </head>
 <body>
-<h2>Nou municipi</h2>
-<form action="#" th:action="@{/municipi/add}"
-      th:object="${municipi}" method="post">
-    <table>
-        <tr>
-            <td><label>Id municipi</label></td>
-            <td><input type="text" th:field="*{idMunicipi}" /></td>
-        </tr>
-        <tr>
-            <td><label>Nom</label></td>
-            <td><input type="text" th:field="*{nom}" /></td>
-        </tr>
-        <tr>
-            <td><label>Provincia</label></td>
-            <td><select class="form_control" type="text" th:field="*{provincia}">
-                <option value="CASTELLO">Castello</option>
-                <option value="VALENCIA">Valencia</option>
-                <option value="ALACANT">Alacant</option>
-            </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="Afegeix municipi" /></td>
-        </tr>
-    </table>
-</form>
+<div layout:fragment="content" >
+    <!--EL primer action es si fuera una página estática-->
+    <form action="#" th:action="@{/municipi/add}"
+          th:object="${municipi}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+        <div >
+            <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Afegir municipi</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="col-form-label mt-4" for="nom">Nom municipi:</label>
+                <input type="text" class="form-control" placeholder="nom" id="nom" th:field="*{nom}" name="nom"/>
+                <div class="text-danger"><td th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></td></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label mt-4" >Provincia:</label>
+                <select type="text" class="form-control" id="provincia" th:field="*{provincia}">
+                    <option value="CASTELLO">Castello</option>
+                    <option value="VALENCIA">Valencia</option>
+                    <option value="ALACANT">Alacant</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <input class="btn btn-success" type="submit" value="Afegir municipi"/>
+        </div>
+    </form>
+</div>
 </body>
 </html>

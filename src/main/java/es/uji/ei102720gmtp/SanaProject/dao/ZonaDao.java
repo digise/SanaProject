@@ -85,7 +85,7 @@ public class ZonaDao {
         try {
             return jdbcTemplate.query(
                     "SELECT * FROM Zona WHERE id_espai = ? AND id NOT IN ( " +
-                            "SELECT id_espai FROM Ocupa WHERE data_reserva = ? AND id_franja = ?)",
+                            "SELECT id_zona FROM Ocupa WHERE data_reserva = ? AND id_franja = ?)",
                     new ZonaRowMapper(),
                     idEspai, dia, idFranja);
         } catch (EmptyResultDataAccessException e) {

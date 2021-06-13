@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 
+import es.uji.ei102720gmtp.SanaProject.Validation.MunicipiValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class MunicipiController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("municipi") Municipi municipi, BindingResult bindingResult){
+        MunicipiValidator municipiValidator = new MunicipiValidator();
+        municipiValidator.validate(municipi, bindingResult);
         if(bindingResult.hasErrors())
             return "municipi/add";
         municipiDao.addMunicipi(municipi);

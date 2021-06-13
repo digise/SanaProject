@@ -3,24 +3,20 @@
       layout:decorate="~{fragments/base}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Llista espais</title>
 
 </head>
 <body>
-
 <div layout:fragment="content">
-    <div class="row pb-4">
-        <div class="col-2 pt-3">
-            <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/seleccionarProvincia}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
-        </div>
-        <div class="col-6">
-            <h1 class="my-3 ">Espais públics de <span th:text="${provincia}"></span></h1>
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class="my-3">Espais a controlar</h1>
         </div>
     </div>
-    <div th:if="${#lists.isEmpty(espais)}">
-        No hi ha espais públics en la base de dades
+    <div th:if="${#lists.isEmpty(espaisControlador)}">
+        No tens espais a controlar
     </div>
-    <div th:unless="${#lists.isEmpty(espais)}" class="row" th:each="espai: ${espais}" >
+    <div th:unless="${#lists.isEmpty(espaisControlador)}" class="row" th:each="espai: ${espaisControlador}" >
         <div class="col">
             <div class="card border-primary mb-3" style="max-width: 50rem;">
                 <div class="card-header"><span th:text="${espai.nom}"></span></div>
@@ -36,12 +32,13 @@
                     </div>
                 </div>
                 <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Elegir la zona</a>
+                    <a class="btn btn-primary" th:href="@{/controlador/reservesEspai/{idEspai}(idEspai=${espai.id})}">Reserves</a>
                 </div>
             </div>
         </div>
         <div class="w-100"></div>
     </div>
+    <a type="button" class="btn btn-danger" th:href="@{/controlador/indexControlador}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
 
 
 </div>

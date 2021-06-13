@@ -1,50 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/base}">
 <head>
-    <title>Gestionar espais publics</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<h1>Llista de espais</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>IdMunicipi</th>
-        <th>Nom</th>
-        <th>Tipus</th>
-        <th>Terreny</th>
-        <th>TipusAcces</th>
-        <th>Localitzacio</th>
-        <th>Longitud</th>
-        <th>Amplaria</th>
-        <th>Imagen</th>
-        <th>Descripcio</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="espaiPublic: ${espais}">
-        <td th:text="${espaiPublic.id}"></td>
-        <td th:text="${espaiPublic.idMunicipi}"></td>
-        <td th:text="${espaiPublic.nom}"></td>
-        <td th:text="${espaiPublic.tipus}"></td>
-        <td th:text="${espaiPublic.terreny}"></td>
-        <td th:text="${espaiPublic.tipusAcces}"></td>
-        <td th:text="${espaiPublic.localitzacio}"></td>
-        <td th:text="${espaiPublic.longitud}"></td>
-        <td th:text="${espaiPublic.amplaria}"></td>
-        <td th:text="${espaiPublic.imagen}"></td>
-        <td th:text="${espaiPublic.descripcio}"></td>
-        <td><a th:href="@{/espaiPublic/update/{id}(id=${espaiPublic.id})}">Edita</a>
-        </td>
-        <td><a th:href="@{/espaiPublic/delete/{id}(id=${espaiPublic.id})}">Esborra</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="add">Afegeix espai public</a>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-2">
+            <a type="button" class="btn btn-danger" th:href="@{/responsable/indexResponsable}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        </div>
+        <div class="col-8">
+            <h1 class="my-3 text-center">Espais públics</h1>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(espais)}">
+        No hi ha espais públics en la base de dades
+    </div>
+    <div th:unless="${#lists.isEmpty(espais)}" class="row" th:each="espai: ${espais}" >
+        <div class="col">
+            <div class="card border-primary mb-3" style="max-width: 50rem;">
+                <div class="card-header"><span th:text="${espai.nom}"></span></div>
+                <div class="row no-gutters">
+                    <div class="col-5 m-4">
+                        <img class="card-img" th:src="${espai.imagen}" alt="Card image cap">
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card-body">
+                            <p><b>Localització: </b><span th:text="${espai.localitzacio}"></span></p>
+                            <p style="text-align: justify"><b>Descripció: </b><span th:text="${espai.descripcio}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-3" align="center">
+                    <a class="btn btn-primary" th:href="@{/reserva/mostrarReserves/{id}(id=${espai.id})}">Reserves</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-100"></div>
+    </div>
+
+
+
+</div>
 </body>
 </html>
