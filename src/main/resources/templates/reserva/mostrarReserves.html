@@ -10,32 +10,34 @@
 <body>
 
 <div layout:fragment="content">
-    <h1 class="my-3">Reserves del espai <span th:text="${}"></span></h1>
-    <div th:if="${#lists.isEmpty(controladors)}">
-        No hi ha controladors assignats en aquest espai
+    <h1 class="my-3">Reserves del espai <span th:text="${espai.nom}"></span></h1>
+    <div th:if="${#lists.isEmpty(reserves)}">
+        No hi ha reserves en aquest espai
     </div>
-    <div th:unless="${#lists.isEmpty(controladors)}">
+    <div th:unless="${#lists.isEmpty(reserves)}">
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Nif</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Cognoms</th>
-                <th scope="col">Correu</th>
-                <th scope="col">Telèfon</th>
-                <th scope="col">Localització</th>
+                <th scope="col">id Reserva</th>
+                <th scope="col">id Zona</th>
+                <th scope="col">Nombre Persones</th>
+                <th scope="col">Hora inici</th>
+                <th scope="col">Hora final</th>
+                <th scope="col">Data reserva</th>
+                <th scope="col">Estat de la reserva</th>
                 <th scope="col">Acció</th>
             </tr>
             </thead>
-            <tr class="table-light" th:each="controlador: ${controladors}" th:object="${controlador}">
-                <td th:text="${controlador.controlador.nif}"></td>
-                <td th:text="${controlador.controlador.nom}"></td>
-                <td th:text="${controlador.controlador.cognoms}"></td>
-                <td th:text="${controlador.controlador.email}"></td>
-                <td th:text="${controlador.controlador.telefon}"></td>
-                <td> <span th:text="${controlador.nomEspaiPublic}"></span>, <span th:text="${municipi.nom}"></span></td>
-                <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/controlador/update/{nifControlador}(nifControlador=${controlador.controlador.nif})}"><i class="fa fa-edit"></i> Editar</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{/controlador/delete/{nifControlador}(nifControlador=${controlador.controlador.nif})}"><i class="fas fa-trash"></i> Borrar</a></td>
+            <tr class="table-light" th:each="reserva: ${reserves}">
+                <td th:text="${reserva.reserva.idReserva}"></td>
+                <td th:text="${reserva.idZona}"></td>
+                <td th:text="${reserva.reserva.nombrePersones}"></td>
+                <td th:text="$reserva.horaInici}"></td>
+                <td th:text="${reserva.horaFinal}"></td>
+                <td th:text="${reserva.dataReserva}"></td>
+                <td th:text="${reserva.estatReserva.getDescripcion()}"></td>
+                <td><a class="btn btn-info btn-sm"  th:href="@{/reserva/update/{idReserva}(idReserva=${reserva.reserva.id})}"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/reserva/delete/{idReserva}(idReserva=${reserva.reserva.idReserva})}"><i class="fas fa-trash"></i> Borrar</a></td>
             </tr>
             </tbody>
         </table>

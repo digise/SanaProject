@@ -18,7 +18,7 @@ public final class CiutadaRowMapper implements RowMapper<Ciutada> {
         ciutada.setDomicili(rs.getString("domicili"));
         ciutada.setLocalitat(rs.getString("localitat"));
         ciutada.setPais(rs.getString("pais"));
-        ciutada.setPin(rs.getString("pin"));
+        ciutada.setContrasenya(rs.getString("pin"));
         return ciutada;
     }
 }

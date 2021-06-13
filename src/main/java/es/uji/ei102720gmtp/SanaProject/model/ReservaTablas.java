@@ -17,8 +17,8 @@ public class ReservaTablas extends Reserva{
     private LocalDate dataReserva;
     private Reserva reserva;
 
-    public ReservaTablas(int idEspai, int idZona, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
-        this.reserva = new Reserva();
+    public ReservaTablas(Reserva reserva, int idEspai, int idZona, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
+        this.reserva = reserva;
         this.idEspai = idEspai;
         this.idZona = idZona;
         this.horaInici = horaInici;

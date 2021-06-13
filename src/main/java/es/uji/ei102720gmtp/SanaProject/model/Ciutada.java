@@ -10,7 +10,7 @@ public class Ciutada {
     private String domicili;
     private String localitat;
     private String pais;
-    private String pin;
+    private String contrasenya;
 
     public Ciutada(){}
 
@@ -46,8 +46,8 @@ public class Ciutada {
         return pais;
     }
 
-    public String getPin() {
-        return pin;
+    public String getContrasenya() {
+        return contrasenya;
     }
 
     public void setNif(String nif) {
@@ -82,8 +82,8 @@ public class Ciutada {
         this.pais = pais;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class Ciutada {
                 ", domicili='" + domicili + '\'' +
                 ", localitat='" + localitat + '\'' +
                 ", pais='" + pais + '\'' +
-                ", pin='" + pin + '\'' +
+                ", pin='" + contrasenya + '\'' +
                 '}';
     }
 }
