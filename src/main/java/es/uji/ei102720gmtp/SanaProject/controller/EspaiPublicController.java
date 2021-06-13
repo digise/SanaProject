@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -110,7 +111,7 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         espaiPublic.setLocalitzacio(municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getProvincia().toString());
         EspaiPublicValidator espaiPublicValidator = new EspaiPublicValidator();
         espaiPublicValidator.validate(espaiPublic, bindingResult);
@@ -148,8 +149,9 @@ public class EspaiPublicController {
         model.addAttribute("espai", espai);
 
 
-
         // Passar municipi i provincia
+        Municipi municipi = municipiDao.getMunicipi( espai.getIdMunicipi() );
+        model.addAttribute("municipi", municipi);
 
         List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
         model.addAttribute("franges", frangesHoraries);
