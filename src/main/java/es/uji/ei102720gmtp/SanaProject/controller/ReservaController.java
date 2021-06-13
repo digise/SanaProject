@@ -82,11 +82,18 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping(value = "/mostrarReserves/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservesEspai/{id}", method = RequestMethod.GET)
     public String mostrarReserves(Model model, @PathVariable int id){
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
         model.addAttribute("reserves", reservesService.reservesPerEspai(id));
         return "reserva/mostrarReserves";
+    }
+
+    @RequestMapping(value = "/reservesClient/{nif}", method = RequestMethod.GET)
+    public String mostrarReserves(Model model, @PathVariable String nif, HttpSession session){
+        model.addAttribute("ciutada", session.getAttribute("ciutada"));
+        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
+        return "reserva/reservesClient";
     }
 
     /*

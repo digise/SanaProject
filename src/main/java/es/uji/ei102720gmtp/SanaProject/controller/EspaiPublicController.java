@@ -80,11 +80,13 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult){
+    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors())
             return "espaiPublic/add";
+        String msg = String.format("Les dades de l'espai amb nom: " + espaiPublic.getNom() + " s'ha afegit correctament");
+        redirectAttributes.addFlashAttribute("alert", msg);
         espaiPublicDao.addEspaiPublic(espaiPublic);
-        return "redirect:list";
+        return "redirect:espaisPerMunicipi";
     }
 
     @RequestMapping(value="/update/{id}", method = RequestMethod.GET)
