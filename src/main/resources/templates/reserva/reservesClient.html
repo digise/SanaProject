@@ -48,7 +48,7 @@
                 <td th:text="${reserva.dataReserva.toString()}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
                 <td>
-                    <a class="btn btn-danger btn-sm" th:href="@{/reserva/delete/{id}(id=${reserva.reserva.id})}"><i class="fas fa-trash"></i> Cancelar</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/reserva/delete/{id}(id=${reserva.reserva.id})}"><i class="fas fa-trash"></i> Anul·lar</a>
                 </td>
             </tr>
             </tbody>
