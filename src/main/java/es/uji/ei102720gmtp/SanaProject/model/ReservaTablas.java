@@ -19,14 +19,26 @@ public class ReservaTablas extends Reserva{
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataReserva;
     private Reserva reserva;
+    private String nomEspai;
+    private String nomMunicipi;
 
-    public ReservaTablas(Reserva reserva, int idEspai, int idZona, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
+    public ReservaTablas(Reserva reserva, int idEspai, String nomEspai, String nomMunicipi, int idZona, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
         this.reserva = reserva;
         this.idEspai = idEspai;
+        this.nomEspai = nomEspai;
+        this.nomMunicipi = nomMunicipi;
         this.idZona = idZona;
         this.horaInici = horaInici;
         this.horaFinal = horaFinal;
         this.dataReserva = dataReserva;
+    }
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public int getIdEspai() {
@@ -81,6 +93,14 @@ public class ReservaTablas extends Reserva{
         this.espaiPublicDao = espaiPublicDao;
     }
 
+    public String getNomEspai() {
+        return nomEspai;
+    }
+
+    public void setNomEspai(String nomEspai) {
+        this.nomEspai = nomEspai;
+    }
+
     public MunicipiDao getMunicipiDao() {
         return municipiDao;
     }
@@ -97,5 +117,21 @@ public class ReservaTablas extends Reserva{
     public String nomLocalitzacioCiutadaReserva(int idEspai){
         String localitzacio = municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getProvincia().getDescripcion();
         return localitzacio;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservaTablas{" +
+                "idEspai=" + idEspai +
+                ", idZona=" + idZona +
+                ", horaInici=" + horaInici +
+                ", horaFinal=" + horaFinal +
+                ", dataReserva=" + dataReserva +
+                ", reserva=" + reserva +
+                ", nomEspai='" + nomEspai + '\'' +
+                ", nomMunicipi='" + nomMunicipi + '\'' +
+                ", espaiPublicDao=" + espaiPublicDao +
+                ", municipiDao=" + municipiDao +
+                '}';
     }
 }

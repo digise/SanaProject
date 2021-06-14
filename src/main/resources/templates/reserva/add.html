@@ -7,7 +7,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     <h1 class="my-5 text-center" style="font-size: xxx-large"
         th:text="${'Reservar a la franja ' + franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString() + ' (' + reservaDadesCompletes.dataReserva.toString() + ')'}"></h1>
     <div class="col card" style="max-width: 40rem;">

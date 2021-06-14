@@ -39,8 +39,6 @@ public class Reserva {
         return nifCiutada;
     }
 
-
-
     public void setId(int id) {
         this.id = id;
     }

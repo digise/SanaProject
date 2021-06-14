@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -91,11 +92,19 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping(value = "/mostrarReserves/{id}", method = RequestMethod.GET)
-    public String mostrarReserves(Model model, @PathVariable int id){
-        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+    @RequestMapping(value = "/reservesClient/{nif}", method = RequestMethod.GET)
+    public String mostrarReservesClient(Model model, @PathVariable String nif){
+        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
+        model.addAttribute("nif", nif);
+        return "reserva/reservesClient";
+    }
+
+    @RequestMapping(value = "/reservesEspai/{id}", method = RequestMethod.GET)
+    public String mostrarReservesEspai(Model model, @PathVariable int id){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
         model.addAttribute("reserves", reservesService.reservesPerEspai(id));
-        return "reserva/mostrarReserves";
+        return "reserva/reservesEspai";
     }
 
     @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}")
@@ -261,9 +270,23 @@ public class ReservaController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "/delete/{id}")
-    public String processDelete(@PathVariable int id){
-        reservaDao.deleteReserva(id);
-        return "redirect:../list";
+    @RequestMapping(value ="/deleteEspai/{idEspai}/{idReserva}")
+    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, Model model, HttpSession session, RedirectAttributes redirectAttributes){
+        reservaDao.getReserva(idReserva).setEstat(EstatReserva.CANCELADAGESTORMUNICIPAL);
+        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
+        redirectAttributes.addFlashAttribute("alert", msg);
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
+        model.addAttribute("espai", espai);
+        model.addAttribute("reserves", reservesService.reservesPerEspai(idEspai));
+        return "reserva/reservesEspai";
+    }
+
+    @RequestMapping(value ="/deletePerClient/{id}")
+    public String processDeletePerClient(@ModelAttribute("nif") String nif, @PathVariable int id, Model model, RedirectAttributes redirectAttributes){
+        reservaDao.getReserva(id).setEstat(EstatReserva.CANCELADACIUTADA);
+        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
+        redirectAttributes.addFlashAttribute("alert", msg);
+        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
+        return "reserva/reservesClient";
     }
 }

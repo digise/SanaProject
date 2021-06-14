@@ -1,13 +1,11 @@
 package es.uji.ei102720gmtp.SanaProject.services;
 
-import es.uji.ei102720gmtp.SanaProject.dao.FranjaHorariaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.OcupaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ReservaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.Ocupa;
 import es.uji.ei102720gmtp.SanaProject.model.Reserva;
 import es.uji.ei102720gmtp.SanaProject.model.ReservaTablas;
 import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +29,12 @@ public class ReservesService implements InterfaceReservesService{
     @Autowired
     FranjaHorariaDao franjaHorariaDao;
 
+    @Autowired
+    EspaiPublicDao espaiPublicDao;
+
+    @Autowired
+    MunicipiDao municipiDao;
+
     @Override
     public List<ReservaTablas> reservesPerEspai(int idEspai) {
         List<ReservaTablas> res = new ArrayList<>();
@@ -40,12 +44,19 @@ public class ReservesService implements InterfaceReservesService{
                 int idZona = zona.getId();
                 LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraInici();
                 LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraFinal();
+                Reserva reserva = reservaDao.getReserva(ocupa.getIdReserva());
+                if (LocalTime.now().isAfter(horaFinal))
+                    reserva.setEstat(EstatReserva.FIUS);
+                else if (LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal))
+                    reserva.setEstat(EstatReserva.ENUS);
+                else
+                    reserva.setEstat(EstatReserva.PENDENTUS);
+
                 LocalDate data = ocupa.getDataReserva();
-                ReservaTablas reserva = new ReservaTablas(reservaDao.getReserva(ocupa.getIdReserva()), idEspai, idZona, horaInici, horaFinal, data);
-                res.add(reserva);
+                ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), idZona, horaInici, horaFinal, data);
+                res.add(reservaTablas);
             }
         }
-        System.out.println(res);
         return res;
     }
 
@@ -60,7 +71,15 @@ public class ReservesService implements InterfaceReservesService{
                     LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraInici();
                     LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraFinal();
                     LocalDate data = ocupa.getDataReserva();
-                    ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, idZona, horaInici, horaFinal, data);
+                    reserva = reservaDao.getReserva(ocupa.getIdReserva());
+                    if (LocalDate.now().isAfter(data) && LocalTime.now().isAfter(horaFinal))
+                        reserva.setEstat(EstatReserva.FIUS);
+                    else if (LocalDate.now().equals(data) && (LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal)))
+                        reserva.setEstat(EstatReserva.ENUS);
+                    else
+                        reserva.setEstat(EstatReserva.PENDENTUS);
+
+                    ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), idZona, horaInici, horaFinal, data);
                     res.add(reservaTablas);
                 }
             }
