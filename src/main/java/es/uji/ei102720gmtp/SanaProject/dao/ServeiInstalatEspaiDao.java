@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,12 @@ public class ServeiInstalatEspaiDao {
                 serveiInstalatEspai.getIdEspai(), serveiInstalatEspai.getNomServei(), serveiInstalatEspai.getDataApertura());
     }
 
-    public void deleteServeiInstalatEspai(String idEspai, String nomServei) {
+    public void addServeiInstalatEspai(int id, String nom, LocalDate dataApertura) {
+        jdbcTemplate.update("INSERT INTO ServeiInstalatEspai VALUES(?, ?, ?)",
+                id, nom, dataApertura);
+    }
+
+    public void deleteServeiInstalatEspai(int idEspai, String nomServei) {
         jdbcTemplate.update("DELETE from ServeiInstalatEspai where id_espai=? and nom_servei=?",
                 idEspai, nomServei);
     }
@@ -40,7 +46,7 @@ public class ServeiInstalatEspaiDao {
                 servei.getDataApertura(), servei.getIdEspai(), servei.getNomServei());
     }
 
-    public ServeiInstalatEspai getServeiInstalatEspai(String idEspai, String nomServei) {
+    public ServeiInstalatEspai getServeiInstalatEspai(int idEspai, String nomServei) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM ServeiInstalatEspai WHERE id_espai=? and nom_servei=?",
@@ -57,6 +63,17 @@ public class ServeiInstalatEspaiDao {
                     "SELECT * FROM ServeiInstalatEspai",
                     new ServeiInstalatEspaiRowMapper()
             );
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<ServeiInstalatEspai>();
+        }
+    }
+
+    public List<ServeiInstalatEspai> getServeisInstalatsFromEspai(int idEspai) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM ServeiInstalatEspai WHERE id_espai = ?",
+                    new ServeiInstalatEspaiRowMapper(),
+                    idEspai);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<ServeiInstalatEspai>();
         }

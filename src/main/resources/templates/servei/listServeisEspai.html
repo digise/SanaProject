@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/baseGestor}">
+<head>
+  <title>Llista serveis espai</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+<div layout:fragment="content" class="row">
+  <div class="col-2">
+    <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/espaisPerMunicipi}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+  </div>
+  <div class="col-7">
+    <h1 class="my-3">Llista de serveis permanents</h1>
+  </div>
+  <div th:if="${#lists.isEmpty(serveisPermanents)}">
+    <h5><u>No hi ha serveis</u></h5>
+  </div>
+  <div th:unless="${#lists.isEmpty(serveisPermanents)}">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Tipus</th>
+        <th scope="col">Data apertura</th>
+      </tr>
+      </thead>
+      <tr class="table-light" th:each="serveiPermanent: ${serveisPermanents}" th:object="${serveiPermanent}">
+        <td th:text="${serveiPermanent.nom}"></td>
+        <td th:text="${serveiPermanent.tipus}"></td>
+        <td th:text="${serveiPermanent.dataApertura.toString()}"></td>
+        <td>
+          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiPermanentGestor/{id}/{nom}(id=${espai.id}, nom=${serveiPermanent.nom})}"><i class="fas fa-trash"></i> Borrar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-2">
+    <a class="btn btn-success" type="submit" th:href="@{/servei/addServeiPermanentGestor/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir serveiPermanent</a>
+  </div>
+
+
+</div>
+
+</body>
+</html>

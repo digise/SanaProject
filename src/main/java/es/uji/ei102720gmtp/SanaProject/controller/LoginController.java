@@ -79,7 +79,7 @@ public class LoginController {
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String checkLogin(@ModelAttribute("user") UserDetails user,
-                             BindingResult bindingResult, HttpSession session) {
+                             BindingResult bindingResult, HttpSession session, Model model) {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -101,6 +101,8 @@ public class LoginController {
                 if (session.getAttribute("nextUrl") != null) {
                     String redireccion = (String) session.getAttribute("nextUrl");
                     session.removeAttribute("nextUrl");
+                    String tipus = "ciutada";
+                    model.addAttribute("tipus", tipus);
                     return "redirect:" + redireccion;
                 }
             }
@@ -121,6 +123,8 @@ public class LoginController {
                 if (session.getAttribute("nextUrl") != null) {
                     String redireccion = (String) session.getAttribute("nextUrl");
                     session.removeAttribute("nextUrl");
+                    String tipus = "gestor";
+                    model.addAttribute("tipus", tipus);
                     return "redirect:" + redireccion;
                 }
             }

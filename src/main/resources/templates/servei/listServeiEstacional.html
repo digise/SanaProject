@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/baseResponsable}">
+<head>
+    <title>Llista serveis estacionals</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div layout:fragment="content" class="row">
+    <div class="col-2">
+        <a type="button" class="btn btn-danger" th:href="@{/servei/seleccionarTipusServei}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    </div>
+    <div class="col-7">
+        <h1 class="my-3">Llista de serveis estacionals</h1>
+    </div>
+    <div th:if="${#lists.isEmpty(serveis)}">
+        <h5><u>No hi ha serveis</u></h5>
+    </div>
+    <div th:unless="${#lists.isEmpty(serveis)}">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Tipus</th>
+
+            </tr>
+            </thead>
+            <tr class="table-light" th:each="servei: ${serveis}" th:object="${servei}">
+                <td th:text="${servei.nom}"></td>
+                <td th:text="${servei.tipus}"></td>
+                <td>
+                    <a type="button" class="btn btn-info btn-sm"  th:href="@{/servei/updateServeiEstacional/{nom}(nom=${servei.nom})}"><i class="fa fa-edit"></i> Editar</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiEstacional/{nom}(nom=${servei.nom})}"><i class="fas fa-trash"></i> Borrar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-success" type="submit" th:href="@{/servei/addServeiEstacional}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir servei</a>
+    </div>
+
+
+</div>
+
+</body>
+</html>

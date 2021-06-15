@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/base}">
+      layout:decorate="~{fragments/baseGestor}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -39,7 +39,7 @@
                 <div class="card-footer p-3" align="center">
                     <a class="btn btn-primary" th:href="@{/espaiPublic/informacioEspai/{id}(id=${espai.id})}">Més infromació del espai</a>
                     <a class="btn btn-primary" th:href="@{/reserva/reservesEspai/{id}(id=${espai.id})}">Reserves</a>
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/elegirZona/{id}(id=${espai.id})}">Serveis Espai</a>
+                    <a class="btn btn-primary" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}">Serveis Espai</a>
                     <a class="btn btn-info" th:href="@{/espaiPublic/update/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Modificar espai</a>
                 </div>
             </div>

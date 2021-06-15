@@ -61,4 +61,15 @@ public class ServeiPermanentDao {
             return new ArrayList<ServeiPermanent>();
         }
     }
+
+    public List<ServeiPermanent> getServeisPermanentsFromEspai(int idEspai) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM ServeiPermanent WHERE nom IN (SELECT nom_servei from serveiinstalatespai WHERE id_espai = ?)",
+                    new ServeiPermanentRowMapper(),
+                    idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<ServeiPermanent>();
+        }
+    }
 }
