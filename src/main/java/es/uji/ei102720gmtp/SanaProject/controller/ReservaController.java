@@ -107,6 +107,14 @@ public class ReservaController {
         return "reserva/reservesEspai";
     }
 
+    @RequestMapping(value = "/reservesEspaiResponsable/{id}", method = RequestMethod.GET)
+    public String mostrarReservesEspaiResponsable(Model model, @PathVariable int id){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
+        model.addAttribute("reserves", reservesService.reservesPerEspai(id));
+        return "reserva/reservesEspaiResponsable";
+    }
+
     @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}")
     public String addReserva(Model model, @PathVariable String idEspai, @PathVariable String idFranja, @PathVariable String dia, HttpSession session){
 

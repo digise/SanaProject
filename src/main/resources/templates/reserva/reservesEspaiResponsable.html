@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/baseGestor}">
+      layout:decorate="~{fragments/baseResponsable}">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -12,7 +12,7 @@
 <div layout:fragment="content">
     <div class="row pb-4">
         <div class="col-2 pt-3">
-            <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/espaisPerMunicipi}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+            <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
         </div>
         <div class="col-7">
             <h1 class="my-3" style="text-align: center">Reserves del espai <span th:text="${espai.nom}"></span></h1>
@@ -34,7 +34,6 @@
                 <th scope="col">Hora final</th>
                 <th scope="col">Data reserva</th>
                 <th scope="col">Estat de la reserva</th>
-                <th scope="col">Acció</th>
             </tr>
             </thead>
             <tr class="table-light" th:each="reserva: ${reserves}">
@@ -45,7 +44,6 @@
                 <td th:text="${reserva.horaFinal.toString()}"></td>
                 <td th:text="${reserva.dataReserva}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
-                <td><a class="btn btn-danger btn-sm" th:href="@{/reserva/deleteEspai/{idEspai}/{idReserva}(idEspai=${espai.id}, idReserva=${reserva.reserva.id})}"><i class="fas fa-window-close"></i> Anul·lar</a></td>
             </tr>
             </tbody>
         </table>
