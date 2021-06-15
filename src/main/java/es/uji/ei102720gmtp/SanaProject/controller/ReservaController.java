@@ -93,9 +93,11 @@ public class ReservaController {
     }
 
     @RequestMapping(value = "/reservesClient/{nif}", method = RequestMethod.GET)
-    public String mostrarReservesClient(Model model, @PathVariable String nif){
+    public String mostrarReservesClient(@ModelAttribute("idReserva") int idReserva, Model model, @PathVariable String nif, RedirectAttributes redirectAttributes){
         model.addAttribute("reserves", reservesService.reservesPerClient(nif));
         model.addAttribute("nif", nif);
+        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
+        redirectAttributes.addFlashAttribute("alert", msg);
         return "reserva/reservesClient";
     }
 
@@ -282,11 +284,8 @@ public class ReservaController {
     }
 
     @RequestMapping(value ="/deletePerClient/{id}")
-    public String processDeletePerClient(@ModelAttribute("nif") String nif, @PathVariable int id, Model model, RedirectAttributes redirectAttributes){
+    public String processDeletePerClient(@PathVariable int id, Model model){
         reservaDao.getReserva(id).setEstat(EstatReserva.CANCELADACIUTADA);
-        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
-        redirectAttributes.addFlashAttribute("alert", msg);
-        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
         return "reserva/reservesClient";
     }
 }
