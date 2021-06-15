@@ -89,6 +89,8 @@ public class ControladorController  {
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("controlador") ControladorAmbEspaiPublic controladorAmbEspaiPublic, BindingResult bindingResult){
+        ControladorsAmbEspaiPublicValidator controladorsAmbEspaiPublicValidator = new ControladorsAmbEspaiPublicValidator();
+        controladorsAmbEspaiPublicValidator.validate(controladorAmbEspaiPublic, bindingResult);
         if(bindingResult.hasErrors())
             return "controlador/add";
         System.out.println(controladorAmbEspaiPublic.toString());

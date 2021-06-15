@@ -10,6 +10,7 @@ import es.uji.ei102720gmtp.SanaProject.model.ReservaDadesCompletes;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
 import es.uji.ei102720gmtp.SanaProject.services.ReservesClientService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -279,22 +280,28 @@ public class ReservaController {
     }
 
     @RequestMapping(value ="/deleteEspai/{idEspai}/{idReserva}")
-    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, Model model, HttpSession session, RedirectAttributes redirectAttributes){
-        reservaDao.getReserva(idReserva).setEstat(EstatReserva.CANCELADAGESTORMUNICIPAL);
+    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, RedirectAttributes redirectAttributes){
+
+        Reserva reserva = reservaDao.getReserva(idReserva);
+        reserva.setEstat(EstatReserva.CANCELADAPERGESTORMUNICIPAL);
+        reservaDao.updateReserva(reserva);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
-        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
-        model.addAttribute("espai", espai);
-        model.addAttribute("reserves", reservesService.reservesPerEspai(idEspai));
-        return "reserva/reservesEspai";
+        //EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
+        //model.addAttribute("espai", espai);
+        //model.addAttribute("reserves", reservesService.reservesPerEspai(idEspai));
+        return "redirect:../../reservesEspai/"+idEspai;
     }
 
     @RequestMapping(value ="/deletePerClient/{id}")
     public String processDeletePerClient(@ModelAttribute("nif") String nif, @PathVariable int id, Model model, RedirectAttributes redirectAttributes){
-        reservaDao.getReserva(id).setEstat(EstatReserva.CANCELADACIUTADA);
+        Reserva reserva = reservaDao.getReserva(id);
+        reserva.setEstat(EstatReserva.CANCELADAPERCIUTADA);
+        reservaDao.updateReserva(reserva);
+        System.out.println(nif);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
         model.addAttribute("reserves", reservesService.reservesPerClient(nif));
-        return "reserva/reservesClient";
+        return "redirect:../reservesClient/"+nif;
     }
 }
