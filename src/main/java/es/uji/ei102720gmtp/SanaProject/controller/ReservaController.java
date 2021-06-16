@@ -93,14 +93,14 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping(value = "/reservesClient/{nif}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservesClient/{nif}")
     public String mostrarReservesClient(Model model, @PathVariable String nif){
         model.addAttribute("reserves", reservesService.reservesPerClient(nif));
         model.addAttribute("nif", nif);
         return "reserva/reservesClient";
     }
 
-    @RequestMapping(value = "/reservesEspai/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservesEspai/{id}")
     public String mostrarReservesEspai(Model model, @PathVariable int id){
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
@@ -287,21 +287,16 @@ public class ReservaController {
         reservaDao.updateReserva(reserva);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
-        //EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
-        //model.addAttribute("espai", espai);
-        //model.addAttribute("reserves", reservesService.reservesPerEspai(idEspai));
         return "redirect:../../reservesEspai/"+idEspai;
     }
 
     @RequestMapping(value ="/deletePerClient/{id}")
-    public String processDeletePerClient(@ModelAttribute("nif") String nif, @PathVariable int id, Model model, RedirectAttributes redirectAttributes){
+    public String processDeletePerClient(@PathVariable int id, Model model, RedirectAttributes redirectAttributes){
         Reserva reserva = reservaDao.getReserva(id);
         reserva.setEstat(EstatReserva.CANCELADAPERCIUTADA);
         reservaDao.updateReserva(reserva);
-        System.out.println(nif);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
-        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
-        return "redirect:../reservesClient/"+nif;
+        return "redirect:../reservesClient/"+reserva.getNifCiutada();
     }
 }

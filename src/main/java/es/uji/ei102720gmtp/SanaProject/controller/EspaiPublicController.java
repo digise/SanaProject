@@ -64,7 +64,12 @@ public class EspaiPublicController {
     }
 
     @RequestMapping("espaisprovincia/{provincia}")
-    public String listEspaiPublicsProvincia(Model model, @PathVariable String provincia){
+    public String listEspaiPublicsProvincia(Model model, @PathVariable String provincia, HttpSession session){
+        String registrat = "No registrat";
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        if (!(ciutada == null))
+            registrat = "Registrat";
+        model.addAttribute("registrat", registrat);
         model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerProvincia(provincia));
         model.addAttribute("provincia", provincia);
         return "espaiPublic/espaisprovincia";
@@ -214,6 +219,11 @@ public class EspaiPublicController {
         }
         session.setAttribute("nextUrl", nextUrl);*/
         return "espaiPublic/seleccionarProvincia";
+    }
+
+    @RequestMapping("/seleccionarProvinciaSenseRegistrar")
+    public String mostrarSeleccionarProvinciaSenseRegistrar(HttpSession session, Model model){
+        return "espaiPublic/seleccionarProvinciaSenseRegistrar";
     }
 
     @RequestMapping("/espaisPerControlador")

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/baseSenseRegistrar}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SANA</title>
+
+</head>
+<body>
+<div style="text-align: center" layout:fragment="content">
+    <h2 class="my-4">Selecciona la provincia:</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col mb-3">
+                <a th:href="@{/espaiPublic/espaisprovincia/Castelló}"><button type="button" class="btn btn-primary btn-lg">Castello</button></a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col mb-3">
+                <a th:href="@{/espaiPublic/espaisprovincia/Valencia}"><button type="button" class="btn btn-primary btn-lg">Valencia</button></a>
+            </div>
+            <div class="w-100"></div>
+            <div class="col mb-3">
+                <a th:href="@{/espaiPublic/espaisprovincia/Alacant}"><button type="button" class="btn btn-primary btn-lg">Alacant </button></a>
+            </div>
+            <div class="w-100"></div>
+        </div>
+    </div>
+    <div class="btn-group-vertical">
+    </div>
+</div>
+</body>
+</html>
