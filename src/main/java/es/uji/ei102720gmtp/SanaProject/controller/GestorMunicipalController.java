@@ -70,6 +70,7 @@ public class GestorMunicipalController {
     @RequestMapping(value="/update/{nif}", method = RequestMethod.GET)
     public String editGestorMunicipal(Model model, @PathVariable String nif){
         model.addAttribute("gestorMunicipal", gestorMunicipalDao.getGestorMunicipal(nif));
+        model.addAttribute("id", gestorMunicipalDao.getGestorMunicipal(nif).getIdMunicipi());
         return "gestorMunicipal/update";
     }
 

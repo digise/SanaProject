@@ -43,7 +43,9 @@
         <td th:text="${gestor.telefon}"></td>
         <td><span th:text="${municipi.nom}"></span></td>
         <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/gestorMunicipal/update/{nif}(nif=${gestor.nif})}"><i class="fa fa-edit"></i> Editar</a>
-          <a class="btn btn-danger btn-sm" th:href="@{/gestorMunicipal/delete/{nif}(nif=${gestor.nif})}"><i class="fas fa-trash"></i> Borrar</a></td>
+          <a class="btn btn-danger btn-sm" th:href="@{/gestorMunicipal/delete/{nif}(nif=${gestor.nif})}"
+             th:onclick="return confirm('Estàs segur d\'esborrar el gestor amb nom ' + [[${gestor.nom}]] + ' del municipi ' + [[${municipi.nom}]] + '?');">
+            <i class="fas fa-trash"></i> Borrar</a></td>
       </tr>
       </tbody>
     </table>
