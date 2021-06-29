@@ -31,30 +31,34 @@
                 <th scope="col">Nom espai</th>
                 <th scope="col">id Zona</th>
                 <th scope="col">Nombre Persones</th>
+                <th scope="col">Data reserva</th>
                 <th scope="col">Hora inici</th>
                 <th scope="col">Hora final</th>
-                <th scope="col">Data reserva</th>
                 <th scope="col">Estat de la reserva</th>
                 <th scope="col">Acció</th>
             </tr>
             </thead>
-            <tr class="table-light" th:each="reserva: ${reserves}">
+            <tr class="table-light" th:each="reserva: ${#lists.sort(reserves)}">
                 <td th:text="${reserva.reserva.id}"></td>
                 <td th:text="${reserva.nomEspai}"></td>
                 <td th:text="${reserva.idZona}"></td>
                 <td th:text="${reserva.reserva.nombrePersones}"></td>
+                <td th:text="${reserva.dataReserva.toString()}"></td>
                 <td th:text="${reserva.horaInici.toString()}"></td>
                 <td th:text="${reserva.horaFinal.toString()}"></td>
-                <td th:text="${reserva.dataReserva.toString()}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
                 <td>
-                    <a th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" class="btn btn-danger btn-sm" th:href="@{/reserva/deletePerClient/{id}(id=${reserva.reserva.id})}"><i class="fas fa-trash"></i> Anul·lar</a>
+                    <a type="button" th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" th:href="@{/reserva/deletePerClient/{id}(id=${reserva.reserva.id})}"
+                       th:onclick="return confirm('Estàs segur d\'esborrar la reserva amb id ' + [[${reserva.reserva.id}]] + 'de l\'espai' + [[${reserva.nomEspai}]] + '?');">
+                        <i class="fas fa-trash"></i> Anul·lar</a>
                 </td>
+
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -2,6 +2,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.Validation.ControladorsAmbEspaiPublicValidator;
+import es.uji.ei102720gmtp.SanaProject.dao.ControlaDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ControladorDao;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -32,6 +34,7 @@ public class ControladorController  {
     private InterfaceControladorsPerMunicipiService controladorsPerMunicipiService;
     private MunicipiDao municipiDao;
     private EspaiPublicDao espaiPublicDao;
+    private ControlaDao controlaDao;
     private MunicipisPerControladorService municipisPerControladorService;
 
 
@@ -60,6 +63,11 @@ public class ControladorController  {
         this.municipisPerControladorService = municipisPerControladorService;
     }
 
+    @Autowired
+    public void setControlaDao(ControlaDao controlaDao){
+        this.controlaDao = controlaDao;
+    }
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -69,6 +77,11 @@ public class ControladorController  {
     }
     @RequestMapping("/controladorsPerMunicipi")
     public String listControladorsMunicipi(Model model, HttpSession session){
+
+        for (Controla controla : controlaDao.getlistControla()){
+            if (controla.getDataFinal().isBefore(LocalDate.now()))
+                controlaDao.getControla(controla.getNifControlador(), controla.getIdEspai(), controla.getDataInici());
+        }
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
         int idMunicipi = gestorMunicipal.getIdMunicipi();
         model.addAttribute("controladors", controladorsPerMunicipiService.controladorsPerMunicipi(idMunicipi));
@@ -122,10 +135,23 @@ public class ControladorController  {
     }
 
     @RequestMapping(value = "/delete/{nifControlador}")
-    public String processDelete(@PathVariable String nifControlador, HttpSession session){
+    public String processDelete(@PathVariable String nifControlador, HttpSession session, RedirectAttributes redirectAttributes){
         GestorMunicipal gestorMunicipal = (GestorMunicipal) session.getAttribute("gestorMunicipal");
         int idMunicipi = gestorMunicipal.getIdMunicipi();
+        int senseBorrar = controladorDao.getlistControladors().size();
         controladorDao.deleteControlador(controladorsPerMunicipiService.getControladorService(nifControlador, idMunicipi));
+        int borrat = controladorDao.getlistControladors().size();
+        String msg;
+        if (senseBorrar != borrat){
+            msg = String.format("El controlador amb nom " + controladorDao.getControlador(nifControlador).getNom() + controladorDao.getControlador(nifControlador).getCognoms() + "se ha borrat correctament");
+            redirectAttributes.addFlashAttribute("alertBona", msg);
+        }
+        else{
+            msg = String.format("El controlador amb nom " + controladorDao.getControlador(nifControlador).getNom() + " " + controladorDao.getControlador(nifControlador).getCognoms() + " no se ha borrat ja que está controlant un espai ");
+            redirectAttributes.addFlashAttribute("alertMala", msg);
+        }
+
+
         return "redirect:../controladorsPerMunicipi";
     }
 

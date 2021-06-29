@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class ReservaTablas extends Reserva{
+public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
 
     private int idEspai;
     private int idZona;
@@ -120,6 +120,12 @@ public class ReservaTablas extends Reserva{
     }
 
     @Override
+    public int compareTo(ReservaTablas altraReserva) {
+        return this.getDataReserva().compareTo(altraReserva.getDataReserva()) + this.getHoraInici().compareTo(altraReserva.getHoraInici());
+    }
+
+
+    @Override
     public String toString() {
         return "ReservaTablas{" +
                 "idEspai=" + idEspai +
@@ -134,4 +140,6 @@ public class ReservaTablas extends Reserva{
                 ", municipiDao=" + municipiDao +
                 '}';
     }
+
+
 }
