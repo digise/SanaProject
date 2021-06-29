@@ -93,6 +93,13 @@ public class ReservaController {
         return "reserva/list";
     }
 
+    @RequestMapping("/ocupacio/{id}")
+    public String mostraOcupacio(Model model, @PathVariable int id){
+        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+        model.addAttribute("ocupacio", reservesService.ocupacioPerEspai(id));
+        return "reserva/ocupacio";
+    }
+
     @RequestMapping(value = "/reservesClient/{nif}")
     public String mostrarReservesClient(Model model, @PathVariable String nif){
         model.addAttribute("reserves", reservesService.reservesPerClient(nif));

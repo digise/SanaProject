@@ -1,13 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.services;
 
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.FranjaHorariaDao;
-import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ZonaDao;
-import es.uji.ei102720gmtp.SanaProject.model.EspaiPublic;
-import es.uji.ei102720gmtp.SanaProject.model.FranjaHoraria;
-import es.uji.ei102720gmtp.SanaProject.model.Municipi;
-import es.uji.ei102720gmtp.SanaProject.model.Zona;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,4 +63,6 @@ public class EspaiPublicService implements InterfaceEspaiPublicService{
     public Zona getZona(int idZona) {
         return zonaDao.getZona(idZona);
     }
+
+
 }

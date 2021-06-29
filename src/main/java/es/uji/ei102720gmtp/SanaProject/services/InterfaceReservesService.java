@@ -10,4 +10,6 @@ public interface InterfaceReservesService {
     public List<ReservaTablas> reservesPerEspai(int idEspai);
 
     public List<ReservaTablas> reservesPerClient(String nifCiutada);
+
+    public int ocupacioPerEspai(int idEspai);
 }

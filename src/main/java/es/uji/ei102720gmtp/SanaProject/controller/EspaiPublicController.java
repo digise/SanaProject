@@ -11,6 +11,7 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.MunicipisPerControladorService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class EspaiPublicController {
     private EspaiPublicService espaiPublicService;
     private MunicipiDao municipiDao;
     private MunicipisPerControladorService municipisPerControladorService;
+    private ReservesService reservesService;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -53,6 +55,11 @@ public class EspaiPublicController {
     @Autowired
     public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
         this.municipisPerControladorService = municipisPerControladorService;
+    }
+
+    @Autowired
+    public void setReservesService(ReservesService reservesService){
+        this.reservesService = reservesService;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
