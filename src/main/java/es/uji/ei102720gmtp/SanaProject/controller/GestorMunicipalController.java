@@ -48,8 +48,9 @@ public class GestorMunicipalController {
         return "gestorMunicipal/list";
     }
 
-    @RequestMapping(value = "/add")
-    public String addGestorMunicipal(Model model){
+    @RequestMapping(value = "/add/{id}")
+    public String addGestorMunicipal(Model model, @PathVariable int id){
+        model.addAttribute("id", id);
         model.addAttribute("gestorMunicipal", new GestorMunicipal());
         return "gestorMunicipal/add";
     }
@@ -57,6 +58,7 @@ public class GestorMunicipalController {
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
+
         gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
         if(bindingResult.hasErrors())
             return "gestorMunicipal/add";

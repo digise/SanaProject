@@ -11,6 +11,7 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.TipusAcces;
 import es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.MunicipisPerControladorService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class EspaiPublicController {
     private EspaiPublicService espaiPublicService;
     private MunicipiDao municipiDao;
     private MunicipisPerControladorService municipisPerControladorService;
+    private ReservesService reservesService;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -53,6 +55,11 @@ public class EspaiPublicController {
     @Autowired
     public void setMunicipisPerControladorService(MunicipisPerControladorService municipisPerControladorService){
         this.municipisPerControladorService = municipisPerControladorService;
+    }
+
+    @Autowired
+    public void setReservesService(ReservesService reservesService){
+        this.reservesService = reservesService;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -85,19 +92,19 @@ public class EspaiPublicController {
         return "espaiPublic/espaisPerMunicipi";
     }
 
-    @RequestMapping(value = "/add")
-    public String addEspaiPublic(Model model){
+    @RequestMapping(value = "/add/{id}")
+    public String addEspaiPublic(Model model, @PathVariable int id){
         model.addAttribute("espaiPublic", new EspaiPublic());
-        model.addAttribute("municipis", municipiDao.getMunicipis());
+        model.addAttribute("id", id);
         return "espaiPublic/add";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, Model model) {
+    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, @ModelAttribute("id") int id, BindingResult bindingResult, Model model) {
         EspaiPublicValidator espaiPublicValidator = new EspaiPublicValidator();
         espaiPublicValidator.validate(espaiPublic, bindingResult);
         if (bindingResult.hasErrors()){
-            model.addAttribute("municipis", municipiDao.getMunicipis());
+            model.addAttribute("id", id);
             return "espaiPublic/add";
         }
         espaiPublicDao.addEspaiPublic(espaiPublic);
@@ -111,12 +118,11 @@ public class EspaiPublicController {
         String provincia = municipi.getProvincia().name();
         model.addAttribute("provincia", provincia);
         model.addAttribute("nomMunicipi", municipi.getNom());
-        model.addAttribute("municipis", municipiDao.getMunicipis());
         return "espaiPublic/update";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, @ModelAttribute("id") int id, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         espaiPublic.setLocalitzacio(municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getProvincia().toString());
         EspaiPublicValidator espaiPublicValidator = new EspaiPublicValidator();
         espaiPublicValidator.validate(espaiPublic, bindingResult);

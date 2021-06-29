@@ -91,4 +91,20 @@ public class ReservesService implements InterfaceReservesService{
         }
         return res;
     }
+
+    @Override
+    public int ocupacioPerEspai(int idEspai) {
+        int ocupacio = 0;
+        List<Zona> zonesEspai = zonaDao.getZonesFromEspai(idEspai);
+        for (Zona zona : zonesEspai) {
+            for (Ocupa ocupa : ocupaDao.getListaOcupaZona(zona.getId())) {
+                int idZona = zona.getId();
+                Reserva reserva = reservaDao.getReserva(ocupa.getIdReserva());
+                if (reserva.getEstat() == EstatReserva.ENUS){
+                    ocupacio += reserva.getNombrePersones();
+                }
+            }
+        }
+        return ocupacio;
+    }
 }
