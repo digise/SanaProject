@@ -90,13 +90,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="municipi" class="form-label mt-4"><b>Municipi:</b></label>
-                    <select class="form-select" id="municipi" type="text" th:field="*{idMunicipi}">
-                        <option th:each="municipi : ${municipis}"
-                                th:value="${municipi.id}"
-                                th:text="${municipi.nom + ' - ' + municipi.provincia.toString()}">
-                        </option>
-                    </select>
+                    <label for="idMunicipi" class="form-label mt-4"><b>Municipi:</b></label>
+                    <input type="number" class="form-control" th:value="*{idMunicipi}" id="idMunicipi" name="idMunicipi" readonly/>
+
                 </div>
 
                 <div class="form-group">
