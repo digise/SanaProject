@@ -20,12 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 
 class RegistrarseValidator implements Validator {
-    private CiutadaDao ciutadaDao;
-
-    @Autowired
-    public void setCiutadaDao(CiutadaDao ciutadaDao) {
-        this.ciutadaDao = ciutadaDao;
-    }
 
     @Override
     public boolean supports(Class<?> cls) {
@@ -40,9 +34,7 @@ class RegistrarseValidator implements Validator {
         if (ciutada.getNif().trim().equals(""))
             errors.rejectValue("nif", "obligatori",
                     "Cal introduir un valor");
-        /*if (ciutadaDao.getCiutadans().contains(ciutada))
-            errors.rejectValue("nif", "obligatori" ,
-                    "Aquest usuari ja existeix");*/
+
         if (ciutada.getNom().trim().equals(""))
             errors.rejectValue("contrasenya", "obligatori" ,
                     "Cal introduir un valor");
@@ -69,9 +61,9 @@ class RegistrarseValidator implements Validator {
 @Controller
 public class RegistrarseController {
 
+    @Autowired
     private CiutadaDao ciutadaDao;
 
-    @Autowired
     public void setCiutadaDao(CiutadaDao ciutadaDao) {
         this.ciutadaDao = ciutadaDao;
     }
@@ -85,8 +77,13 @@ public class RegistrarseController {
     @RequestMapping(value="/registrarse", method= RequestMethod.POST)
     public String checkLogin(@ModelAttribute("ciutada") Ciutada ciutada,
                              BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+
         RegistrarseValidator ciutadaValidator = new RegistrarseValidator();
         ciutadaValidator.validate(ciutada, bindingResult);
+        if( !ciutadaDao.getCiutada(ciutada.getNif()).equals(ciutada)){
+            bindingResult.rejectValue("nif", "obligatori", "El nif ya existeix en la bbdd");
+        }
+
         if (bindingResult.hasErrors()) {
             return "registrarse";
         }
