@@ -13,6 +13,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,7 +80,7 @@ public class LoginController {
 
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public String checkLogin(@ModelAttribute("user") UserDetails user,
-                             BindingResult bindingResult, HttpSession session, Model model) {
+                             BindingResult bindingResult, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         UserValidator userValidator = new UserValidator();
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -87,12 +88,14 @@ public class LoginController {
         }
         // Comprova que el login siga correcte
         // intentant carregar les dades de l'usuari
+        System.out.println(ciutadaDao.getCiutadans());
         for (Ciutada ciutada : ciutadaDao.getCiutadans()) {
             if (ciutada.getNif().equals(user.getNif())) {
                 if (!ciutada.getContrasenya().equals(user.getPassword())) {
                     bindingResult.rejectValue("password", "badpw", "Contrasenya incorrecta");
                     return "login";
                 }
+
                 user.setTipusUsuari(TipusUsuari.CIUTADA);
                 session.setAttribute("user", user);
                 session.setAttribute("ciutada", ciutada);
@@ -163,6 +166,7 @@ public class LoginController {
                 return "redirect:" + redireccion;
             }
         }
+
         return "redirect:/";
     }
 

@@ -16,7 +16,7 @@
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
     <!-- Nuestro css-->
-    <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
+    <link rel="stylesheet" type="text/css" href="static/css/signup.css" th:href="@{/css/signup.css}">
 
 </head>
 <body style="background-color:#6AF4F2;">
@@ -27,67 +27,63 @@
                 <img src="static/imagenes/user/user.png" th:src="@{/imagenes/user/user.png}"/>
             </div>
             <form class="col-12" th:action="@{/registrarse}" th:object="${ciutada}" method="post">
-                <div class="form-group" id="user-group">
-                    <input type="text" class="form-control" placeholder="NIF" th:field="*{nif}"/>
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="nif" style="color:#FFFFFF">NIF:</label>
+                            <input type="text" class="form-control" id="nif" name="nif" required="required" th:field="*{nif}"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="nom" style="color:#FFFFFF">Nom:</label>
+                            <input type="text" class="form-control" id="nom" name="nom" required="required" th:field="*{nom}"/>
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group" id="nom">
-                    <input type="text" class="form-control" placeholder="Nom" th:field="*{nom}"/>
-                    <div class="alert alert-danger" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></div>
-                </div>
-                <div class="form-group" id="cognoms">
-                    <input type="text" class="form-control" placeholder="Cognoms" th:field="*{cognoms}"/>
+                <div class="form-group">
+                    <label for="cognoms" style="color:#FFFFFF">Cognoms:</label>
+                    <input type="text" class="form-control" id="cognoms" name="cognoms" required="required" th:field="*{cognoms}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('cognoms')}" th:errors="*{cognoms}"></div>
                 </div>
-                <div class="form-group" id="telefon">
-                    <input type="text" class="form-control" placeholder="Telèfon" th:field="*{telefon}"/>
+                <div class="form-group">
+                    <label for="telefon" style="color:#FFFFFF">Telèfon:</label>
+                    <input type="text" class="form-control" id="telefon" name="telefon" required="required" th:field="*{telefon}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('telefon')}" th:errors="*{telefon}"></div>
                 </div>
-                <div class="form-group" id="correu">
-                    <input type="text" class="form-control" placeholder="Correu" th:field="*{email}"/>
+                <div class="form-group">
+                    <label for="correu" style="color:#FFFFFF">Correu:</label>
+                    <input type="text" class="form-control" id="correu" name="correu" required="required" th:field="*{email}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
-                <div class="form-group" id="direccio">
-                    <input type="text" class="form-control" placeholder="Direcció (C (nom carrer) (nombre))" th:field="*{domicili}"/>
+                <div class="form-group">
+                    <label for="direccio" style="color:#FFFFFF">Direcció:</label>
+                    <input type="text" class="form-control" id="direccio" name="direccio" required="required" placeholder="C (nom carrer) (nombre)" th:field="*{domicili}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('domicili')}" th:errors="*{domicili}"></div>
                 </div>
                 <div class="form-group">
-                    <select class="form-select" id="provincia" type="text" th:field="*{localitat}">
+                    <label for="localitat" style="color:#FFFFFF">País:</label>
+                    <select class="form-select" id="localitat" name="localitat" type="text" th:field="*{localitat}">
                         <option th:each="localitat : ${T(es.uji.ei102720gmtp.SanaProject.model.enums.Provincia).values()}"
                                 th:value="${localitat}">
                             <span th:text="${localitat.getDescripcion()}"></span>
                         </option>
                     </select>
                 </div>
-                <div class="form-group" id="pais">
-                    <input type="text" class="form-control" placeholder="País" th:field="*{pais}"/>
+                <div class="form-group">
+                    <label for="pais" style="color:#FFFFFF">País:</label>
+                    <input type="text" class="form-control" id="pais" name="pais" required="required" th:field="*{pais}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('pais')}" th:errors="*{pais}"></div>
                 </div>
-                <div class="form-group" id="contrasena-group">
-                    <input type="password" class="form-control" placeholder="Contrasenya" th:field="*{contrasenya}"/>
+                <div class="form-group">
+                    <label for="contrasenya" style="color:#FFFFFF">Contrasenya:</label>
+                    <input type="password" class="form-control" id="contrasenya" name="contrasenya" required="required" th:field="*{contrasenya}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('contrasenya')}" th:errors="*{contrasenya}"></div>
                 </div>
                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrarseModal"><i class="fas fa-sign-in-alt"></i> Registrar-se </button>
             </form>
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="registrarseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <a type="button" class="btn btn-primary" href="/login.html">Log in</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
