@@ -1,5 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
+import es.uji.ei102720gmtp.SanaProject.Validation.EspaiPublicValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ServeiPermanentValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ServeiEstacionalDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ServeiInstalatEspaiDao;
@@ -75,6 +77,8 @@ public class ServeiController {
 
     @RequestMapping(value="/addServeiPermanent", method= RequestMethod.POST)
     public String processAddServeiPermanent(@ModelAttribute("serveiPermanent") ServeiPermanent serveiPermanent, BindingResult bindingResult){
+        ServeiPermanentValidator serveiPermanentValidator = new ServeiPermanentValidator();
+        serveiPermanentValidator.validate(serveiPermanent, bindingResult);
         if(bindingResult.hasErrors())
             return "servei/addServeiPermanent";
         serveiPermanentDao.addServeiPermanent(serveiPermanent);
