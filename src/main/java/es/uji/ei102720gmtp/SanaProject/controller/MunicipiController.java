@@ -4,6 +4,8 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 import es.uji.ei102720gmtp.SanaProject.Validation.MunicipiValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
+import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
+import es.uji.ei102720gmtp.SanaProject.services.GestorsPerMunicipiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +14,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/municipi")
 public class MunicipiController {
     private MunicipiDao municipiDao;
+    private GestorsPerMunicipiService gestorsPerMunicipiService;
 
     @Autowired
     public void setMunicipiDao(MunicipiDao municipiDao){
         this.municipiDao = municipiDao;
     }
-
+    @Autowired
+    public void setGestorsPerMunicipiService(GestorsPerMunicipiService gestorsPerMunicipiService){
+        this.gestorsPerMunicipiService = gestorsPerMunicipiService;
+    }
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -66,7 +73,14 @@ public class MunicipiController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String processDelete(@PathVariable int id){
+    public String processDelete(@PathVariable int id, RedirectAttributes redirectAttributes){
+        if (!gestorsPerMunicipiService.getGestorsPerMunicipi(id).isEmpty()){
+            String msg = String.format("No es pot eliminar un municipi que conté gestors");
+            redirectAttributes.addFlashAttribute("alert", msg);
+            //model.addAttribute("alerta",msg);
+            return "redirect:../list";
+        }
+
         municipiDao.deleteMunicipi(id);
         return "redirect:../list";
     }
