@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -96,7 +97,12 @@ public class ServeiController {
     }
 
     @RequestMapping(value = "/deleteServeiPermanent/{nom}")
-    public String deleteServeiPermanent(Model model, @PathVariable String nom){
+    public String deleteServeiPermanent(Model model, @PathVariable String nom, RedirectAttributes redirectAttributes){
+        if (serveiService.serveiPermanentEnUs(nom)){
+            String msg = String.format("No es pot eliminar, el servei està en ús");
+            redirectAttributes.addFlashAttribute("alert", msg);
+            return "redirect:../listServeiPermanent";
+        }
         serveiPermanentDao.deleteServeiPermanent(nom);
         return "redirect:../listServeiPermanent";
     }
@@ -139,7 +145,12 @@ public class ServeiController {
     }
 
     @RequestMapping(value = "/deleteServeiEstacional/{nom}")
-    public String deleteServeiEstacional(Model model, @PathVariable String nom){
+    public String deleteServeiEstacional(Model model, @PathVariable String nom, RedirectAttributes redirectAttributes){
+        if (serveiService.serveiEstacionalEnUs(nom)){
+            String msg = String.format("No es pot eliminar, el servei està en ús");
+            redirectAttributes.addFlashAttribute("alert", msg);
+            return "redirect:../listServeiEstacional";
+        }
         serveiEstacionalDao.deleteServeiEstacional(nom);
         return "redirect:../listServeiEstacional";
     }

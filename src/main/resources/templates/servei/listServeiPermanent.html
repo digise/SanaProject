@@ -13,6 +13,8 @@
   <div class="col-7">
     <h1 class="my-3">Llista de serveis permanents</h1>
   </div>
+  <div th:if="${alert != null}" th:text="${alert}" class="alert alert-danger" role="alert">
+  </div>
   <div th:if="${#lists.isEmpty(serveis)}">
     <h5><u>No hi ha serveis</u></h5>
   </div>

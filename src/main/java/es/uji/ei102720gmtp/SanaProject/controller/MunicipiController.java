@@ -77,7 +77,6 @@ public class MunicipiController {
         if (!gestorsPerMunicipiService.getGestorsPerMunicipi(id).isEmpty()){
             String msg = String.format("No es pot eliminar un municipi que conté gestors");
             redirectAttributes.addFlashAttribute("alert", msg);
-            //model.addAttribute("alerta",msg);
             return "redirect:../list";
         }
 

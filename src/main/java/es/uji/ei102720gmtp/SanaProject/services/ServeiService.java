@@ -1,9 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.services;
 
-import es.uji.ei102720gmtp.SanaProject.dao.PeriodeServeiEspaiDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiEstacionalDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiInstalatEspaiDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiPermanentDao;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,9 @@ public class ServeiService implements InterfaceServeiService{
 
     @Autowired
     private PeriodeServeiEspaiDao periodeServeiEspaiDao;
+
+    @Autowired
+    private EspaiPublicDao espaiPublicDao;
 
     @Override
     public List<ServeiPermanentComplet> getServeiPermanentInstalats(int idEspai) {
@@ -85,5 +85,29 @@ public class ServeiService implements InterfaceServeiService{
             }
         }
         return tots;
+    }
+
+    @Override
+    public boolean serveiPermanentEnUs(String nomServei){
+        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()) {
+            int id = espaiPublic.getId();
+            for (ServeiPermanent servei : serveiPermanentDao.getServeisPermanentsFromEspai(id)){
+                if (servei.getNom().equals(nomServei))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean serveiEstacionalEnUs(String nomServei){
+        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()) {
+            int id = espaiPublic.getId();
+            for (ServeiEstacional servei : serveiEstacionalDao.getServeisEstacinalsFromEspai(id)){
+                if (servei.getNom().equals(nomServei))
+                    return true;
+            }
+        }
+        return false;
     }
 }

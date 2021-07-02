@@ -10,4 +10,6 @@ public interface InterfaceServeiService {
     public List<ServeiPermanentComplet> getServeiPermanentInstalats(int idEspai);
     public List<ServeiEstacionalComplet> getServeisEstacionalsInstalats(int idEspai);
     public List<ServeiPermanent> getServeisRestants(List<ServeiPermanent> list);
+    public boolean serveiPermanentEnUs(String nomServei);
+    public boolean serveiEstacionalEnUs(String nomServei);
 }
