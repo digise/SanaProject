@@ -29,8 +29,9 @@ public class ControlaDao {
     }
 
     /* Esborrem  */
-    public void deleteControla(String nifControlador,String idEspai,LocalDate dataInici) {
-        jdbcTemplate.update("DELETE from Controla where nif_controlador=? AND id_espai=? AND data_inici=?",
+    public void deleteControla(String nifControlador, int idEspai,LocalDate dataInici) {
+        if (getControla(nifControlador, idEspai, dataInici).getDataFinal().isBefore(LocalDate.now()))
+            jdbcTemplate.update("DELETE from Controla where nif_controlador=? AND id_espai=? AND data_inici=?",
                 nifControlador,idEspai,dataInici);
     }
 
@@ -41,7 +42,7 @@ public class ControlaDao {
     }
 
     /* Obtenim  amb el id. Torna null si no existeix. */
-    public Controla getControla(String nifControlador, String idEspai, LocalDate dataInici) {
+    public Controla getControla(String nifControlador, int idEspai, LocalDate dataInici) {
         try {
             return jdbcTemplate.queryForObject(
                     "SELECT * FROM Controla WHERE nif_controlador=? AND id_espai=? AND data_inici=?",

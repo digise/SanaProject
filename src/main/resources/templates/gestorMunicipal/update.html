@@ -12,7 +12,7 @@
 <form action="#" th:action="@{/gestorMunicipal/update}"
       th:object="${gestorMunicipal}" method="post">
     <div>
-        <a type="button" class="btn btn-danger" th:href="@{/municipi/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        <a type="button" class="btn btn-danger" th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${id})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     </div>
     <div class="modal-header">
         <h2><span th:text="${gestorMunicipal.nom}"></span></h2>

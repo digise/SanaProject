@@ -27,7 +27,7 @@ public class MunicipiDao {
     }
 
     /* Esborrem el municipi amb el id*/
-    public void deleteMunicipi(String idMunicipi) {
+    public void deleteMunicipi(int idMunicipi) {
         jdbcTemplate.update("DELETE from Municipi where id=?",
                 idMunicipi);
     }
@@ -42,7 +42,7 @@ public class MunicipiDao {
        (excepte el id, que és la clau primària) */
     public void updateMunicipi(Municipi municipi) {
         jdbcTemplate.update("UPDATE Municipi SET nom = ?, provincia = CAST (? AS tipus_provincia) WHERE id = ?",
-                municipi.getNom(), municipi.getProvincia().getDescripcion(), municipi.getId());
+                municipi.getNom(), municipi.getProvincia().name(), municipi.getId());
     }
 
     /* Obtenim el municipi amb el id. Torna null si no existeix. */

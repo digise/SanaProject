@@ -23,7 +23,10 @@
                 </div>
             </div>
             <div class="card-body">
-
+                <div class="form-group">
+                    <label for="idMunicipi" class="form-label mt-4"><b>Municipi:</b></label>
+                    <input type="number" class="form-control" th:value="${id}" id="idMunicipi" name="idMunicipi" readonly/>
+                </div>
                 <div class="form-group">
                     <label class="col-form-label mt-2" for="nif"><b>Nom espai públic:</b></label>
                     <input type="text" class="form-control" placeholder="Default input" id="nif"  th:field="*{nom}">
@@ -62,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-form-label mt-4" for="localitzacio">Localització:</label>
-                    <input type="text" class="form-control" placeholder="email" id="localitzacio" th:field="*{localitzacio}">
+                    <input type="text" class="form-control" placeholder="Castelló" id="localitzacio" th:field="*{localitzacio}">
                     <div class="text-danger"><td th:if="${#fields.hasErrors('localitzacio')}" th:errors="*{localitzacio}"></td></div>
                 </div>
                 <div class="row">
@@ -70,7 +73,7 @@
                         <div class="form-group">
                             <label class="col-form-label mt-4" for="longitud"><b>Longitud (en metres):</b></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" placeholder="Default input" id="longitud" th:field="*{longitud}">
+                                <input type="number" class="form-control" placeholder="1000" id="longitud" th:field="*{longitud}" required>
                             </div>
                             <div class="text-danger"><td th:if="${#fields.hasErrors('longitud')}" th:errors="*{longitud}"></td></div>
                         </div>
@@ -79,21 +82,11 @@
                         <div class="form-group">
                             <label class="col-form-label mt-4" for="amplaria"><b>Amplária (en metres):</b></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" placeholder="Default input" id="amplaria" th:field="*{amplaria}">
+                                <input type="number" class="form-control" placeholder="2000" id="amplaria" th:field="*{amplaria}" required>
                             </div>
                             <div class="text-danger"><td th:if="${#fields.hasErrors('amplaria')}" th:errors="*{amplaria}"></td></div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="municipi" class="form-label mt-4"><b>Municipi:</b></label>
-                    <select class="form-select" id="municipi" type="text" th:field="*{idMunicipi}">
-                        <option th:each="municipi : ${municipis}"
-                                th:value="${municipi.id}"
-                                th:text="${municipi.nom + ' - ' + municipi.provincia.toString()}">
-                        </option>
-                    </select>
                 </div>
 
                 <div class="form-group">

@@ -10,6 +10,7 @@ import es.uji.ei102720gmtp.SanaProject.model.ReservaDadesCompletes;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
 import es.uji.ei102720gmtp.SanaProject.services.ReservesClientService;
+import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,7 @@ public class ReservaController {
     private FranjaHorariaDao franjaHorariaDao;
     private InterfaceReservesService reservesService;
     private ReservesClientService reservesClientService;
+    private EmailDao emailDao;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -84,6 +86,11 @@ public class ReservaController {
         this.reservesClientService = reservesClientService;
     }
 
+    @Autowired
+    public void setEmailDao(EmailDao emailDao){
+        this.emailDao = emailDao;
+    }
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -92,19 +99,34 @@ public class ReservaController {
         return "reserva/list";
     }
 
-    @RequestMapping(value = "/reservesClient/{nif}", method = RequestMethod.GET)
-    public String mostrarReservesClient(Model model, @PathVariable String nif, HttpSession session){
+    @RequestMapping("/ocupacio/{id}")
+    public String mostraOcupacio(Model model, @PathVariable int id){
+        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+        model.addAttribute("ocupacio", reservesService.ocupacioPerEspai(id));
+        return "reserva/ocupacio";
+    }
+
+    @RequestMapping(value = "/reservesClient/{nif}")
+    public String mostrarReservesClient(Model model, @PathVariable String nif){
         model.addAttribute("reserves", reservesService.reservesPerClient(nif));
         model.addAttribute("nif", nif);
         return "reserva/reservesClient";
     }
 
-    @RequestMapping(value = "/reservesEspai/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservesEspai/{id}")
     public String mostrarReservesEspai(Model model, @PathVariable int id){
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
         model.addAttribute("reserves", reservesService.reservesPerEspai(id));
         return "reserva/reservesEspai";
+    }
+
+    @RequestMapping(value = "/reservesEspaiResponsable/{id}", method = RequestMethod.GET)
+    public String mostrarReservesEspaiResponsable(Model model, @PathVariable int id){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
+        model.addAttribute("reserves", reservesService.reservesPerEspai(id));
+        return "reserva/reservesEspaiResponsable";
     }
 
     @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}")
@@ -131,6 +153,7 @@ public class ReservaController {
         List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(data, franjaHoraria, Integer.valueOf(idEspai));
         model.addAttribute("zones", zonesDisponibles);
 
+        emailDao.addEmail(new Email(reservaCompleta.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", null, ciutada.getNif()));
         return "reserva/add";
     }
 
@@ -271,25 +294,23 @@ public class ReservaController {
     }
 
     @RequestMapping(value ="/deleteEspai/{idEspai}/{idReserva}")
-    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, Model model, HttpSession session, RedirectAttributes redirectAttributes){
-        reservaDao.getReserva(idReserva).setEstat(EstatReserva.CANCELADAGESTORMUNICIPAL);
+    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, RedirectAttributes redirectAttributes){
+
+        Reserva reserva = reservaDao.getReserva(idReserva);
+        reserva.setEstat(EstatReserva.CANCELADAPERGESTORMUNICIPAL);
+        reservaDao.updateReserva(reserva);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
-        EspaiPublic espai = espaiPublicDao.getEspaiPublic(idEspai);
-        model.addAttribute("espai", espai);
-        model.addAttribute("reserves", reservesService.reservesPerEspai(idEspai));
-        return "reserva/reservesEspai";
+        return "redirect:../../reservesEspai/"+idEspai;
     }
 
     @RequestMapping(value ="/deletePerClient/{id}")
-    public String processDeletePerClient(@ModelAttribute("nif") String nif, @PathVariable int id, Model model, RedirectAttributes redirectAttributes){
-        reservaDao.getReserva(id).setEstat(EstatReserva.CANCELADACIUTADA);
+    public String processDeletePerClient(@PathVariable int id, Model model, RedirectAttributes redirectAttributes){
+        Reserva reserva = reservaDao.getReserva(id);
+        reserva.setEstat(EstatReserva.CANCELADAPERCIUTADA);
+        reservaDao.updateReserva(reserva);
         String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
         redirectAttributes.addFlashAttribute("alert", msg);
-        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
-        System.out.println(model.getAttribute("reserves").toString());
-        System.out.println(nif);
-        System.out.println("hola");
-        return "redirect:../reservesClient/" + nif;
+        return "redirect:../reservesClient/"+reserva.getNifCiutada();
     }
 }

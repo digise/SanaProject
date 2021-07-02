@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{fragments/baseResponsable}">
+      layout:decorate="~{fragments/baseGestor}">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -45,7 +45,9 @@
                 <td th:text="${reserva.horaFinal.toString()}"></td>
                 <td th:text="${reserva.dataReserva}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
-                <td><a class="btn btn-danger btn-sm" th:href="@{/reserva/deleteEspai/{idEspai}/{idReserva}(idEspai=${espai.id}, idReserva=${reserva.reserva.id})}"><i class="fas fa-window-close"></i> Anul·lar</a></td>
+                <td>
+                    <a th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" class="btn btn-danger btn-sm" th:href="@{/reserva/deleteEspai/{idEspai}/{idReserva}(idEspai=${espai.id}, idReserva=${reserva.reserva.id})}"><i class="fas fa-window-close"></i> Anul·lar</a>
+                </td>
             </tr>
             </tbody>
         </table>

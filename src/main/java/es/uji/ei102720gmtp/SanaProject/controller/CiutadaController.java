@@ -1,7 +1,9 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
+import es.uji.ei102720gmtp.SanaProject.dao.EmailDao;
 import es.uji.ei102720gmtp.SanaProject.model.Ciutada;;
+import es.uji.ei102720gmtp.SanaProject.model.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +13,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/ciutada")
 public class CiutadaController {
 
     private CiutadaDao ciutadaDao;
 
+    private EmailDao emailDao;
+
     @Autowired
     public void setCiutadaDao(CiutadaDao ciutadaDao){
         this.ciutadaDao = ciutadaDao;
+    }
+
+    @Autowired
+    public void setEmailDao(EmailDao emailDao){
+        this.emailDao = emailDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -63,6 +76,16 @@ public class CiutadaController {
         ciutadaDao.deleteCiutada(nif);
         return "redirect:../list";
     }
+
+    @RequestMapping("/correu/{nif}")
+    public String mostrarCorreusCiutada(@PathVariable String nif, Model model){
+        model.addAttribute("emails", emailDao.getEmailsDeCiutada(nif));
+        model.addAttribute("correu", ciutadaDao.getCiutada(nif).getEmail());
+        return "ciutada/email";
+
+    }
+
+
 
 
 }

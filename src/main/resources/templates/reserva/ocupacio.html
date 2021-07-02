@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/baseResponsable}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+  <div class="row">
+    <div class="col-2">
+      <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/list}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    </div>
+    <div class="col-8">
+      <h1 class="my-3 text-center">Ocupació de <span th:text="${espai.nom}"></span></h1>
+      <h3 class="my-3 text-center">La ocupació actual del espai es de <span th:text="${ocupacio}"></span> persones</h3>
+    </div>
+  </div>
+</div>
+</body>
+</html>

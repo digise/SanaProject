@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="row pb-4">
         <div class="col-2 pt-3">
-            <a type="button" class="btn btn-secondary" th:href="@{/gestorMunicipal/indexGestor}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+            <a type="button" class="btn btn-danger" th:href="@{/gestorMunicipal/indexGestor}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
         </div>
         <div class="col-6">
             <h1 class="my-3" style="text-align: center">Espais públics de <span th:text="${municipi.nom}"></span></h1>
@@ -41,13 +41,14 @@
                     <a class="btn btn-primary" th:href="@{/reserva/reservesEspai/{id}(id=${espai.id})}">Reserves</a>
                     <a class="btn btn-primary" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}">Serveis Espai</a>
                     <a class="btn btn-info" th:href="@{/espaiPublic/update/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Modificar espai</a>
+                    <a class="btn btn-success" th:href="@{/espaiPublic/afegirZonesFranjes/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Afegir zona i franjes horàries</a>
                 </div>
             </div>
         </div>
         <div class="w-100"></div>
 
     </div>
-    <a class="btn btn-success" type="submit" th:href="@{/espaiPublic/add}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir espai</a>
+    <a class="btn btn-success" type="submit" th:href="@{/espaiPublic/add/{id}(id=${municipi.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir espai</a>
 
 
 </div>

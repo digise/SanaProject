@@ -49,9 +49,9 @@ public class ControlaController {
     }
 
     @RequestMapping(value="/update/{nifControlador}/{idEspai}/{dataInici}", method = RequestMethod.GET)
-    public String editControla(Model model, @PathVariable String nifControlador, @PathVariable String idEspai, @PathVariable String dataInici){
+    public String editControla(Model model, @PathVariable String nifControlador, @PathVariable int idEspai, @PathVariable String dataInici){
         LocalDate data = LocalDate.parse(dataInici, DateTimeFormatter.ISO_DATE);
-        model.addAttribute("controla", controlaDao.getControla(nifControlador,idEspai,data));
+        model.addAttribute("controla", controlaDao.getControla(nifControlador, idEspai,data));
         return "controla/update";
     }
 
@@ -64,7 +64,7 @@ public class ControlaController {
     }
 
     @RequestMapping(value = "/delete/{nifControlador}/{idEspai}/{dataInici}")
-    public String processDelete( @PathVariable String nifControlador, @PathVariable String idEspai, @PathVariable String dataInici){
+    public String processDelete( @PathVariable String nifControlador, @PathVariable int idEspai, @PathVariable String dataInici){
         LocalDate data = LocalDate.parse(dataInici, DateTimeFormatter.ISO_DATE);
         controlaDao.deleteControla(nifControlador,idEspai,data);
         return "redirect:../../../list";

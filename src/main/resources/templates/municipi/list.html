@@ -32,7 +32,9 @@
                 <td th:text="${municipi.provincia.getDescripcion()}"></td>
                 <td><a type="button" class="btn btn-info btn-sm"  th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Gestionar els gestors</a>
                     <a type="button" class="btn btn-info btn-sm"  th:href="@{/municipi/update/{id}(id=${municipi.id})}"><i class="fa fa-edit"></i> Editar</a>
-                    <a class="btn btn-danger btn-sm" th:href="@{/municipi/delete/{id}(id=${municipi.id})}"><i class="fas fa-trash"></i> Borrar</a></td>
+                    <a class="btn btn-danger btn-sm" th:href="@{/municipi/delete/{id}(id=${municipi.id})}"
+                       th:onclick="return confirm('Estàs segur d\'esborrar el municipi amb id ' + [[${municipi.id}]] + ' i amb nom ' + [[${municipi.nom}]] + '?');">
+                        <i class="fas fa-trash"></i> Borrar</a></td>
             </tr>
             </tbody>
         </table>

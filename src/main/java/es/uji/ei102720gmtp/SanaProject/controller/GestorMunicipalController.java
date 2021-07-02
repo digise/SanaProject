@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -47,8 +48,9 @@ public class GestorMunicipalController {
         return "gestorMunicipal/list";
     }
 
-    @RequestMapping(value = "/add")
-    public String addGestorMunicipal(Model model){
+    @RequestMapping(value = "/add/{id}")
+    public String addGestorMunicipal(Model model, @PathVariable int id){
+        model.addAttribute("id", id);
         model.addAttribute("gestorMunicipal", new GestorMunicipal());
         return "gestorMunicipal/add";
     }
@@ -56,16 +58,19 @@ public class GestorMunicipalController {
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
+
         gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
         if(bindingResult.hasErrors())
             return "gestorMunicipal/add";
+        int id = gestorMunicipal.getIdMunicipi();
         gestorMunicipalDao.addGestorMunicipal(gestorMunicipal);
-        return "redirect:gestorsPerMunicipi";
+        return "redirect:gestorsPerMunicipi/"+id;
     }
 
     @RequestMapping(value="/update/{nif}", method = RequestMethod.GET)
     public String editGestorMunicipal(Model model, @PathVariable String nif){
         model.addAttribute("gestorMunicipal", gestorMunicipalDao.getGestorMunicipal(nif));
+        model.addAttribute("id", gestorMunicipalDao.getGestorMunicipal(nif).getIdMunicipi());
         return "gestorMunicipal/update";
     }
 
@@ -73,16 +78,18 @@ public class GestorMunicipalController {
     public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
         GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
         gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
+        int id = gestorMunicipal.getIdMunicipi();
         if (bindingResult.hasErrors())
             return "gestorMunicipal/update";
         gestorMunicipalDao.updateGestorMunicipal(gestorMunicipal);
-        return "redirect:gestorsPerMunicipi";
+        return "redirect:gestorsPerMunicipi/"+id;
     }
 
     @RequestMapping(value = "/delete/{nif}")
     public String processDelete(@PathVariable String nif){
+        int id = gestorMunicipalDao.getGestorMunicipal(nif).getIdMunicipi();
         gestorMunicipalDao.deleteGestorMunicipal(gestorMunicipalDao.getGestorMunicipal(nif));
-        return "redirect:../gestorsPerMunicipi";
+        return "redirect:../gestorsPerMunicipi/"+id;
     }
 
     @RequestMapping("/indexGestor")

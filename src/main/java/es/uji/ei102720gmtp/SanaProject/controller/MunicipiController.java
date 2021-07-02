@@ -54,17 +54,19 @@ public class MunicipiController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("municipi") Municipi municipi, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("municipi") Municipi municipi, BindingResult bindingResult, Model model){
         MunicipiValidator municipiValidator = new MunicipiValidator();
         municipiValidator.validate(municipi, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("municipi", municipi);
             return "municipi/update";
+        }
         municipiDao.updateMunicipi(municipi);
         return "redirect:list";
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String processDelete(@PathVariable String id){
+    public String processDelete(@PathVariable int id){
         municipiDao.deleteMunicipi(id);
         return "redirect:../list";
     }
