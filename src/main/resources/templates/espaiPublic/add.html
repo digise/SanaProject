@@ -23,7 +23,10 @@
                 </div>
             </div>
             <div class="card-body">
-
+                <div class="form-group">
+                    <label for="idMunicipi" class="form-label mt-4"><b>Municipi:</b></label>
+                    <input type="number" class="form-control" th:value="${id}" id="idMunicipi" name="idMunicipi" readonly/>
+                </div>
                 <div class="form-group">
                     <label class="col-form-label mt-2" for="nif"><b>Nom espai públic:</b></label>
                     <input type="text" class="form-control" placeholder="Default input" id="nif"  th:field="*{nom}">
@@ -84,11 +87,6 @@
                             <div class="text-danger"><td th:if="${#fields.hasErrors('amplaria')}" th:errors="*{amplaria}"></td></div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="idMunicipi" class="form-label mt-4"><b>Municipi:</b></label>
-                    <input type="number" class="form-control" th:value="${id}" id="idMunicipi" name="idMunicipi" readonly/>
                 </div>
 
                 <div class="form-group">

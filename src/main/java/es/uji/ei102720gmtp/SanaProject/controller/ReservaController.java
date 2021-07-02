@@ -44,6 +44,7 @@ public class ReservaController {
     private FranjaHorariaDao franjaHorariaDao;
     private InterfaceReservesService reservesService;
     private ReservesClientService reservesClientService;
+    private EmailDao emailDao;
 
     @Autowired
     public void setReservaDao(ReservaDao reservaDao){
@@ -83,6 +84,11 @@ public class ReservaController {
     @Autowired
     public void setReservesClientService(ReservesClientService reservesClientService) {
         this.reservesClientService = reservesClientService;
+    }
+
+    @Autowired
+    public void setEmailDao(EmailDao emailDao){
+        this.emailDao = emailDao;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -147,6 +153,7 @@ public class ReservaController {
         List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(data, franjaHoraria, Integer.valueOf(idEspai));
         model.addAttribute("zones", zonesDisponibles);
 
+        emailDao.addEmail(new Email(reservaCompleta.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", null, ciutada.getNif()));
         return "reserva/add";
     }
 

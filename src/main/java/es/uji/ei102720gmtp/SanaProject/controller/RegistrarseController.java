@@ -92,7 +92,7 @@ public class RegistrarseController {
         user.setPassword(ciutada.getContrasenya());
         session.setAttribute("user", user);
         ciutadaDao.addCiutada(ciutada);
-        String msg = String.format("T'has registrat correctament!!");
+        String msg = String.format("T'has registrat correctament!! Ara tens que iniciar sessió per entrar en l'aplicació");
         redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:login";
     }

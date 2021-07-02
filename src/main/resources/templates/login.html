@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Inici de Sessió</title>
+    <title>Registrar-se</title>
 
     <!--JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -20,16 +20,16 @@
 </head>
 <body style="background-color:#105625;">
 <div class="modal-dialog text-center" style="margin-top: 13%">
+    <div th:if="${alert != null}" th:text="${alert}" class="alert alert-success" role="alert">
+    </div>
     <div class="col-sm-8 main-section">
         <div class="modal-content">
             <div class="col-12 user-img">
                 <img src="static/imagenes/user/user.png" th:src="@{/imagenes/user/user.png}"/>
             </div>
-            <div th:if="${alert != null}" th:text="${alert}" class="alert alert-success" role="alert">
-            </div>
             <form class="col-12" th:action="@{/login}" th:object="${user}" method="post">
                 <div class="form-group" id="user-group">
-                    <input type="text" class="form-control" placeholder="NIF" th:field="*{nif}"/>
+                    <input type="text" class="form-control" placeholder="NIF" maxlength="9" th:field="*{nif}"/>
                     <div class="alert alert-danger" th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></div>
                 </div>
                 <div class="form-group" id="contrasena-group">

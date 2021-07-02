@@ -1,0 +1,35 @@
+<html layout:decorate="~{fragments/baseCiutada}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Emails</title>
+</head>
+<body>
+<div layout:fragment="content">
+<div class="row pb-4">
+    <div class="col-2 pt-3">
+        <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/seleccionarProvincia}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    </div>
+    <div class="col-6">
+        <h1 class="my-3" style="text-align: center">Enviament d'emails a la direcció:  <span th:text="${correu}"></span></h1>
+    </div>
+</div>
+<div th:if="${#lists.isEmpty(emails)}">
+    No hi ha emails
+</div>
+<div th:unless="${#lists.isEmpty(emails)}" th:each="email: ${emails}" class="card mb-3">
+    <div class="card border-secondary mb-3">
+        <div class="card-header" th:text="${email.asunto}"></div>
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">fecha: <label th:text="${email.dataEnviament}"></label></p>
+            <p class="card-text">asunto: <label th:text="${email.emisor}"></label></p>
+            <p class="card-text">mensaje: <label th:text="${email.mensaje}"></label></p>
+
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>
