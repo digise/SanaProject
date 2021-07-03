@@ -31,7 +31,7 @@
                 <td>
                     <a type="button" class="btn btn-info btn-sm"  th:href="@{/servei/updateServeiEstacional/{nom}(nom=${servei.nom})}"><i class="fa fa-edit"></i> Editar</a>
                     <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiEstacional/{nom}(nom=${servei.nom})}"
-                       th:onclick="return confirm('Estàs segur d\'esborrar el servei amb nom ' + [[${servei.nom}]] + '?');">
+                       th:onclick="return confirm('Estàs segur d\'esborrar el servei amb nom ' + [[${servei.nom}]] + '? Desapareixerà de totes les arees');">
                         <i class="fas fa-trash"></i> Borrar</a>
                 </td>
             </tr>

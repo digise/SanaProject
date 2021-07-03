@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.Validation.EspaiPublicValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ServeiEstacionalValidator;
 import es.uji.ei102720gmtp.SanaProject.Validation.ServeiPermanentValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.ServeiEstacionalDao;
@@ -93,6 +94,8 @@ public class ServeiController {
 
     @RequestMapping(value = "/updateServeiPermanent", method = RequestMethod.POST)
     public String processUpdateServeiPermanent(@ModelAttribute("servei") ServeiPermanent serveiPermanent, BindingResult bindingResult){
+        ServeiPermanentValidator serveiPermanentValidator = new ServeiPermanentValidator();
+        serveiPermanentValidator.validate(serveiPermanent, bindingResult);
         if (bindingResult.hasErrors())
             return "servei/updateServeiPermanent";
         serveiPermanentDao.updateServeiPermanent(serveiPermanent);
@@ -122,6 +125,8 @@ public class ServeiController {
 
     @RequestMapping(value="/addServeiEstacional", method= RequestMethod.POST)
     public String processAddServeiEstacional(@ModelAttribute("serveiEstacional") ServeiEstacional serveiEstacional, BindingResult bindingResult){
+        ServeiEstacionalValidator serveiEstacionalValidator = new ServeiEstacionalValidator();
+        serveiEstacionalValidator.validate(serveiEstacional, bindingResult);
         if(bindingResult.hasErrors())
             return "servei/addServeiEstacional";
         serveiEstacionalDao.addServeiEstacional(serveiEstacional);
@@ -136,6 +141,8 @@ public class ServeiController {
 
     @RequestMapping(value = "/updateServeiEstacional", method = RequestMethod.POST)
     public String processUpdateServeiEstacional(@ModelAttribute("servei") ServeiEstacional serveiEstacional, BindingResult bindingResult){
+        ServeiEstacionalValidator serveiEstacionalValidator = new ServeiEstacionalValidator();
+        serveiEstacionalValidator.validate(serveiEstacional, bindingResult);
         if (bindingResult.hasErrors())
             return "servei/updateServeiEstacional";
         serveiEstacionalDao.updateServeiEstacional(serveiEstacional);
