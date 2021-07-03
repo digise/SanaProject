@@ -23,6 +23,7 @@ public class Email {
         this.nifCiutada = nifCiutada;
     }
 
+
     public int getId() {
         return id;
     }

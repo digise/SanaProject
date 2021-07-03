@@ -152,8 +152,6 @@ public class ReservaController {
 
         List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(data, franjaHoraria, Integer.valueOf(idEspai));
         model.addAttribute("zones", zonesDisponibles);
-
-        emailDao.addEmail(new Email(reservaCompleta.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", null, ciutada.getNif()));
         return "reserva/add";
     }
 
@@ -188,11 +186,15 @@ public class ReservaController {
 
             return "redirect:/reserva/add/" + reservaDadesCompletes.getIdEspai() + '/' + reservaDadesCompletes.getIdFranja() + '/' + reservaDadesCompletes.getDataReserva().toString();
         }
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+
+        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " El codi de la reserva es " +
+                reservaDadesCompletes.getIdReserva() + "dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
 
         Reserva reservaSimple = new Reserva();
         reservaSimple.setNombrePersones(reservaDadesCompletes.getNombrePersones());
         reservaSimple.setEstat(EstatReserva.PENDENTUS);
-        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+
         reservaSimple.setNifCiutada(ciutada.getNif());
 
         String dadesCodiQr = String.valueOf(reservaDadesCompletes.getIdEspai()) + String.valueOf(reservaDadesCompletes.getIdFranja()) + String.valueOf(reservaDadesCompletes.getIdZona()) + reservaDadesCompletes.getDataReserva().toString();

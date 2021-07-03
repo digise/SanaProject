@@ -8,7 +8,7 @@
 <div layout:fragment="content">
 <div class="row pb-4">
     <div class="col-2 pt-3">
-        <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/seleccionarProvincia}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/seleccionarProvincia}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     </div>
     <div class="col-6">
         <h1 class="my-3" style="text-align: center">Enviament d'emails a la direcció:  <span th:text="${correu}"></span></h1>
@@ -18,13 +18,13 @@
     No hi ha emails
 </div>
 <div th:unless="${#lists.isEmpty(emails)}" th:each="email: ${emails}" class="card mb-3">
-    <div class="card border-secondary mb-3">
-        <div class="card-header" th:text="${email.asunto}"></div>
+    <div class="card border-info mb-3">
+        <div class="card-header"><b th:text="${email.asunto}"></b></div>
         <div class="card-body">
             <h5 class="card-title"></h5>
-            <p class="card-text">fecha: <label th:text="${email.dataEnviament}"></label></p>
-            <p class="card-text">asunto: <label th:text="${email.emisor}"></label></p>
-            <p class="card-text">mensaje: <label th:text="${email.mensaje}"></label></p>
+            <p class="card-text"><b>emisor:</b> <label th:text="${email.emisor}"></label></p>
+            <p class="card-text"><b>fecha:</b> <label th:text="${email.dataEnviament}"></label></p>
+            <p class="card-text"><b>mensaje:</b><label th:text="${email.mensaje}"></label></p>
 
         </div>
     </div>
