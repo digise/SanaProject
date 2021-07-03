@@ -2,8 +2,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.CiutadaDao;
 import es.uji.ei102720gmtp.SanaProject.dao.EmailDao;
-import es.uji.ei102720gmtp.SanaProject.model.Ciutada;;
-import es.uji.ei102720gmtp.SanaProject.model.Email;
+import es.uji.ei102720gmtp.SanaProject.model.*;;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -80,7 +80,9 @@ public class CiutadaController {
     @RequestMapping("/correu/{nif}")
     public String mostrarCorreusCiutada(@PathVariable String nif, Model model){
         model.addAttribute("emails", emailDao.getEmailsDeCiutada(nif));
-        model.addAttribute("correu", ciutadaDao.getCiutada(nif).getEmail());
+        String correu = ciutadaDao.getCiutada(nif).getEmail();
+        model.addAttribute("correu", correu);
+
         return "ciutada/email";
 
     }
