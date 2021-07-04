@@ -79,8 +79,9 @@ public class MunicipiController {
             redirectAttributes.addFlashAttribute("alert", msg);
             return "redirect:../list";
         }
-
         municipiDao.deleteMunicipi(id);
+        String msg = String.format("El municipi s'ha eliminat");
+        redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../list";
     }
 }

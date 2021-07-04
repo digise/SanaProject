@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
@@ -86,9 +87,11 @@ public class GestorMunicipalController {
     }
 
     @RequestMapping(value = "/delete/{nif}")
-    public String processDelete(@PathVariable String nif){
+    public String processDelete(@PathVariable String nif, RedirectAttributes redirectAttributes){
         int id = gestorMunicipalDao.getGestorMunicipal(nif).getIdMunicipi();
         gestorMunicipalDao.deleteGestorMunicipal(gestorMunicipalDao.getGestorMunicipal(nif));
+        String msg = String.format("El gestor municipal s'ha eliminat");
+        redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../gestorsPerMunicipi/"+id;
     }
 

@@ -104,6 +104,8 @@ public class ServeiController {
             return "redirect:../listServeiPermanent";
         }
         serveiPermanentDao.deleteServeiPermanent(nom);
+        String msg = String.format("El servei s'ha eliminat");
+        redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../listServeiPermanent";
     }
 
@@ -152,6 +154,8 @@ public class ServeiController {
             return "redirect:../listServeiEstacional";
         }
         serveiEstacionalDao.deleteServeiEstacional(nom);
+        String msg = String.format("El servei s'ha eliminat");
+        redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../listServeiEstacional";
     }
 
