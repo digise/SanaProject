@@ -1,9 +1,9 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
-import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiEstacionalDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiInstalatEspaiDao;
-import es.uji.ei102720gmtp.SanaProject.dao.ServeiPermanentDao;
+import es.uji.ei102720gmtp.SanaProject.Validation.PeriodeServeiValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ServeiEstacionalValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ServeiPermanentValidator;
+import es.uji.ei102720gmtp.SanaProject.dao.*;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceServeiService;
 import org.springframework.beans.factory.annotation.Autowired;
