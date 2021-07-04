@@ -63,10 +63,10 @@ public class ServeiEstacionalDao {
         }
     }
 
-    public List<ServeiEstacional> getServeisEstacinalsFromEspai(int idEspai) {
+    public List<ServeiEstacional> getServeisEstacionalsFromEspai(int idEspai) {
         try {
             return jdbcTemplate.query(
-                    "SELECT * FROM ServeiEstacional WHERE nom IN (SELECT nom_servei from serveiinstalatespai WHERE id_espai = ?)",
+                    "SELECT * FROM ServeiEstacional WHERE nom IN (SELECT nom_servei from periodeserveiespai WHERE id_espai = ?)",
                     new ServeiEstacionalRowMapper(),
                     idEspai);
         } catch (EmptyResultDataAccessException e) {

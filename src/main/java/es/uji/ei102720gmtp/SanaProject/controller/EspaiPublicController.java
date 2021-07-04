@@ -12,6 +12,7 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.TipusTerreny;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.MunicipisPerControladorService;
 import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
+import es.uji.ei102720gmtp.SanaProject.services.ServeiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,7 @@ public class EspaiPublicController {
     private MunicipiDao municipiDao;
     private MunicipisPerControladorService municipisPerControladorService;
     private ReservesService reservesService;
+    private ServeiService serveiService;
 
     @Autowired
     public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao){
@@ -60,6 +62,11 @@ public class EspaiPublicController {
     @Autowired
     public void setReservesService(ReservesService reservesService){
         this.reservesService = reservesService;
+    }
+
+    @Autowired
+    public void setServeiService(ServeiService serveiService) {
+        this.serveiService = serveiService;
     }
 
     //Operacions: Crear, llistar, actualitzar, esborrar
@@ -150,6 +157,10 @@ public class EspaiPublicController {
         String provincia = municipi.getProvincia().getDescripcion();
         model.addAttribute("provincia", provincia);
         model.addAttribute("nomMunicipi", municipi.getNom());
+        List<ServeiPermanentComplet> serveiPermanentList = serveiService.getServeiPermanentInstalats(espai.getId());
+        model.addAttribute("serveiPermanentList", serveiPermanentList);
+        List<ServeiEstacionalComplet> serveiEstacionalList = serveiService.getServeisEstacionalsInstalats(espai.getId());
+        model.addAttribute("serveiEstacionalList", serveiEstacionalList);
         return "/espaiPublic/informacioEspai";
     }
 
@@ -172,6 +183,12 @@ public class EspaiPublicController {
 
         ElegirZonaBean dades = new ElegirZonaBean(espai.getId(), diaDate);
         model.addAttribute("dades", dades);
+
+        List<ServeiPermanentComplet> serveiPermanentList = serveiService.getServeiPermanentInstalats(espai.getId());
+        model.addAttribute("serveiPermanentList", serveiPermanentList);
+
+        List<ServeiEstacionalComplet> serveiEstacionalList = serveiService.getServeisEstacionalsInstalats(espai.getId());
+        model.addAttribute("serveiEstacionalList", serveiEstacionalList);
 
         String registrat = "No registrat";
         Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
@@ -201,6 +218,12 @@ public class EspaiPublicController {
 
         ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
         model.addAttribute("dades", novesDades);
+
+        List<ServeiPermanentComplet> serveiPermanentList = serveiService.getServeiPermanentInstalats(espai.getId());
+        model.addAttribute("serveiPermanentList", serveiPermanentList);
+
+        List<ServeiEstacionalComplet> serveiEstacionalList = serveiService.getServeisEstacionalsInstalats(espai.getId());
+        model.addAttribute("serveiEstacionalList", serveiEstacionalList);
 
         String registrat = "Registrat";
         model.addAttribute("registrat", registrat);

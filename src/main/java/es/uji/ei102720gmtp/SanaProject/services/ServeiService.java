@@ -1,6 +1,9 @@
 package es.uji.ei102720gmtp.SanaProject.services;
 
-import es.uji.ei102720gmtp.SanaProject.dao.*;
+import es.uji.ei102720gmtp.SanaProject.dao.PeriodeServeiEspaiDao;
+import es.uji.ei102720gmtp.SanaProject.dao.ServeiEstacionalDao;
+import es.uji.ei102720gmtp.SanaProject.dao.ServeiInstalatEspaiDao;
+import es.uji.ei102720gmtp.SanaProject.dao.ServeiPermanentDao;
 import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,6 @@ public class ServeiService implements InterfaceServeiService{
 
     @Autowired
     private PeriodeServeiEspaiDao periodeServeiEspaiDao;
-
-    @Autowired
-    private EspaiPublicDao espaiPublicDao;
 
     @Override
     public List<ServeiPermanentComplet> getServeiPermanentInstalats(int idEspai) {
@@ -66,7 +66,7 @@ public class ServeiService implements InterfaceServeiService{
     }
 
     @Override
-    public List<ServeiPermanent> getServeisRestants(List<ServeiPermanent> list) {
+    public List<ServeiPermanent> getServeisPermanentsRestants(List<ServeiPermanent> list) {
         List<ServeiPermanent> tots = serveiPermanentDao.getServeisPermanents();
         LinkedList<ServeiPermanent> definitu = new LinkedList<>();
 
@@ -88,26 +88,40 @@ public class ServeiService implements InterfaceServeiService{
     }
 
     @Override
-    public boolean serveiPermanentEnUs(String nomServei){
-        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()) {
-            int id = espaiPublic.getId();
-            for (ServeiPermanent servei : serveiPermanentDao.getServeisPermanentsFromEspai(id)){
-                if (servei.getNom().equals(nomServei))
-                    return true;
+    public List<ServeiEstacional> getServeisEstacionalsRestants(List<ServeiEstacional> list) {
+        List<ServeiEstacional> tots = serveiEstacionalDao.getServeisEstacionals();
+        LinkedList<ServeiEstacional> definitu = new LinkedList<>();
+
+        for (ServeiEstacional servei : tots)
+            definitu.add(servei);
+
+        Iterator<ServeiEstacional> iterator = definitu.iterator();
+
+        while (iterator.hasNext()){
+            ServeiEstacional servei = iterator.next();
+            for (ServeiEstacional serveiEstacional: list){
+                if (servei.getNom().equals(serveiEstacional.getNom())) {
+                    tots.remove(servei);
+                    break;
+                }
             }
         }
-        return false;
+        return tots;
     }
 
     @Override
-    public boolean serveiEstacionalEnUs(String nomServei){
-        for (EspaiPublic espaiPublic : espaiPublicDao.getEspaisPublics()) {
-            int id = espaiPublic.getId();
-            for (ServeiEstacional servei : serveiEstacionalDao.getServeisEstacinalsFromEspai(id)){
-                if (servei.getNom().equals(nomServei))
-                    return true;
-            }
-        }
-        return false;
+    public boolean isPermanentServeiUsed(String nom) {
+        List<ServeiInstalatEspai> usedService = serveiInstalatEspaiDao.getServeisInstalatsFromNom(nom);
+        if (usedService.isEmpty())
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean isEstacionalServeiUsed(String nom) {
+        List<PeriodeServeiEspai> usedService = periodeServeiEspaiDao.getServeisEstacionalsFromNom(nom);
+        if (usedService.isEmpty())
+            return false;
+        return true;
     }
 }

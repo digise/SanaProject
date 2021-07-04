@@ -9,6 +9,7 @@ public class ServeiEstacionalComplet {
 
     private String nom;
     private String tipus;
+    private int idEspai;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaInici;
@@ -36,6 +37,14 @@ public class ServeiEstacionalComplet {
 
     public void setTipus(String tipus) {
         this.tipus = tipus;
+    }
+
+    public int getIdEspai() {
+        return idEspai;
+    }
+
+    public void setIdEspai(int idEspai) {
+        this.idEspai = idEspai;
     }
 
     public LocalTime getHoraInici() {

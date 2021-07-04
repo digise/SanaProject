@@ -10,7 +10,9 @@
     <div class="col-2">
         <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/espaisPerMunicipi}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     </div>
-    <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    <div class="col-7">
+        <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
+    </div>
     <div class="row justify-content-md-center">
         <div class="col-lg-5 m-4">
             <img class="card-img" th:src="${espai.imagen}" alt="Card image">
@@ -29,9 +31,34 @@
                 <span th:unless="${espai.amplaria == 0}" th:text="${espai.amplaria}"></span>
             </p>
             <p style="text-align: justify"><b>Descripcio: </b><span th:text="${espai.descripcio}"></span></p>
-            <p><b>Zones</b></p>
         </div>
     </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-lg-4 m-4 align-self-center">
+            <div class="row">
+                <h2 class="my-2 text-center">Serveis permanents:</h2>
+            </div>
+            <div th:if="${serveiPermanentList.isEmpty()}">
+                <b>No hi ha serveis permanents</b>
+            </div>
+            <div class="row" th:each="serveiPermanent : ${serveiPermanentList}">
+                <p>- <span th:text="${serveiPermanent.getNom()}"></span></p>
+            </div>
+        </div>
+        <div class="col-lg-4 m-4 align-self-center">
+            <div class="row">
+                <h2 class="my-2 text-center">Serveis estacionals:</h2>
+            </div>
+            <div th:if="${serveiEstacionalList.isEmpty()}">
+                <b>No hi ha serveis estacionals</b>
+            </div>
+            <div class="row" th:each="serveiEstacional : ${serveiEstacionalList}">
+                <p>- <span th:text="${serveiEstacional.getNom() + ' (Horari: ' + serveiEstacional.getHoraInici() + ' - ' + serveiEstacional.getHoraFinal() + ')'}"></span></p>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-center my-4">
         <div class="col-sm-auto">
             <h2 class="my-2 text-center">Tipus d'acces:</h2>
