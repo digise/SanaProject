@@ -1,6 +1,7 @@
 package es.uji.ei102720gmtp.SanaProject.dao;
 
 import es.uji.ei102720gmtp.SanaProject.model.ServeiEstacional;
+import es.uji.ei102720gmtp.SanaProject.model.ServeiPermanent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,6 +58,17 @@ public class ServeiEstacionalDao {
                     "SELECT * FROM ServeiEstacional",
                     new ServeiEstacionalRowMapper()
             );
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<ServeiEstacional>();
+        }
+    }
+
+    public List<ServeiEstacional> getServeisEstacionalsFromEspai(int idEspai) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM ServeiEstacional WHERE nom IN (SELECT nom_servei from periodeserveiespai WHERE id_espai = ?)",
+                    new ServeiEstacionalRowMapper(),
+                    idEspai);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<ServeiEstacional>();
         }

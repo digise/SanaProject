@@ -74,4 +74,15 @@ public class PeriodeServeiEspaiDao {
             return new ArrayList<PeriodeServeiEspai>();
         }
     }
+
+    public List<PeriodeServeiEspai> getServeisEstacionalsFromNom(String nom) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM PeriodeServeiEspai WHERE nom_servei = ?",
+                    new PeriodeServeiEspaiRowMapper(),
+                    nom);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<PeriodeServeiEspai>();
+        }
+    }
 }

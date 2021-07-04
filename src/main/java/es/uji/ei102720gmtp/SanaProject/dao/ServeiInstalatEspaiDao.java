@@ -78,4 +78,15 @@ public class ServeiInstalatEspaiDao {
             return new ArrayList<ServeiInstalatEspai>();
         }
     }
+
+    public List<ServeiInstalatEspai> getServeisInstalatsFromNom(String nom) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM ServeiInstalatEspai WHERE nom_servei = ?",
+                    new ServeiInstalatEspaiRowMapper(),
+                    nom);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<ServeiInstalatEspai>();
+        }
+    }
 }

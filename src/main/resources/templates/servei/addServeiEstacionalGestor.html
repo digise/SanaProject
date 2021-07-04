@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/baseResponsable}">
+<head>
+  <title>Afegir nou servei estacional</title>
+  <meta charset="UTF-8" />
+
+</head>
+<body>
+<div layout:fragment="content" >
+
+  <form action="#" th:action="@{/servei/addServeiEstacionalGestor}"
+        th:object="${serveiEstacionalComplet}" method="post">
+    <div >
+      <a type="button" class="btn btn-danger" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    </div>
+    <div class="modal-header">
+      <h2 class="modal-title" id="exampleModalLabel">Afegir servei estacional</h2>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="col-form-label mt-4" for="nom">Nom servei:</label>
+        <select  id="nom" name="nom" th:field="*{nom}">
+          <option th:each="servei: ${serveis}"
+                  th:value="${servei.getNom()}"
+                  th:text="${servei.getNom()}">
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label mt-4" >Hora inici:</label>
+        <input type="time" class="form-control" placeholder="horaInici" id="horaInici" th:field="*{horaInici}" name="horaInici"/>
+        <div class="text-danger"><td th:if="${#fields.hasErrors('horaInici')}" th:errors="*{horaInici}"></td></div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label mt-4" >Hora final:</label>
+        <input type="time" class="form-control" placeholder="horaFinal" id="horaFinal" th:field="*{horaFinal}" name="horaFinal"/>
+        <div class="text-danger"><td th:if="${#fields.hasErrors('horaFinal')}" th:errors="*{horaFinal}"></td></div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label mt-4" >Data inici:</label>
+        <input type="date" class="form-control" placeholder="dataInici" id="dataInici" th:field="*{dataInici}" name="dataInici"/>
+        <div class="text-danger"><td th:if="${#fields.hasErrors('dataInici')}" th:errors="*{dataInici}"></td></div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-form-label mt-4" >Data final:</label>
+        <input type="date" class="form-control" placeholder="dataFinal" id="dataFinal" th:field="*{dataFinal}" name="dataFinal"/>
+        <div class="text-danger"><td th:if="${#fields.hasErrors('dataFinal')}" th:errors="*{dataFinal}"></td></div>
+      </div>
+
+      <input type="hidden" th:field="*{idEspai}" th:value="${espai.id}">
+
+    </div>
+
+    <div class="modal-footer">
+
+      <input class="btn btn-success" type="submit" value="Afegir servei"/>
+    </div>
+  </form>
+</div>
+</body>
+</html>

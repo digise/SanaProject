@@ -14,7 +14,7 @@
     <h1 class="my-3">Llista de serveis permanents</h1>
   </div>
   <div th:if="${#lists.isEmpty(serveisPermanents)}">
-    <h5><u>No hi ha serveis</u></h5>
+    <h5><u>No hi ha serveis permanents</u></h5>
   </div>
   <div th:unless="${#lists.isEmpty(serveisPermanents)}">
     <table class="table table-bordered">
@@ -36,8 +36,43 @@
       </tbody>
     </table>
   </div>
+  <div class="col-2 pb-4">
+    <a class="btn btn-success" style="min-width: 210px;" type="submit" th:href="@{/servei/addServeiPermanentGestor/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir serveiPermanent</a>
+  </div>
+
+
+  <hr>
+
+
+  <div th:if="${#lists.isEmpty(serveisEstacionals)}">
+    <h5><u>No hi ha serveis estacionals</u></h5>
+  </div>
+  <div th:unless="${#lists.isEmpty(serveisEstacionals)}">
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Tipus</th>
+        <th scope="col">Horari</th>
+        <th scope="col">Data inici</th>
+        <th scope="col">Data final</th>
+      </tr>
+      </thead>
+      <tr class="table-light" th:each="serveiEstacional: ${serveisEstacionals}" th:object="${serveiEstacional}">
+        <td th:text="${serveiEstacional.nom}"></td>
+        <td th:text="${serveiEstacional.tipus}"></td>
+        <td th:text="${serveiEstacional.horaInici.toString() + '-' + serveiEstacional.horaFinal.toString()}"></td>
+        <td th:text="${serveiEstacional.dataInici.toString()}"></td>
+        <td th:text="${serveiEstacional.dataFinal.toString()}"></td>
+        <td>
+          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiEstacionalGestor/{id}/{nom}(id=${espai.id}, nom=${serveiEstacional.nom})}"><i class="fas fa-trash"></i> Borrar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="col-2">
-    <a class="btn btn-success" type="submit" th:href="@{/servei/addServeiPermanentGestor/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir serveiPermanent</a>
+    <a class="btn btn-success" style="min-width: 210px;" type="submit" th:href="@{/servei/addServeiEstacionalGestor/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir serveiEstacional</a>
   </div>
 
 

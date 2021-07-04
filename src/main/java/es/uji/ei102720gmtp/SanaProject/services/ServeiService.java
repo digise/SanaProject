@@ -66,7 +66,7 @@ public class ServeiService implements InterfaceServeiService{
     }
 
     @Override
-    public List<ServeiPermanent> getServeisRestants(List<ServeiPermanent> list) {
+    public List<ServeiPermanent> getServeisPermanentsRestants(List<ServeiPermanent> list) {
         List<ServeiPermanent> tots = serveiPermanentDao.getServeisPermanents();
         LinkedList<ServeiPermanent> definitu = new LinkedList<>();
 
@@ -85,5 +85,43 @@ public class ServeiService implements InterfaceServeiService{
             }
         }
         return tots;
+    }
+
+    @Override
+    public List<ServeiEstacional> getServeisEstacionalsRestants(List<ServeiEstacional> list) {
+        List<ServeiEstacional> tots = serveiEstacionalDao.getServeisEstacionals();
+        LinkedList<ServeiEstacional> definitu = new LinkedList<>();
+
+        for (ServeiEstacional servei : tots)
+            definitu.add(servei);
+
+        Iterator<ServeiEstacional> iterator = definitu.iterator();
+
+        while (iterator.hasNext()){
+            ServeiEstacional servei = iterator.next();
+            for (ServeiEstacional serveiEstacional: list){
+                if (servei.getNom().equals(serveiEstacional.getNom())) {
+                    tots.remove(servei);
+                    break;
+                }
+            }
+        }
+        return tots;
+    }
+
+    @Override
+    public boolean isPermanentServeiUsed(String nom) {
+        List<ServeiInstalatEspai> usedService = serveiInstalatEspaiDao.getServeisInstalatsFromNom(nom);
+        if (usedService.isEmpty())
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean isEstacionalServeiUsed(String nom) {
+        List<PeriodeServeiEspai> usedService = periodeServeiEspaiDao.getServeisEstacionalsFromNom(nom);
+        if (usedService.isEmpty())
+            return false;
+        return true;
     }
 }
