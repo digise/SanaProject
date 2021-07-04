@@ -70,7 +70,7 @@ public class RegistrarseController {
         this.ciutadaDao = ciutadaDao;
     }
 
-    public void setEmailDao(EmailDao emailDao){
+    public void setEmailDao(EmailDao emailDao) {
         this.emailDao = emailDao;
     }
 
@@ -80,13 +80,14 @@ public class RegistrarseController {
         return "registrarse";
     }
 
-    @RequestMapping(value="/registrarse", method= RequestMethod.POST)
+    @RequestMapping(value = "/registrarse", method = RequestMethod.POST)
     public String checkLogin(@ModelAttribute("ciutada") Ciutada ciutada,
                              BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 
         RegistrarseValidator ciutadaValidator = new RegistrarseValidator();
         ciutadaValidator.validate(ciutada, bindingResult);
-        if( !ciutadaDao.getCiutada(ciutada.getNif()).equals(ciutada)){
+        System.out.println(ciutadaDao.getCiutada(ciutada.getNif()));
+        if (ciutadaDao.getCiutada(ciutada.getNif()) != null) {
             bindingResult.rejectValue("nif", "obligatori", "El nif ya existeix en la bbdd");
         }
 
@@ -100,8 +101,7 @@ public class RegistrarseController {
         ciutadaDao.addCiutada(ciutada);
         String msg = String.format("T'has registrat correctament!! Ara tens que iniciar sessió per entrar en l'aplicació");
         redirectAttributes.addFlashAttribute("alert", msg);
-        emailDao.addEmail(new Email(LocalDate.now(), "no_reply@sana.es", ciutada.getEmail(), "REGISTRE REALITZAT", ciutada.getNom() + " " + ciutada.getCognoms() + ", ja eres usuari de l'aplicació SANA", ciutada.getNif()));
+        emailDao.addEmail(new Email(LocalDate.now(), "no_reply@sana.es", ciutada.getEmail(), "REGISTRE REALITZAT", " " + ciutada.getNom() + " " + ciutada.getCognoms() + ", ja eres usuari de l'aplicació SANA", ciutada.getNif()));
         return "redirect:login";
     }
-
 }
