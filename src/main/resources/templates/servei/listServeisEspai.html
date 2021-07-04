@@ -36,14 +36,18 @@
       </tbody>
     </table>
   </div>
-  <div class="col-2 pb-4">
+  <div class="col-2 pb-lg-5">
     <a class="btn btn-success" style="min-width: 210px;" type="submit" th:href="@{/servei/addServeiPermanentGestor/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir serveiPermanent</a>
   </div>
 
 
   <hr>
 
-
+  <div class="col-2 pt-lg-3">
+  </div>
+  <div class="col-7 pt-lg-3">
+    <h1 class="my-3">Llista de serveis permanents</h1>
+  </div>
   <div th:if="${#lists.isEmpty(serveisEstacionals)}">
     <h5><u>No hi ha serveis estacionals</u></h5>
   </div>

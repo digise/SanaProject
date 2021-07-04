@@ -17,6 +17,9 @@
       <h2 class="modal-title" id="exampleModalLabel">Afegir servei permanent</h2>
     </div>
     <div class="modal-body">
+      <div th:if="${#lists.isEmpty(serveis)}">
+        <h5><u>No hi ha més serveis que afegir</u></h5>
+      </div>
       <div class="form-group" th:each="servei: ${serveis}">
         <a class="btn btn-success" type="button" th:href="@{/servei/addServeiPermanentGestor/{id}/{nom}(id=${espai.id}, nom=${servei.nom})}" th:text="${servei.nom}"></a>
       </div>

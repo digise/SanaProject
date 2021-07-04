@@ -59,6 +59,7 @@ public class ReservesClientService implements InterfaceReservesClientService{
         return res;
     }
 
+    // @Todo
     @Override
     public ReservaDadesCompletes getReservaDadesCompletes(String idReserva) {
         ReservaDadesCompletes reservaDadesCompletes = new ReservaDadesCompletes();
@@ -67,10 +68,10 @@ public class ReservesClientService implements InterfaceReservesClientService{
         Ocupa ocupa = ocupaDao.getOcupaFromIdReserva(Integer.valueOf(idReserva));
 
         reservaDadesCompletes.setIdReserva(idReserva);
-        reservaDadesCompletes.setDataReserva(ocupa.getDataReserva());
+        //   reservaDadesCompletes.setDataReserva(ocupa.getDataReserva());
         reservaDadesCompletes.setEstat(reserva.getEstat());
         reservaDadesCompletes.setCodiQR(reserva.getCodiQr());
-        reservaDadesCompletes.setIdFranja(String.valueOf(ocupa.getIdFranja()));
+        //  reservaDadesCompletes.setIdFranja(String.valueOf(ocupa.getIdFranja()));
         reservaDadesCompletes.setNombrePersones(reserva.getNombrePersones());
         reservaDadesCompletes.setIdZona(String.valueOf(ocupa.getIdZona()));
 
