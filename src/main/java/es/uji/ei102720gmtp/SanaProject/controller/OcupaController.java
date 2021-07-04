@@ -48,9 +48,9 @@ public class OcupaController {
     }
 
 
-    @RequestMapping(value = "/delete/{idReserva}/{idZona}/{idFranja}/{dataReserva}")
-    public String processDelete(@PathVariable int idReserva, @PathVariable int idZona, @PathVariable int idFranja, @PathVariable LocalDate dataReserva){
-        ocupaDao.deleteOcupa(idReserva, idZona, idFranja, dataReserva);
+    @RequestMapping(value = "/delete/{idReserva}/{idZona}")
+    public String processDelete(@PathVariable int idReserva, @PathVariable int idZona){
+        ocupaDao.deleteOcupa(idReserva, idZona);
         return "redirect:../list";
     }
 }

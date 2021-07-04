@@ -8,9 +8,7 @@ public class Ocupa {
 
     private int idReserva;
     private int idZona;
-    private int idFranja;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataReserva;
+
 
     public Ocupa(){}
 
@@ -30,29 +28,11 @@ public class Ocupa {
         this.idZona = idZona;
     }
 
-    public int getIdFranja() {
-        return this.idFranja;
-    }
-
-    public LocalDate getDataReserva() {
-        return dataReserva;
-    }
-
-    public void setIdFranja(int idFranja) {
-        this.idFranja = idFranja;
-    }
-
-    public void setDataReserva(LocalDate dataReserva) {
-        this.dataReserva = dataReserva;
-    }
-
     @Override
     public String toString() {
         return "Ocupa{" +
                 "idReserva=" + idReserva +
                 ", idZona=" + idZona +
-                ", id_franja=" + idFranja +
-                ", data_reserva=" + dataReserva +
                 '}';
     }
 }
