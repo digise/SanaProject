@@ -222,8 +222,8 @@ public class ReservaController {
         Reserva reservaGuardada = reservaDao.getReservaFromQR("/imagenes/reserva" + dadesCodiQr + ".png");
 
         Ocupa ocupa = new Ocupa();
-        ocupa.setDataReserva(reservaDadesCompletes.getDataReserva());
-        ocupa.setIdFranja(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+        /*ocupa.setDataReserva(reservaDadesCompletes.getDataReserva());
+        ocupa.setIdFranja(Integer.valueOf(reservaDadesCompletes.getIdFranja()));*/
         ocupa.setIdZona(Integer.valueOf(reservaDadesCompletes.getIdZona()));
         ocupa.setIdReserva(reservaGuardada.getId());
         ocupaDao.addOcupa(ocupa);

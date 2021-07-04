@@ -1,12 +1,10 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
 import es.uji.ei102720gmtp.SanaProject.dao.*;
-import es.uji.ei102720gmtp.SanaProject.model.Ciutada;
-import es.uji.ei102720gmtp.SanaProject.model.Controlador;
-import es.uji.ei102720gmtp.SanaProject.model.GestorMunicipal;
-import es.uji.ei102720gmtp.SanaProject.model.UserDetails;
+import es.uji.ei102720gmtp.SanaProject.model.*;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 class RegistrarseValidator implements Validator {
 
@@ -64,8 +63,15 @@ public class RegistrarseController {
     @Autowired
     private CiutadaDao ciutadaDao;
 
+    @Autowired
+    private EmailDao emailDao;
+
     public void setCiutadaDao(CiutadaDao ciutadaDao) {
         this.ciutadaDao = ciutadaDao;
+    }
+
+    public void setEmailDao(EmailDao emailDao){
+        this.emailDao = emailDao;
     }
 
     @RequestMapping("/registrarse")
@@ -94,6 +100,7 @@ public class RegistrarseController {
         ciutadaDao.addCiutada(ciutada);
         String msg = String.format("T'has registrat correctament!! Ara tens que iniciar sessió per entrar en l'aplicació");
         redirectAttributes.addFlashAttribute("alert", msg);
+        emailDao.addEmail(new Email(LocalDate.now(), "no_reply@sana.es", ciutada.getEmail(), "REGISTRE REALITZAT", ciutada.getNom() + " " + ciutada.getCognoms() + ", ja eres usuari de l'aplicació SANA", ciutada.getNif()));
         return "redirect:login";
     }
 

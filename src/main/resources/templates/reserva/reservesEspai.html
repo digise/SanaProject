@@ -46,7 +46,9 @@
                 <td th:text="${reserva.dataReserva}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
                 <td>
-                    <a th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" class="btn btn-danger btn-sm" th:href="@{/reserva/deleteEspai/{idEspai}/{idReserva}(idEspai=${espai.id}, idReserva=${reserva.reserva.id})}"><i class="fas fa-window-close"></i> Anul·lar</a>
+                    <a type="button" class="btn btn-danger btn-sm" th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" th:href="@{/reserva/deleteEspai/{idEspai}/{idReserva}(idEspai=${espai.id}, idReserva=${reserva.reserva.id})}"
+                       th:onclick="return confirm('Estàs segur d\'esborrar la reserva amb id ' + [[${reserva.reserva.id}]] + 'de l\'espai' + [[${espai.nom}]] + '?');">
+                        <i class="fas fa-window-close"></i> Anul·lar</a>
                 </td>
             </tr>
             </tbody>
