@@ -1,5 +1,6 @@
 package es.uji.ei102720gmtp.SanaProject.controller;
 
+import es.uji.ei102720gmtp.SanaProject.Validation.PeriodeServeiValidator;
 import es.uji.ei102720gmtp.SanaProject.Validation.ServeiEstacionalValidator;
 import es.uji.ei102720gmtp.SanaProject.Validation.ServeiPermanentValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.*;
@@ -232,6 +233,7 @@ public class ServeiController {
         model.addAttribute("serveisEstacionals", serveiEstacionalInstalats);
 
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+
         return "servei/listServeisEspai";
     }
 
@@ -248,6 +250,7 @@ public class ServeiController {
         model.addAttribute("serveis", list);
 
         ServeiEstacionalComplet serveiEstacionalComplet = new ServeiEstacionalComplet();
+        serveiEstacionalComplet.setIdEspai(id);
         model.addAttribute("serveiEstacionalComplet", serveiEstacionalComplet);
 
         return "servei/addServeiEstacionalGestor";
@@ -257,8 +260,6 @@ public class ServeiController {
     public String addServeiEstacionalGestorPost(@ModelAttribute("serveiEstacionalComplet") ServeiEstacionalComplet serveiEstacionalComplet, BindingResult bindingResult, Model model) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(serveiEstacionalComplet.getIdEspai());
 
-
-
         PeriodeServeiEspai periodeServeiEspai = new PeriodeServeiEspai();
         periodeServeiEspai.setNomServei(serveiEstacionalComplet.getNom());
         periodeServeiEspai.setIdEspai(serveiEstacionalComplet.getIdEspai());
@@ -266,6 +267,17 @@ public class ServeiController {
         periodeServeiEspai.setHoraFinal(serveiEstacionalComplet.getHoraFinal());
         periodeServeiEspai.setDataInici(serveiEstacionalComplet.getDataInici());
         periodeServeiEspai.setDataFinal(serveiEstacionalComplet.getDataFinal());
+
+        PeriodeServeiValidator periodeServeiValidator = new PeriodeServeiValidator();
+        periodeServeiValidator.validate(periodeServeiEspai, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("espai", espai);
+            List<ServeiEstacional> instalats = serveiEstacionalDao.getServeisEstacionalsFromEspai(espai.getId());
+            List<ServeiEstacional> list = serveiService.getServeisEstacionalsRestants(instalats);
+            model.addAttribute("serveis", list);
+            return "servei/addServeiEstacionalGestor";
+        }
+
         periodeServeiEspaiDao.addPeriodeServeiEspai(periodeServeiEspai);
 
         List<ServeiPermanentComplet> serveisPermanentsInstalats = serveiService.getServeiPermanentInstalats(espai.getId());
@@ -281,7 +293,7 @@ public class ServeiController {
 
     @RequestMapping(value = "/deleteServeiEstacionalGestor/{id}/{nom}")
     public String deleteServeiEstacionalGestor(Model model, @PathVariable int id, @PathVariable String nom){
-        serveiInstalatEspaiDao.deleteServeiInstalatEspai(id, nom);
+        periodeServeiEspaiDao.deletePeriodeServeiEspai(id, nom);
 
         List<ServeiPermanentComplet> serveisPermanentsInstalats = serveiService.getServeiPermanentInstalats(id);
         List<ServeiEstacionalComplet> serveiEstacionalInstalats = serveiService.getServeisEstacionalsInstalats(id);
@@ -290,6 +302,7 @@ public class ServeiController {
         model.addAttribute("serveisEstacionals", serveiEstacionalInstalats);
 
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+
         return "servei/listServeisEspai";
     }
 

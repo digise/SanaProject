@@ -26,7 +26,7 @@ public class PeriodeServeiEspaiDao {
                 periodeServeiEspai.getHoraFinal(), periodeServeiEspai.getDataInici(), periodeServeiEspai.getDataFinal());
     }
 
-    public void deletePeriodeServeiEspai(String idEspai, String nomServei) {
+    public void deletePeriodeServeiEspai(int idEspai, String nomServei) {
         jdbcTemplate.update("DELETE from PeriodeServeiEspai where id_espai=? and nom_servei=?",
                 idEspai, nomServei);
     }

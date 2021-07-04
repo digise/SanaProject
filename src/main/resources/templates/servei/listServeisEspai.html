@@ -61,7 +61,7 @@
       <tr class="table-light" th:each="serveiEstacional: ${serveisEstacionals}" th:object="${serveiEstacional}">
         <td th:text="${serveiEstacional.nom}"></td>
         <td th:text="${serveiEstacional.tipus}"></td>
-        <td th:text="${serveiEstacional.horaInici.toString() + '-' + serveiEstacional.horaFinal.toString()}"></td>
+        <td th:text="${serveiEstacional.horaInici.toString() + ' - ' + serveiEstacional.horaFinal.toString()}"></td>
         <td th:text="${serveiEstacional.dataInici.toString()}"></td>
         <td th:text="${serveiEstacional.dataFinal.toString()}"></td>
         <td>
