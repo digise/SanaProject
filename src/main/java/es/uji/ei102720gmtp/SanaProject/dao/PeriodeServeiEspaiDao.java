@@ -26,7 +26,7 @@ public class PeriodeServeiEspaiDao {
                 periodeServeiEspai.getHoraFinal(), periodeServeiEspai.getDataInici(), periodeServeiEspai.getDataFinal());
     }
 
-    public void deletePeriodeServeiEspai(String idEspai, String nomServei) {
+    public void deletePeriodeServeiEspai(int idEspai, String nomServei) {
         jdbcTemplate.update("DELETE from PeriodeServeiEspai where id_espai=? and nom_servei=?",
                 idEspai, nomServei);
     }
@@ -70,6 +70,17 @@ public class PeriodeServeiEspaiDao {
                     "SELECT * FROM PeriodeServeiEspai WHERE id_espai = ?",
                     new PeriodeServeiEspaiRowMapper(),
                     idEspai);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<PeriodeServeiEspai>();
+        }
+    }
+
+    public List<PeriodeServeiEspai> getServeisEstacionalsFromNom(String nom) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM PeriodeServeiEspai WHERE nom_servei = ?",
+                    new PeriodeServeiEspaiRowMapper(),
+                    nom);
         } catch (EmptyResultDataAccessException e) {
             return new ArrayList<PeriodeServeiEspai>();
         }

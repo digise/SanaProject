@@ -28,6 +28,7 @@ public class ServeiController {
     private InterfaceServeiService serveiService;
     private EspaiPublicDao espaiPublicDao;
     private ServeiInstalatEspaiDao serveiInstalatEspaiDao;
+    private PeriodeServeiEspaiDao periodeServeiEspaiDao;
 
     @Autowired
     public void setServeiInstalatEspaiDao(ServeiInstalatEspaiDao serveiInstalatEspaiDao) {
@@ -54,6 +55,11 @@ public class ServeiController {
         this.espaiPublicDao = espaiPublicDao;
     }
 
+    @Autowired
+    public void setPeriodeServeiEspaiDao(PeriodeServeiEspaiDao periodeServeiEspaiDao) {
+        this.periodeServeiEspaiDao = periodeServeiEspaiDao;
+    }
+
     @RequestMapping("/seleccionarTipusServei")
     public String seleccionarTipusServei(Model model){
         return "servei/seleccionarTipusServei";
@@ -76,6 +82,8 @@ public class ServeiController {
 
     @RequestMapping(value="/addServeiPermanent", method= RequestMethod.POST)
     public String processAddServeiPermanent(@ModelAttribute("serveiPermanent") ServeiPermanent serveiPermanent, BindingResult bindingResult){
+        ServeiPermanentValidator serveiPermanentValidator = new ServeiPermanentValidator();
+        serveiPermanentValidator.validate(serveiPermanent, bindingResult);
         if(bindingResult.hasErrors())
             return "servei/addServeiPermanent";
         serveiPermanentDao.addServeiPermanent(serveiPermanent);
@@ -90,6 +98,8 @@ public class ServeiController {
 
     @RequestMapping(value = "/updateServeiPermanent", method = RequestMethod.POST)
     public String processUpdateServeiPermanent(@ModelAttribute("servei") ServeiPermanent serveiPermanent, BindingResult bindingResult){
+        ServeiPermanentValidator serveiPermanentValidator = new ServeiPermanentValidator();
+        serveiPermanentValidator.validate(serveiPermanent, bindingResult);
         if (bindingResult.hasErrors())
             return "servei/updateServeiPermanent";
         serveiPermanentDao.updateServeiPermanent(serveiPermanent);
@@ -98,13 +108,13 @@ public class ServeiController {
 
     @RequestMapping(value = "/deleteServeiPermanent/{nom}")
     public String deleteServeiPermanent(Model model, @PathVariable String nom, RedirectAttributes redirectAttributes){
-        if (serveiService.serveiPermanentEnUs(nom)){
-            String msg = String.format("No es pot eliminar, el servei està en ús");
+        if (serveiService.isPermanentServeiUsed(nom)){
+            String msg = "No es pot borrar el servei " + nom + " perque s'esta usant en alguna area";
             redirectAttributes.addFlashAttribute("alert", msg);
             return "redirect:../listServeiPermanent";
         }
         serveiPermanentDao.deleteServeiPermanent(nom);
-        String msg = String.format("El servei s'ha eliminat");
+        String msg = "S'ha borrat el servei: " + nom;
         redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../listServeiPermanent";
     }
@@ -126,6 +136,8 @@ public class ServeiController {
 
     @RequestMapping(value="/addServeiEstacional", method= RequestMethod.POST)
     public String processAddServeiEstacional(@ModelAttribute("serveiEstacional") ServeiEstacional serveiEstacional, BindingResult bindingResult){
+        ServeiEstacionalValidator serveiEstacionalValidator = new ServeiEstacionalValidator();
+        serveiEstacionalValidator.validate(serveiEstacional, bindingResult);
         if(bindingResult.hasErrors())
             return "servei/addServeiEstacional";
         serveiEstacionalDao.addServeiEstacional(serveiEstacional);
@@ -140,6 +152,8 @@ public class ServeiController {
 
     @RequestMapping(value = "/updateServeiEstacional", method = RequestMethod.POST)
     public String processUpdateServeiEstacional(@ModelAttribute("servei") ServeiEstacional serveiEstacional, BindingResult bindingResult){
+        ServeiEstacionalValidator serveiEstacionalValidator = new ServeiEstacionalValidator();
+        serveiEstacionalValidator.validate(serveiEstacional, bindingResult);
         if (bindingResult.hasErrors())
             return "servei/updateServeiEstacional";
         serveiEstacionalDao.updateServeiEstacional(serveiEstacional);
@@ -148,13 +162,14 @@ public class ServeiController {
 
     @RequestMapping(value = "/deleteServeiEstacional/{nom}")
     public String deleteServeiEstacional(Model model, @PathVariable String nom, RedirectAttributes redirectAttributes){
-        if (serveiService.serveiEstacionalEnUs(nom)){
-            String msg = String.format("No es pot eliminar, el servei està en ús");
+        if (serveiService.isEstacionalServeiUsed(nom)){
+            String msg = "No es pot borrar el servei " + nom + " perque s'esta usant en alguna area";
             redirectAttributes.addFlashAttribute("alert", msg);
             return "redirect:../listServeiEstacional";
         }
+
         serveiEstacionalDao.deleteServeiEstacional(nom);
-        String msg = String.format("El servei s'ha eliminat");
+        String msg = "S'ha borrat el servei: " + nom;
         redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../listServeiEstacional";
     }
@@ -174,12 +189,14 @@ public class ServeiController {
         return "servei/listServeisEspai";
     }
 
+    // Serveis Permanents
+
     @RequestMapping(value = "/addServeiPermanentGestor/{id}")
     public String addServeiPermanentGestor(Model model, @PathVariable int id) {
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
 
         List<ServeiPermanent> instalats = serveiPermanentDao.getServeisPermanentsFromEspai(id);
-        List<ServeiPermanent> list = serveiService.getServeisRestants(instalats);
+        List<ServeiPermanent> list = serveiService.getServeisPermanentsRestants(instalats);
 
         model.addAttribute("espai", espai);
         model.addAttribute("serveis", list);
@@ -216,6 +233,76 @@ public class ServeiController {
         model.addAttribute("serveisEstacionals", serveiEstacionalInstalats);
 
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+
+        return "servei/listServeisEspai";
+    }
+
+    // Serveis estacionals
+
+    @RequestMapping(value = "/addServeiEstacionalGestor/{id}")
+    public String addServeiEstacionalGestor(Model model, @PathVariable int id) {
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+
+        List<ServeiEstacional> instalats = serveiEstacionalDao.getServeisEstacionalsFromEspai(id);
+        List<ServeiEstacional> list = serveiService.getServeisEstacionalsRestants(instalats);
+
+        model.addAttribute("espai", espai);
+        model.addAttribute("serveis", list);
+
+        ServeiEstacionalComplet serveiEstacionalComplet = new ServeiEstacionalComplet();
+        serveiEstacionalComplet.setIdEspai(id);
+        model.addAttribute("serveiEstacionalComplet", serveiEstacionalComplet);
+
+        return "servei/addServeiEstacionalGestor";
+    }
+
+    @RequestMapping(value = "/addServeiEstacionalGestor", method= RequestMethod.POST)
+    public String addServeiEstacionalGestorPost(@ModelAttribute("serveiEstacionalComplet") ServeiEstacionalComplet serveiEstacionalComplet, BindingResult bindingResult, Model model) {
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(serveiEstacionalComplet.getIdEspai());
+
+        PeriodeServeiEspai periodeServeiEspai = new PeriodeServeiEspai();
+        periodeServeiEspai.setNomServei(serveiEstacionalComplet.getNom());
+        periodeServeiEspai.setIdEspai(serveiEstacionalComplet.getIdEspai());
+        periodeServeiEspai.setHoraInici(serveiEstacionalComplet.getHoraInici());
+        periodeServeiEspai.setHoraFinal(serveiEstacionalComplet.getHoraFinal());
+        periodeServeiEspai.setDataInici(serveiEstacionalComplet.getDataInici());
+        periodeServeiEspai.setDataFinal(serveiEstacionalComplet.getDataFinal());
+
+        PeriodeServeiValidator periodeServeiValidator = new PeriodeServeiValidator();
+        periodeServeiValidator.validate(periodeServeiEspai, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("espai", espai);
+            List<ServeiEstacional> instalats = serveiEstacionalDao.getServeisEstacionalsFromEspai(espai.getId());
+            List<ServeiEstacional> list = serveiService.getServeisEstacionalsRestants(instalats);
+            model.addAttribute("serveis", list);
+            return "servei/addServeiEstacionalGestor";
+        }
+
+        periodeServeiEspaiDao.addPeriodeServeiEspai(periodeServeiEspai);
+
+        List<ServeiPermanentComplet> serveisPermanentsInstalats = serveiService.getServeiPermanentInstalats(espai.getId());
+        List<ServeiEstacionalComplet> serveiEstacionalInstalats = serveiService.getServeisEstacionalsInstalats(espai.getId());
+
+        model.addAttribute("serveisPermanents", serveisPermanentsInstalats);
+        model.addAttribute("serveisEstacionals", serveiEstacionalInstalats);
+
+        model.addAttribute("espai", espai);
+
+        return "servei/listServeisEspai";
+    }
+
+    @RequestMapping(value = "/deleteServeiEstacionalGestor/{id}/{nom}")
+    public String deleteServeiEstacionalGestor(Model model, @PathVariable int id, @PathVariable String nom){
+        periodeServeiEspaiDao.deletePeriodeServeiEspai(id, nom);
+
+        List<ServeiPermanentComplet> serveisPermanentsInstalats = serveiService.getServeiPermanentInstalats(id);
+        List<ServeiEstacionalComplet> serveiEstacionalInstalats = serveiService.getServeisEstacionalsInstalats(id);
+
+        model.addAttribute("serveisPermanents", serveisPermanentsInstalats);
+        model.addAttribute("serveisEstacionals", serveiEstacionalInstalats);
+
+        model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
+
         return "servei/listServeisEspai";
     }
 
