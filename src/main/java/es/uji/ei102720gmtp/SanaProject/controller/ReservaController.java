@@ -240,7 +240,7 @@ public class ReservaController {
         model.addAttribute("zona", zonaDao.getZona(Integer.valueOf(reservaDadesCompletes.getIdZona())));
         List<Reserva> reserves = reservaDao.getReserves();
         Reserva reserva = reserves.get(reserves.size() - 1);
-        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " El codi de la reserva es " +
+        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " " + "El codi de la reserva es " +
                 reserva.getId() + " dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
         return "/reserva/reservaFeta";
     }
