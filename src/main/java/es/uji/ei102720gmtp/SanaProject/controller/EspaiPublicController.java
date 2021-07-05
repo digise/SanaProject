@@ -2,7 +2,9 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.Validation.ControladorsAmbEspaiPublicValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ElegirZonaBeanValidator;
 import es.uji.ei102720gmtp.SanaProject.Validation.EspaiPublicValidator;
+import es.uji.ei102720gmtp.SanaProject.Validation.ReservaValidator;
 import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.*;
@@ -212,13 +214,6 @@ public class EspaiPublicController {
         List<FranjaHoraria> frangesHoraries = espaiPublicService.getFrangesHoraries(espai.getId());
         model.addAttribute("franges", frangesHoraries);
 
-        LocalDate diaDate = dades.getDiaElegit();
-        model.addAttribute("dia", diaDate);
-
-
-        ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
-        model.addAttribute("dades", novesDades);
-
         List<ServeiPermanentComplet> serveiPermanentList = serveiService.getServeiPermanentInstalats(espai.getId());
         model.addAttribute("serveiPermanentList", serveiPermanentList);
 
@@ -227,6 +222,21 @@ public class EspaiPublicController {
 
         String registrat = "Registrat";
         model.addAttribute("registrat", registrat);
+
+        ElegirZonaBeanValidator elegirZonaBeanValidator = new ElegirZonaBeanValidator();
+        elegirZonaBeanValidator.validate(dades, bindingResult);
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getFieldError("diaElegit").toString());
+            LocalDate diaDate = LocalDate.now().plus(2, ChronoUnit.DAYS);
+            model.addAttribute("dia", diaDate);
+            return "espaiPublic/elegirZona";
+        }
+
+        ElegirZonaBean novesDades = new ElegirZonaBean(espai.getId(), dades.getDiaElegit());
+        model.addAttribute("dades", novesDades);
+
+        LocalDate diaDate = dades.getDiaElegit();
+        model.addAttribute("dia", diaDate);
 
         return "/espaiPublic/elegirZona";
     }
