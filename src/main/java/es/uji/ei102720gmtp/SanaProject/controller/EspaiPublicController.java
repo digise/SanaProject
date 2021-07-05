@@ -103,17 +103,17 @@ public class EspaiPublicController {
 
     @RequestMapping(value = "/add/{id}")
     public String addEspaiPublic(Model model, @PathVariable int id){
-        model.addAttribute("espaiPublic", new EspaiPublic());
-        model.addAttribute("id", id);
+        EspaiPublic espaiPublic = new EspaiPublic();
+        espaiPublic.setIdMunicipi(id);
+        model.addAttribute("espaiPublic", espaiPublic);
         return "espaiPublic/add";
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, @ModelAttribute("id") int id, BindingResult bindingResult, Model model) {
+    public String processAddSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, Model model) {
         EspaiPublicValidator espaiPublicValidator = new EspaiPublicValidator();
         espaiPublicValidator.validate(espaiPublic, bindingResult);
         if (bindingResult.hasErrors()){
-            model.addAttribute("id", id);
             return "espaiPublic/add";
         }
         espaiPublicDao.addEspaiPublic(espaiPublic);
@@ -131,7 +131,7 @@ public class EspaiPublicController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, @ModelAttribute("id") int id, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+    public String processUpdateSubmit(@ModelAttribute("espaiPublic") EspaiPublic espaiPublic, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
         espaiPublic.setLocalitzacio(municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getNom() + ", " + municipiDao.getMunicipi(espaiPublic.getIdMunicipi()).getProvincia().toString());
         EspaiPublicValidator espaiPublicValidator = new EspaiPublicValidator();
         espaiPublicValidator.validate(espaiPublic, bindingResult);

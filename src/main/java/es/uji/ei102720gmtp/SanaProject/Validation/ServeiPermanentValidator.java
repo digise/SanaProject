@@ -1,9 +1,11 @@
 package es.uji.ei102720gmtp.SanaProject.Validation;
 
+import es.uji.ei102720gmtp.SanaProject.dao.ServeiPermanentDao;
 import es.uji.ei102720gmtp.SanaProject.model.ServeiPermanent;
 import org.springframework.validation.Errors;
 
 public class ServeiPermanentValidator implements Validator{
+
 
     @Override
     public boolean supports(Class<?> cls) {

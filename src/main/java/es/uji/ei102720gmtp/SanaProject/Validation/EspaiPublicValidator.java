@@ -23,12 +23,14 @@ public class EspaiPublicValidator implements Validator {
             errors.rejectValue("localitzacio", "obligatori", "Cal introduir la localització");
         if (espaiPublic.getLongitud() == null)
             errors.rejectValue("longitud", "obligatori", "Cal introduir la longitud");
-        if (espaiPublic.getLongitud() < 1000)
-            errors.rejectValue("longitud", "massa baix", "La longitud deu ser major de 1000 metres");
+        else
+            if (espaiPublic.getLongitud() < 1000)
+                errors.rejectValue("longitud", "massa baix", "La longitud deu ser major de 1000 metres");
         if (espaiPublic.getAmplaria() == null)
             errors.rejectValue("amplaria", "obligatori", "Cal introduir la amplaria");
-        if (espaiPublic.getAmplaria() < 2000)
-            errors.rejectValue("amplaria", "massa baix", "La amplaria deu ser major de 2000 metres");
+        else
+            if (espaiPublic.getAmplaria() < 2000)
+                errors.rejectValue("amplaria", "massa baix", "La amplaria deu ser major de 2000 metres");
         if (espaiPublic.getImagen().trim().equals(""))
             errors.rejectValue("imagen", "obligatori", "Cal introduir la url de la image");
         if (espaiPublic.getDescripcio().trim().equals(""))

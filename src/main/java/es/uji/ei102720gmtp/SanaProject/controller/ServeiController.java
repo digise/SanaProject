@@ -84,6 +84,9 @@ public class ServeiController {
     public String processAddServeiPermanent(@ModelAttribute("serveiPermanent") ServeiPermanent serveiPermanent, BindingResult bindingResult){
         ServeiPermanentValidator serveiPermanentValidator = new ServeiPermanentValidator();
         serveiPermanentValidator.validate(serveiPermanent, bindingResult);
+        for (ServeiPermanent serveiPermanent1: serveiPermanentDao.getServeisPermanents())
+            if (serveiPermanent1.getNom().equals(serveiPermanent.getNom()))
+                bindingResult.rejectValue("nom", "repetit", "Aquest servei ja eisteix");
         if(bindingResult.hasErrors())
             return "servei/addServeiPermanent";
         serveiPermanentDao.addServeiPermanent(serveiPermanent);
@@ -138,6 +141,9 @@ public class ServeiController {
     public String processAddServeiEstacional(@ModelAttribute("serveiEstacional") ServeiEstacional serveiEstacional, BindingResult bindingResult){
         ServeiEstacionalValidator serveiEstacionalValidator = new ServeiEstacionalValidator();
         serveiEstacionalValidator.validate(serveiEstacional, bindingResult);
+        for (ServeiEstacional serveiEstacional1: serveiEstacionalDao.getServeisEstacionals())
+            if (serveiEstacional1.getNom().equals(serveiEstacional.getNom()))
+                bindingResult.rejectValue("nom", "repetit", "Aquest servei ja eisteix");
         if(bindingResult.hasErrors())
             return "servei/addServeiEstacional";
         serveiEstacionalDao.addServeiEstacional(serveiEstacional);
@@ -234,6 +240,7 @@ public class ServeiController {
 
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
 
+        model.addAttribute("alertPermanent", "S'ha borrat el servei " + nom);
         return "servei/listServeisEspai";
     }
 
@@ -303,6 +310,7 @@ public class ServeiController {
 
         model.addAttribute("espai", espaiPublicDao.getEspaiPublic(id));
 
+        model.addAttribute("alertEstacional", "S'ha borrat el servei " + nom);
         return "servei/listServeisEspai";
     }
 

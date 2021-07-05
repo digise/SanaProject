@@ -7,7 +7,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+    <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     <h1 class="my-5 text-center" style="font-size: xxx-large">Realització de la reserva</h1>
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
@@ -42,6 +42,7 @@
                     </ul>
                 </div>
             </div>
+            <div class="row text-danger justify-content-center"><td th:if="${#fields.hasErrors('zones')}" th:errors="*{zones}"></td></div>
             <div class="row justify-content-md-center pt-3 pb-3">
                 <div class="col-md-auto">
                     <label for="nombrePersones"><b>Indica el nombre de persones: </b></label>
