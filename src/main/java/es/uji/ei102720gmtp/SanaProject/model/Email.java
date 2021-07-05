@@ -2,7 +2,7 @@ package es.uji.ei102720gmtp.SanaProject.model;
 
 import java.time.LocalDate;
 
-public class Email {
+public class Email implements Comparable<Email>{
 
     private int id;
     private LocalDate dataEnviament;
@@ -78,6 +78,11 @@ public class Email {
 
     public void setNifCiutada(String nifCiutada) {
         this.nifCiutada = nifCiutada;
+    }
+
+    @Override
+    public int compareTo(Email altreEmail) {
+        return altreEmail.getDataEnviament().compareTo(this.getDataEnviament());
     }
 
     @Override

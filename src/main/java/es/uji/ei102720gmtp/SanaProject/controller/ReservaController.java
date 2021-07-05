@@ -211,7 +211,7 @@ public class ReservaController {
         model.addAttribute("zones", reservaDadesCompletes.getZones());
         List<Reserva> reserves = reservaDao.getReserves();
         Reserva reserva = reserves.get(reserves.size() - 1);
-        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " " + "El codi de la reserva es " +
+        emailDao.addEmail(new Email(LocalDate.now(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " " + "El codi de la reserva es " +
                 reserva.getId() + " dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
         return "/reserva/reservaFeta";
     }
@@ -272,22 +272,26 @@ public class ReservaController {
     }
 
     @RequestMapping(value ="/deleteEspai/{idEspai}/{idReserva}")
-    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, RedirectAttributes redirectAttributes){
+    public String processDeleteEspai(@PathVariable int idReserva, @PathVariable int idEspai, RedirectAttributes redirectAttributes, HttpSession session){
 
         Reserva reserva = reservaDao.getReserva(idReserva);
         reserva.setEstat(EstatReserva.CANCELADAPERGESTORMUNICIPAL);
         reservaDao.updateReserva(reserva);
-        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament");
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(idReserva).getId() + " se ha cancelat correctament, li arribarà un email amb la notificació");
         redirectAttributes.addFlashAttribute("alert", msg);
+        emailDao.addEmail(new Email(LocalDate.now(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA ANULADA", " " + "La reserva ha sigut anulada pel gestor Municipal, li arribarà un email amb la notificació", ciutada.getNif()));
+
         return "redirect:../../reservesEspai/"+idEspai;
     }
 
     @RequestMapping(value ="/deletePerClient/{id}")
-    public String processDeletePerClient(@PathVariable int id, Model model, RedirectAttributes redirectAttributes){
+    public String processDeletePerClient(@PathVariable int id, Model model, RedirectAttributes redirectAttributes, HttpSession session){
         Reserva reserva = reservaDao.getReserva(id);
         reserva.setEstat(EstatReserva.CANCELADAPERCIUTADA);
         reservaDao.updateReserva(reserva);
-        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament");
+        Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
+        String msg = String.format("Les dades de la reserva amb id " + reservaDao.getReserva(id).getId() + " se ha cancelat correctament, li arribarà un email amb la notificació");
         redirectAttributes.addFlashAttribute("alert", msg);
         return "redirect:../reservesClient/"+reserva.getNifCiutada();
     }

@@ -260,10 +260,6 @@ public class EspaiPublicController {
         return "espaiPublic/seleccionarProvincia";
     }
 
-    @RequestMapping("/seleccionarProvinciaSenseRegistrar")
-    public String mostrarSeleccionarProvinciaSenseRegistrar(HttpSession session, Model model){
-        return "espaiPublic/seleccionarProvinciaSenseRegistrar";
-    }
 
     @RequestMapping("/espaisPerControlador")
     public String mostrarEspaisPerControlador(Model model, HttpSession session){
@@ -271,5 +267,34 @@ public class EspaiPublicController {
         List<EspaiPublic> espaisControlador = municipisPerControladorService.municipisPerControlador(controlador.getNif());
         model.addAttribute("espaisControlador", espaisControlador);
         return "espaiPublic/espaisPerControlador";
+    }
+
+
+    @RequestMapping("/seleccionarProvinciaSenseRegistrar")
+    public String mostrarSeleccionarProvinciaSenseRegistrar(){
+        return "espaiPublic/seleccionarProvinciaSenseRegistrar";
+    }
+
+
+    @RequestMapping("espaisProvinciaSenseRegistrar/{provincia}")
+    public String listEspaiPublicsProvinciaSenseRegistrar(Model model, @PathVariable String provincia, HttpSession session){
+        model.addAttribute("espais", espaiPublicService.getEspaisPublicsPerProvincia(provincia));
+        model.addAttribute("provincia", provincia);
+        return "espaiPublic/espaisProvinciaSenseRegistrar";
+    }
+
+    @RequestMapping(value= "/informacioEspaiSenseRegistrar/{id}")
+    public String showInformacioSenseRegistrar(Model model, @PathVariable int id){
+        EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
+        model.addAttribute("espai", espai);
+        Municipi municipi = municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(id).getIdMunicipi());
+        String provincia = municipi.getProvincia().getDescripcion();
+        model.addAttribute("provincia", provincia);
+        model.addAttribute("municipi", municipi);
+        List<ServeiPermanentComplet> serveiPermanentList = serveiService.getServeiPermanentInstalats(espai.getId());
+        model.addAttribute("serveiPermanentList", serveiPermanentList);
+        List<ServeiEstacionalComplet> serveiEstacionalList = serveiService.getServeisEstacionalsInstalats(espai.getId());
+        model.addAttribute("serveiEstacionalList", serveiEstacionalList);
+        return "/espaiPublic/informacioEspaiSenseRegistrar";
     }
 }

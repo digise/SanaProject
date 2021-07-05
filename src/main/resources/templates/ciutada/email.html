@@ -17,7 +17,7 @@
 <div th:if="${#lists.isEmpty(emails)}">
     No hi ha emails
 </div>
-<div th:unless="${#lists.isEmpty(emails)}" th:each="email: ${emails}" class="card mb-3">
+<div th:unless="${#lists.isEmpty(emails)}" th:each="email: ${#lists.sort(emails)}" class="card mb-3">
     <div class="card border-info mb-3">
         <div class="card-header"><b th:text="${email.asunto}"></b></div>
         <div class="card-body">

@@ -4,10 +4,10 @@
             <img src="/imagenes/logo.png" class="img-fluid">
         </div>
 
-        <div class="navbar-collapse collapse" th:object="${session}">
+        <div class="navbar-collapse collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/espaiPublic/seleccionarProvincia" th:href="@{/espaiPublic/seleccionarProvincia}">Inicio
+                    <a class="nav-link active" href="/espaiPublic/seleccionarProvinciaSenseRegistrar" th:href="@{/espaiPublic/seleccionarProvinciaSenseRegistrar}">Inicio
                         <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
@@ -15,11 +15,8 @@
             <div class="d-flex">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item dropdown">
-                        <div class="users">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="/imagenes/iconoSesion.png" width="40" height="40"></a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/login.html" th:href="@{/login}">Iniciar Sessió</a>
-                            </div>
+                        <div class="dropleft-menu">
+                            <a class="dropdown-item" href="/index.html"><b>Iniciar Sessió o registrar-se</b></a>
                         </div>
                     </li>
                 </ul>
