@@ -23,13 +23,13 @@ public class ZonaDao {
 
     /* Afegim la zona */
     public void addZona(Zona zona) {
-        jdbcTemplate.update("INSERT INTO Zona VALUES(?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO Zona (id_espai, capacitat, coordenades) VALUES(?, ?, ?)",
                 zona.getIdEspai(), zona.getCapacitat(), zona.getCoordenades());
     }
 
     /* Esborrem la zona */
-    public void deleteZona(String idZona) {
-        jdbcTemplate.update("DELETE from Zona where id=?",
+    public void deleteZona(int idZona) {
+        jdbcTemplate.update("DELETE from Zona where id= ?",
                 idZona);
     }
 

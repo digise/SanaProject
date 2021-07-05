@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/baseGestor}">
 <head>
-    <title>Gestionar les zones d'un espai natural</title>
+    <title>Gestionar les franjes d'un espai natural</title>
     <meta charset="UTF-8" />
 
 </head>
@@ -13,34 +13,33 @@
             <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/espaisPerMunicipi}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
         </div>
         <div class="col-6">
-            <h1 class="my-3" style="text-align: center">Zones de l'espai <span th:text="${espai.nom}"></span></h1>
+            <h1 class="my-3" style="text-align: center">Franges horaries de l'espai de l'espai <span th:text="${espai.nom}"></span></h1>
         </div>
     </div>
     <div th:if="${alert != null}" th:text="${alert}" class="alert alert-success" role="alert">
     </div>
     <div th:if="${alertErroni != null}" th:text="${alertErroni}" class="alert alert-danger" role="alert">
     </div>
-    <div th:if="${#lists.isEmpty(zones)}">
-        No hi ha zones en aquest espai
-
+    <div th:if="${#lists.isEmpty(franges)}">
+        No hi ha franges en aquest espai
     </div>
-    <div th:unless="${#lists.isEmpty(zones)}">
+    <div th:unless="${#lists.isEmpty(franges)}">
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Id zona</th>
-                <th scope="col">Capacitat</th>
-                <th scope="col">Coordenades</th>
+                <th scope="col">Id Franja</th>
+                <th scope="col">Hora Inici</th>
+                <th scope="col">Hora Final</th>
                 <th scope="col">Acció: </th>
             </tr>
             </thead>
-            <tr class="table-light" th:each="zona: ${zones}">
-                <td th:text="${zona.id}"></td>
-                <td th:text="${zona.capacitat}"></td>
-                <td th:text="${zona.coordenades}"></td>
+            <tr class="table-light" th:each="franja: ${franges}">
+                <td th:text="${franja.id}"></td>
+                <td th:text="${franja.horaInici.toString()}"></td>
+                <td th:text="${franja.horaFinal.toString()}"></td>
                 <td>
-                    <a type="button" class="btn btn-danger btn-sm"  th:href="@{/zona/delete/{id}(id=${zona.id})}"
-                       th:onclick="return confirm('Estàs segur d\'esborrar la zona amb id ' + [[${zona.id}]] + '?');">
+                    <a type="button" class="btn btn-danger btn-sm"  th:href="@{/franja/delete/{id}(id=${franja.id})}"
+                       th:onclick="return confirm('Estàs segur d\'esborrar la franja amb id ' + [[${franja.id}]] + '?');">
                         <i class="fas fa-trash"></i> Borrar</a>
                 </td>
 
@@ -48,7 +47,7 @@
             </tbody>
         </table>
     </div>
-    <a class="btn btn-success" type="submit" th:href="@{/zona/add/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir zona</a>
+    <a class="btn btn-success" type="submit" th:href="@{/franja/add/{id}(id=${espai.id})}"><i class="fa fa-plus" aria-hidden="true"></i> Afegir franja</a>
 
 </div>
 </body>

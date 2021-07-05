@@ -14,35 +14,30 @@
         </div>
     </div>
     <!--EL primer action es si fuera una página estática-->
-    <form action="#" th:action="@{/zona/add}"
-          th:object="${zona}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
+    <form action="#" th:action="@{/franja/add}"
+          th:object="${franja}" method="post"> <!--lo maneja dinámicamente thymeleaf-->
         <div class="card border-info mb-3" style="max-width: 50rem;">
             <div class="card-header">
-                <h2 style="text-align: center">Afegir zona en l'espai <span th:text="${espai.nom}"></span></h2>
+                <h2 style="text-align: center">Afegir una franja en l'espai <span th:text="${espai.nom}"></span></h2>
             </div>
-
             <div class="modal-body">
-
                 <div class="form-group">
                     <label class="col-form-label mt-4" for="idEspai">Id espai:</label>
                     <input type="number" class="form-control" placeholder="idEspai" id="idEspai" th:field="*{idEspai}" readonly/>
-
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="capacitat"><b>Capacitat:</b></label>
-                    <input type="number" class="form-control" placeholder="capacitat" id="capacitat" th:field="*{capacitat}">
-                    <div class="text-danger"><td th:if="${#fields.hasErrors('capacitat')}" th:errors="*{capacitat}"></td></div>
-
+                    <label class="col-form-label mt-4" >Hora inici:</label>
+                    <input type="time" class="form-control" placeholder="horaInici" id="horaInici" th:field="*{horaInici}" name="horaInici"/>
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('horaInici')}" th:errors="*{horaInici}"></td></div>
                 </div>
                 <div class="form-group">
-                    <label class="col-form-label mt-4" for="coordenades">Coordenades:</label>
-                    <input type="text" class="form-control" placeholder="coordenades" id="coordenades" th:field="*{coordenades}">
-                    <div class="text-danger"><td th:if="${#fields.hasErrors('coordenades')}" th:errors="*{coordenades}"></td></div>
-
+                    <label class="col-form-label mt-4" >Hora final:</label>
+                    <input type="time" class="form-control" placeholder="horaFinal" id="horaFinal" th:field="*{horaFinal}" name="horaFinal"/>
+                    <div class="text-danger"><td th:if="${#fields.hasErrors('horaFinal')}" th:errors="*{horaFinal}"></td></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <input class="btn btn-success" type="submit" value="Afegir zona"/>
+                <input class="btn btn-success" type="submit" value="Afegir franja"/>
             </div>
         </div>
     </form>
