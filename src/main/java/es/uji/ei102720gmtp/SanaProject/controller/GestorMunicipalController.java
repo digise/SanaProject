@@ -56,12 +56,14 @@ public class GestorMunicipalController {
     }
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
-    public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+    public String processAddSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult, Model model){
         GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
 
         gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
-        if(bindingResult.hasErrors())
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("id", gestorMunicipal.getIdMunicipi());
             return "gestorMunicipal/add";
+        }
         int id = gestorMunicipal.getIdMunicipi();
         gestorMunicipalDao.addGestorMunicipal(gestorMunicipal);
         return "redirect:gestorsPerMunicipi/"+id;
@@ -75,12 +77,14 @@ public class GestorMunicipalController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult){
+    public String processUpdateSubmit(@ModelAttribute("gestorMunicipal") GestorMunicipal gestorMunicipal, BindingResult bindingResult, Model model){
         GestorMunicipalValidator gestorMunicipalValidator = new GestorMunicipalValidator();
         gestorMunicipalValidator.validate(gestorMunicipal, bindingResult);
         int id = gestorMunicipal.getIdMunicipi();
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("id", gestorMunicipal.getIdMunicipi());
             return "gestorMunicipal/update";
+        }
         gestorMunicipalDao.updateGestorMunicipal(gestorMunicipal);
         return "redirect:gestorsPerMunicipi/"+id;
     }

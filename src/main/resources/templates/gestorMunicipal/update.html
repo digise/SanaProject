@@ -20,12 +20,13 @@
     <div class="modal-body">
         <div class="form-group">
             <label class="col-form-label mt-2" for="nif">Nif:</label>
-            <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{nif}">
+            <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{nif}" readonly="readonly">
             <div class="text-danger"><td th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"></td></div>
         </div>
         <div class="form-group">
             <label class="col-form-label mt-4">Id municipi:</label>
-            <input type="text" class="form-control" placeholder="id municipi" id="idMunicipi" th:field="*{idMunicipi}" name="nom"/>
+            <input type="number" class="form-control" placeholder="id municipi" id="idMunicipi" th:field="*{idMunicipi}" name="nom"/>
+            <div class="text-danger"><td th:if="${#fields.hasErrors('idMunicipi')}" th:errors="*{idMunicipi}"></td></div>
         </div>
         <div class="form-group">
             <label class="col-form-label mt-4" for="nom">Nom:</label>
