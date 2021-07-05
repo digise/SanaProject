@@ -73,7 +73,7 @@ public class ReservesClientService implements InterfaceReservesClientService{
         reservaDadesCompletes.setCodiQR(reserva.getCodiQr());
         //  reservaDadesCompletes.setIdFranja(String.valueOf(ocupa.getIdFranja()));
         reservaDadesCompletes.setNombrePersones(reserva.getNombrePersones());
-        reservaDadesCompletes.setIdZona(String.valueOf(ocupa.getIdZona()));
+        //   reservaDadesCompletes.setIdZona(String.valueOf(ocupa.getIdZona()));
 
         return reservaDadesCompletes;
     }
