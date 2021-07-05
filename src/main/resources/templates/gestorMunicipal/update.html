@@ -11,13 +11,16 @@
     <!--EL primer action es si fuera una página estática-->
 <form action="#" th:action="@{/gestorMunicipal/update}"
       th:object="${gestorMunicipal}" method="post">
-    <div>
-        <a type="button" class="btn btn-secondary" th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${id})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
-    </div>
-    <div class="modal-header">
-        <h2><span th:text="${gestorMunicipal.nom}"></span></h2>
-    </div>
+
     <div class="modal-body">
+        <div class="row pb-4">
+            <div class="col-2">
+                <a type="button" class="btn btn-secondary" th:href="@{/gestorMunicipal/gestorsPerMunicipi/{id}(id=${id})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+            </div>
+            <div class="col-6 pt-3">
+                <h2><span th:text="${gestorMunicipal.nom}"></span></h2>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-form-label mt-2" for="nif">Nif:</label>
             <input type="text" class="form-control" maxlength="9" placeholder="nif" id="nif" th:field="*{nif}" readonly="readonly">
@@ -25,8 +28,7 @@
         </div>
         <div class="form-group">
             <label class="col-form-label mt-4">Id municipi:</label>
-            <input type="number" class="form-control" placeholder="id municipi" id="idMunicipi" th:field="*{idMunicipi}" name="nom"/>
-            <div class="text-danger"><td th:if="${#fields.hasErrors('idMunicipi')}" th:errors="*{idMunicipi}"></td></div>
+            <input type="text" class="form-control" placeholder="id municipi" id="idMunicipi" th:field="*{idMunicipi}" name="nom" required/>
         </div>
         <div class="form-group">
             <label class="col-form-label mt-4" for="nom">Nom:</label>

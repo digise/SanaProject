@@ -20,8 +20,6 @@ public class GestorMunicipalValidator implements Validator {
             errors.rejectValue("cognoms", "obligatori", "Cal introduir un valor");
         if (gestorMunicipal.getEmail().trim().equals(""))
             errors.rejectValue("email", "obligatori", "Cal introduir un valor");
-        if (gestorMunicipal.getIdMunicipi() == 0)
-            errors.rejectValue("idMunicipi", "obligatori", "Cal introduir un valor");
         if (gestorMunicipal.getTelefon() == null || gestorMunicipal.getTelefon().length() != 9)
             errors.rejectValue("telefon", "no permitit", "El número de telèfon deu tindre 9 digits");
         if (gestorMunicipal.getContrasenya().trim().equals(""))

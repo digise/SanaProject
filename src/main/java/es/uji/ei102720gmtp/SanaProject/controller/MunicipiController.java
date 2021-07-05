@@ -2,6 +2,7 @@ package es.uji.ei102720gmtp.SanaProject.controller;
 
 
 import es.uji.ei102720gmtp.SanaProject.Validation.MunicipiValidator;
+import es.uji.ei102720gmtp.SanaProject.dao.EspaiPublicDao;
 import es.uji.ei102720gmtp.SanaProject.dao.MunicipiDao;
 import es.uji.ei102720gmtp.SanaProject.model.Municipi;
 import es.uji.ei102720gmtp.SanaProject.services.ControladorsPerMunicipiService;
@@ -21,15 +22,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MunicipiController {
     private MunicipiDao municipiDao;
     private GestorsPerMunicipiService gestorsPerMunicipiService;
+    private EspaiPublicDao espaiPublicDao;
 
     @Autowired
     public void setMunicipiDao(MunicipiDao municipiDao){
         this.municipiDao = municipiDao;
     }
+
     @Autowired
     public void setGestorsPerMunicipiService(GestorsPerMunicipiService gestorsPerMunicipiService){
         this.gestorsPerMunicipiService = gestorsPerMunicipiService;
     }
+
+    @Autowired
+    public void setEspaiPublicDao(EspaiPublicDao espaiPublicDao) {
+        this.espaiPublicDao = espaiPublicDao;
+    }
+
     //Operacions: Crear, llistar, actualitzar, esborrar
 
     @RequestMapping("/list")
@@ -79,7 +88,14 @@ public class MunicipiController {
             redirectAttributes.addFlashAttribute("alert", msg);
             return "redirect:../list";
         }
+        if (!espaiPublicDao.getEspaisPublicsFromMunicipi(id).isEmpty()){
+            String msg = String.format("No es pot eliminar un municipi que conté espais publics");
+            redirectAttributes.addFlashAttribute("alert", msg);
+            return "redirect:../list";
+        }
 
+        String msg = String.format("S'ha borrat el municipi: " + municipiDao.getMunicipi(id).getNom());
+        redirectAttributes.addFlashAttribute("alert", msg);
         municipiDao.deleteMunicipi(id);
         return "redirect:../list";
     }

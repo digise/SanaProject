@@ -76,6 +76,17 @@ public class EspaiPublicDao
         }
     }
 
+    public List<EspaiPublic> getEspaisPublicsFromMunicipi(int idMunicipi) {
+        try {
+            return jdbcTemplate.query(
+                    "SELECT * FROM espaiPublic WHERE id_municipi = ?",
+                    new EspaiPublicRowMapper(),
+                    idMunicipi);
+        } catch (EmptyResultDataAccessException e) {
+            return new ArrayList<EspaiPublic>();
+        }
+    }
+
 
 }
 
