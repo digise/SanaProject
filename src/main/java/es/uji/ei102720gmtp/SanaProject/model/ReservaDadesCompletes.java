@@ -5,6 +5,7 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ReservaDadesCompletes {
 
@@ -14,7 +15,7 @@ public class ReservaDadesCompletes {
     private int nombrePersones;
     private EstatReserva estat;
     private String nifCiutada;
-    private String idZona;
+    private List<Integer> zones;
     private String idFranja;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -68,12 +69,12 @@ public class ReservaDadesCompletes {
         this.nifCiutada = nifCiutada;
     }
 
-    public String getIdZona() {
-        return idZona;
+    public List<Integer> getZones() {
+        return zones;
     }
 
-    public void setIdZona(String idZona) {
-        this.idZona = idZona;
+    public void setZones(List<Integer> zones) {
+        this.zones = zones;
     }
 
     public String getIdFranja() {
@@ -94,16 +95,17 @@ public class ReservaDadesCompletes {
 
     @Override
     public String toString() {
-        return "NovaReserva{" +
-                "idEspai=" + idEspai +
-                "idReserva=" + idReserva +
+        return "ReservaDadesCompletes{" +
+                "idEspai='" + idEspai + '\'' +
+                ", idReserva='" + idReserva + '\'' +
                 ", codiQR='" + codiQR + '\'' +
                 ", nombrePersones=" + nombrePersones +
                 ", estat=" + estat +
                 ", nifCiutada='" + nifCiutada + '\'' +
-                ", idZona=" + idZona +
-                ", idFranja=" + idFranja +
+                ", zones=" + zones +
+                ", idFranja='" + idFranja + '\'' +
                 ", dataReserva=" + dataReserva +
+                ", zonaDao=" + zonaDao +
                 '}';
     }
 

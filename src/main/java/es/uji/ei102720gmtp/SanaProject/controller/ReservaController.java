@@ -10,7 +10,6 @@ import es.uji.ei102720gmtp.SanaProject.model.ReservaDadesCompletes;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
 import es.uji.ei102720gmtp.SanaProject.services.ReservesClientService;
-import es.uji.ei102720gmtp.SanaProject.services.ReservesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +27,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -130,7 +127,7 @@ public class ReservaController {
         return "reserva/reservesEspaiResponsable";
     }
 
-    @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}")
+    @RequestMapping(value = "/add/{idEspai}/{idFranja}/{dia}", method = RequestMethod.GET)
     public String addReserva(Model model, @PathVariable String idEspai, @PathVariable String idFranja, @PathVariable String dia, HttpSession session){
 
         LocalDate data = LocalDate.parse(dia);
@@ -152,43 +149,28 @@ public class ReservaController {
         model.addAttribute("franjaHoraria", franjaHoraria);
 
         List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(data, franjaHoraria, Integer.valueOf(idEspai));
-        model.addAttribute("zones", zonesDisponibles);
+        model.addAttribute("zonesDisponibles", zonesDisponibles);
         return "reserva/add";
     }
 
-    @RequestMapping(value="/reservaFeta", method= RequestMethod.POST)
+    @RequestMapping(value="/add", method= RequestMethod.POST)
     public String ferReserva(@ModelAttribute("reservaDadesCompletes") ReservaDadesCompletes reservaDadesCompletes, BindingResult bindingResult, Model model, HttpSession session){
-        System.out.println(reservaDadesCompletes);
         reservaDadesCompletes.setZonaDao(zonaDao);
-        Validator reservaValidator = new ReservaValidator();
+        ReservaValidator reservaValidator = new ReservaValidator();
         reservaValidator.validate(reservaDadesCompletes, bindingResult);
         if(bindingResult.hasErrors()){
 
-            if (bindingResult.hasErrors())
-                System.out.println(bindingResult.getFieldError("nombrePersones").toString());
-            model.addAttribute("reserva", reservaDadesCompletes);
+            model.addAttribute("reservaDadesCompletes", reservaDadesCompletes);
 
             FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
             model.addAttribute("franjaHoraria", franjaHoraria);
 
             List<Zona> zonesDisponibles = espaiPublicService.getZonesDisponibles(reservaDadesCompletes.getDataReserva(), franjaHoraria, Integer.valueOf(reservaDadesCompletes.getIdEspai()));
-            model.addAttribute("zones", zonesDisponibles);
+            model.addAttribute("zonesDisponibles", zonesDisponibles);
 
-            /*
-            reserva = new ReservaDadesCompletes();
-            reserva.setIdEspai(espai.getId());
-            reserva.setEstat(EstatReserva.PENDENTUS);
-            Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
-            reserva.setNifCiutada(ciutada.getNif());
-            reserva.setDataReserva(diaDate);
-            model.addAttribute("reserva", reserva);
-
-             */
-
-            return "redirect:/reserva/add/" + reservaDadesCompletes.getIdEspai() + '/' + reservaDadesCompletes.getIdFranja() + '/' + reservaDadesCompletes.getDataReserva().toString();
+            return "reserva/add";
         }
         Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
-        System.out.println(reservaDadesCompletes.getIdReserva());
         emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " El codi de la reserva es " +
                 reservaDadesCompletes.getIdReserva() + "dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
 
@@ -198,35 +180,29 @@ public class ReservaController {
 
         reservaSimple.setNifCiutada(ciutada.getNif());
 
-        String dadesCodiQr = String.valueOf(reservaDadesCompletes.getIdEspai()) + String.valueOf(reservaDadesCompletes.getIdFranja()) + String.valueOf(reservaDadesCompletes.getIdZona()) + reservaDadesCompletes.getDataReserva().toString();
+        reservaSimple.setIdFranja(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+        reservaSimple.setDataReserva(reservaDadesCompletes.getDataReserva());
+
+        String dadesCodiQr = String.valueOf(reservaDadesCompletes.getIdEspai()) + String.valueOf(reservaDadesCompletes.getIdFranja()) + String.valueOf(reservaDadesCompletes.getZones().get(0)) + reservaDadesCompletes.getDataReserva().toString();
         File f = new File("src/main/resources/static/imagenes/reserva" + dadesCodiQr + ".png");
         String data = "localhost:8080/reserva/" + dadesCodiQr;
 
         System.out.println(f.getPath());
+        reservaSimple.setCodiQr("/imagenes/reserva" + dadesCodiQr + ".png");
+        reservaDadesCompletes.setCodiQR("/imagenes/reserva" + dadesCodiQr + ".png");
         try {
             createQR(f, data, 300, 300);
-            System.out.println("Codi QR creat");
-            reservaSimple.setCodiQr("/imagenes/reserva" + dadesCodiQr + ".png");
-            reservaDadesCompletes.setCodiQR("/imagenes/reserva" + dadesCodiQr + ".png");
-        } catch (Exception e){
-            System.out.println("No s'ha pogut crear el codi QR");
-            reservaSimple.setCodiQr("");
-            reservaDadesCompletes.setCodiQR("");
-        }
-
-
-        System.out.println(reservaDadesCompletes);
-        System.out.println(reservaSimple);
+        } catch (Exception e){}
 
         reservaDao.addReserva(reservaSimple);
         Reserva reservaGuardada = reservaDao.getReservaFromQR("/imagenes/reserva" + dadesCodiQr + ".png");
 
-        Ocupa ocupa = new Ocupa();
-        /*ocupa.setDataReserva(reservaDadesCompletes.getDataReserva());
-        ocupa.setIdFranja(Integer.valueOf(reservaDadesCompletes.getIdFranja()));*/
-        ocupa.setIdZona(Integer.valueOf(reservaDadesCompletes.getIdZona()));
-        ocupa.setIdReserva(reservaGuardada.getId());
-        ocupaDao.addOcupa(ocupa);
+        for (int idZona: reservaDadesCompletes.getZones()){
+            Ocupa ocupa = new Ocupa();
+            ocupa.setIdReserva(reservaGuardada.getId());
+            ocupa.setIdZona(idZona);
+            ocupaDao.addOcupa(ocupa);
+        }
 
         reservaDadesCompletes.setEstat(EstatReserva.PENDENTUS);
         reservaDadesCompletes.setNifCiutada(ciutada.getNif());
@@ -237,10 +213,11 @@ public class ReservaController {
 
         model.addAttribute("dades", reservaDadesCompletes);
         model.addAttribute("franjaHoraria", franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja())));
-        model.addAttribute("zona", zonaDao.getZona(Integer.valueOf(reservaDadesCompletes.getIdZona())));
+
+        model.addAttribute("zones", reservaDadesCompletes.getZones());
         List<Reserva> reserves = reservaDao.getReserves();
         Reserva reserva = reserves.get(reserves.size() - 1);
-        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " El codi de la reserva es " +
+        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " " + "El codi de la reserva es " +
                 reserva.getId() + " dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
         return "/reserva/reservaFeta";
     }

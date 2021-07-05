@@ -37,7 +37,7 @@
     </div>
 
     <div class="row justify-content-md-center">
-        <div class="col-lg-4 m-4 align-self-center">
+        <div class="col-lg-4 m-4 align-self-center card">
             <div class="row">
                 <h2 class="my-2 text-center">Serveis permanents:</h2>
             </div>
@@ -48,7 +48,7 @@
                 <p>- <span th:text="${serveiPermanent.getNom()}"></span></p>
             </div>
         </div>
-        <div class="col-lg-4 m-4 align-self-center">
+        <div class="col-lg-4 m-4 align-self-center card">
             <div class="row">
                 <h2 class="my-2 text-center">Serveis estacionals:</h2>
             </div>
@@ -86,11 +86,22 @@
                         <div class="col-auto">
                             <form action="#" th:action="@{/espaiPublic/elegirZona}"
                                   th:object="${dades}" method="post">
-                                <label for="data">Data: </label>
-                                <input type="hidden" id="id" name="id" th:field="*{idEspai}">
-                                <input type="date" id="data" th:id="data" name="data" th:field="*{diaElegit}">
-                                <span><input class="btn btn-outline-primary m-0" type="submit" value="Actualitzar"
-                                             style="color: #1a1a1a; border-width: thin; border-color: #1a1a1a" /></span>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="data">Data: </label>
+                                        <input type="hidden" id="id" name="id" th:field="*{idEspai}">
+                                    </div>
+                                    <div class="col">
+                                        <input type="date" id="data" th:id="data" name="data" th:field="*{diaElegit}">
+                                    </div>
+                                    <div class="col">
+                                        <span><input class="btn btn-outline-primary m-0" type="submit" value="Actualitzar"
+                                                     style="color: #1a1a1a; border-width: thin; border-color: #1a1a1a" /></span>
+                                    </div>
+                                </div>
+                                <div class="row text-danger justify-content-center">
+                                    <td th:if="${#fields.hasErrors('diaElegit')}" th:errors="*{diaElegit}"></td>
+                                </div>
                             </form>
                         </div>
                     </div>
