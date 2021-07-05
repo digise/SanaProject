@@ -10,7 +10,7 @@
   <form action="#" th:action="@{/servei/updateServeiEstacional}"
         th:object="${servei}" method="post">
     <div>
-      <a type="button" class="btn btn-danger" th:href="@{/servei/listServeiEstacional}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+      <a type="button" class="btn btn-secondary" th:href="@{/servei/listServeiEstacional}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     </div>
     <div class="modal-header">
       <h2><span th:text="${servei.nom}"></span></h2>
