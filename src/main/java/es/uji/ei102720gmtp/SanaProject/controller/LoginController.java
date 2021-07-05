@@ -29,7 +29,7 @@ class UserValidator implements Validator {
         // ...
         UserDetails userDetails = (UserDetails) obj;
         if (userDetails.getNif().trim().equals(""))
-            errors.rejectValue("user", "obligatori",
+            errors.rejectValue("nif", "obligatori",
                     "Cal introduir un valor");
 
         if (userDetails.getPassword().trim().equals(""))

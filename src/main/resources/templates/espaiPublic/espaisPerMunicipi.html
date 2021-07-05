@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="row pb-4">
         <div class="col-2 pt-3">
-            <a type="button" class="btn btn-danger" th:href="@{/gestorMunicipal/indexGestor}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+            <a type="button" class="btn btn-secondary" th:href="@{/gestorMunicipal/indexGestor}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
         </div>
         <div class="col-6">
             <h1 class="my-3" style="text-align: center">Espais públics de <span th:text="${municipi.nom}"></span></h1>
@@ -37,11 +37,16 @@
                     </div>
                 </div>
                 <div class="card-footer p-3" align="center">
-                    <a class="btn btn-primary" th:href="@{/espaiPublic/informacioEspai/{id}(id=${espai.id})}">Més infromació del espai</a>
-                    <a class="btn btn-primary" th:href="@{/reserva/reservesEspai/{id}(id=${espai.id})}">Reserves</a>
-                    <a class="btn btn-primary" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}">Serveis Espai</a>
-                    <a class="btn btn-info" th:href="@{/espaiPublic/update/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Modificar espai</a>
-                    <a class="btn btn-success" th:href="@{/espaiPublic/afegirZonesFranjes/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Afegir zona i franjes horàries</a>
+                    <div class="mb-2">
+                        <a class="btn btn-primary" th:href="@{/espaiPublic/informacioEspai/{id}(id=${espai.id})}">Més infromació del espai</a>
+                        <a class="btn btn-primary" th:href="@{/reserva/reservesEspai/{id}(id=${espai.id})}">Reserves</a>
+                        <a class="btn btn-primary" th:href="@{/servei/listServeisEspai/{id}(id=${espai.id})}">Serveis Espai</a>
+                        <a class="btn btn-info" th:href="@{/espaiPublic/update/{id}(id=${espai.id})}"><i class="fas fa-edit"></i> Modificar espai</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-success" th:href="@{/zona/list/{id}(id=${espai.id})}"> Llistat zones</a>
+                        <a class="btn btn-success" th:href="@{/franja/list/{id}(id=${espai.id})}"> Llistat franges horaries</a>
+                    </div>
                 </div>
             </div>
         </div>

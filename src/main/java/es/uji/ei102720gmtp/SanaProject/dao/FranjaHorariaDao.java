@@ -27,7 +27,7 @@ public class FranjaHorariaDao{
     }
 
     /* Esborrem */
-    public void deleteFranjaHoraria(String idFranja) {
+    public void deleteFranjaHoraria(int idFranja) {
         jdbcTemplate.update("DELETE from franjaHoraria where id=?",
                 idFranja);
     }

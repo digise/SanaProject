@@ -98,7 +98,7 @@ public class ReservesService implements InterfaceReservesService{
         int ocupacio = 0;
         List<Zona> zonesEspai = zonaDao.getZonesFromEspai(idEspai);
         for (Zona zona : zonesEspai) {
-            for (Ocupa ocupa : ocupaDao.getListaOcupaZona(zona.getId())) {
+            for (Ocupa ocupa : ocupaDao.getOcupesPerZona(zona.getId())) {
                 int idZona = zona.getId();
                 Reserva reserva = reservaDao.getReserva(ocupa.getIdReserva());
                 if (reserva.getEstat() == EstatReserva.ENUS){

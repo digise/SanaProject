@@ -93,12 +93,22 @@ public class ReservaDao {
     }
 
 
+
     public List<Reserva> getReservesPerEspai(int idEspai) {
         try{
             return jdbcTemplate.query(
                     "SELECT * FROM Reserva WHERE id_franja IN (" +
                             "SELECT id FROM FranjaHoraria WHERE id_espai = ?)",
                     new ReservaRowMapper(), idEspai);
+        }catch (EmptyResultDataAccessException e) {
+            return new ArrayList<Reserva>();
+        }
+    }
+    public List<Reserva> getReservesPerFranges(int idFranja){
+        try{
+            return jdbcTemplate.query(
+                    "SELECT * FROM Reserva WHERE id_franja = ?",
+                    new ReservaRowMapper(), idFranja);
         }catch (EmptyResultDataAccessException e) {
             return new ArrayList<Reserva>();
         }
