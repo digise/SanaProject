@@ -11,6 +11,21 @@
 <body>
 <div style="text-align: center" layout:fragment="content">
   <h1>Benvingut Alberto Espinosa, està vosté en el menú responsable de medi ambient</h1>
+
+  <div class="row pt-lg-5">
+    <div class="col mb-3 pb-4">
+      <a th:href="@{/municipi/list}"><button type="button" class="btn btn-primary btn-lg">Menu municipis</button></a>
+    </div>
+    <div class="w-100"></div>
+    <div class="col mb-3 pb-4">
+      <a th:href="@{/espaiPublic/list}"><button type="button" class="btn btn-primary btn-lg">Menu espais</button></a>
+    </div>
+    <div class="w-100"></div>
+    <div class="col mb-3">
+      <a th:href="@{/servei/seleccionarTipusServei}"><button type="button" class="btn btn-primary btn-lg">Menu serveis</button></a>
+    </div>
+    <div class="w-100"></div>
+  </div>
 </div>
 
 </body>

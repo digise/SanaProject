@@ -8,7 +8,7 @@
 <body>
 <div layout:fragment="content">
     <div class="col-2">
-        <a type="button" class="btn btn-danger" th:href="@{/espaiPublic/espaisProvinciaSenseRegistrar/{provincia}(provincia=${municipi.provincia.getDescripcion()})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
+        <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/espaisProvinciaSenseRegistrar/{provincia}(provincia=${municipi.provincia.getDescripcion()})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
     </div>
     <div class="col-7">
         <h1 class="my-5 text-center" style="font-size: xxx-large"><span th:text="${espai.nom}"></span></h1>
