@@ -18,7 +18,7 @@
     <div class="row justify-content-md-center">
         <div class="col-lg-4 m-4 align-self-center">
             <p><b>Espai: </b><span th:text="${nomEspai}"></span></p>
-            <p><b>Zona: </b><span th:text="${'Zona ' + dades.idZona}"></span></p>
+            <p><b>Zona: </b><span th:text="${'Zona ' + dades.zones.toString()}"></span></p>
             <p><b>Franja horaria: </b><span th:text="${franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString()}"></span></p>
             <p><b>Data de la reserva: </b><span th:text="${dades.dataReserva.toString()}"></span></p>
             <p><b>Nombre de persones: </b><span th:text="${dades.nombrePersones}"></span></p>

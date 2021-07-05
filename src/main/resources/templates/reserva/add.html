@@ -2,27 +2,44 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/baseCiutada}">
 <head>
-    <title>Informació de la reserva</title>
+    <title>Realitzacio de la reserva</title>
     <meta charset="UTF-8">
 </head>
 <body>
 <div layout:fragment="content">
     <a type="button" class="btn btn-secondary" th:href="@{/espaiPublic/elegirZona/{id} (id=${reservaDadesCompletes.idEspai})}"><i class="fa fa-arrow-alt-circle-left"></i> Atrás</a>
-    <h1 class="my-5 text-center" style="font-size: xxx-large"
-        th:text="${'Reservar a la franja ' + franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString() + ' (' + reservaDadesCompletes.dataReserva.toString() + ')'}"></h1>
-    <div class="col card" style="max-width: 40rem;">
-        <form th:action="@{/reserva/reservaFeta}" th:object="${reservaDadesCompletes}" method="post" th:if="${!zones.isEmpty()}">
+    <h1 class="my-5 text-center" style="font-size: xxx-large">Realització de la reserva</h1>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <b>Data: </b>
+        </div>
+        <div class="col-md-auto">
+            <p th:text="${reservaDadesCompletes.dataReserva.toString()}"></p>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <b>Franja horaria: </b>
+        </div>
+        <div class="col-md-auto">
+            <p th:text="${franjaHoraria.horaInici.toString() + ' - ' + franjaHoraria.horaFinal.toString()}"></p>
+        </div>
+    </div>
+    <div class="col card" style="max-width: 44rem;">
+        <form th:action="@{/reserva/add}" th:object="${reservaDadesCompletes}" method="post" th:if="${!zonesDisponibles.isEmpty()}">
             <div class="row justify-content-md-center pb-3">
                 <div class="col-md-auto">
-                    <label for="zona"><b>Selecciona la zona: </b></label>
+                    <label><b>Selecciona la zona: </b></label>
                 </div>
                 <div class="col-md-auto">
-                    <select  id="zona" name="zona" th:field="*{idZona}">
-                        <option th:each="zona: ${zones}"
-                                th:value="${zona.getId()}"
-                                th:text="${'Zona ' + zona.getId() + ' (maxim ' + zona.getCapacitat() + ' persones)'}">
-                        </option>
-                    </select>
+                    <ul>
+                        <li th:each="zona: ${zonesDisponibles}">
+                            <div class="ui">
+                                <input type="checkbox" th:field="*{zones}" th:value="${zona.id}">
+                                <label th:text="${'Zona ' + zona.id + ' (capacitat:' + zona.capacitat + ')'}"></label>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row justify-content-md-center pt-3 pb-3">
@@ -32,8 +49,8 @@
                 <div class="col-md-auto">
                     <input type="number" id="nombrePersones" name="nombrePersones" th:field="*{nombrePersones}">
                 </div>
-                <div class="row text-danger"><p th:if="${#fields.hasErrors('nombrePersones')}" th:errors="*{nombrePersones}"></p></div>
             </div>
+            <div class="row text-danger justify-content-center"><td th:if="${#fields.hasErrors('nombrePersones')}" th:errors="*{nombrePersones}"></td></div>
             <div class="row justify-content-md-center">
                 <div class="col-md-6 align-self-center offset-md-3 pt-3">
                     <input class="btn btn-success" type="submit" value="Reservar">
@@ -44,7 +61,7 @@
             <input type="hidden" th:field="*{dataReserva}">
         </form>
     </div>
-    <div th:if="${zones.isEmpty()}">
+    <div th:if="${zonesDisponibles.isEmpty()}">
         <div class="row justify-content-center pb-3">
             <div class="col-auto">
                 <h5><u>No hi ha zones disponibles al dia i a la franja horaria seleccionades</u></h5>
