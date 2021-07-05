@@ -30,7 +30,9 @@
         <td th:text="${serveiPermanent.tipus}"></td>
         <td th:text="${serveiPermanent.dataApertura.toString()}"></td>
         <td>
-          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiPermanentGestor/{id}/{nom}(id=${espai.id}, nom=${serveiPermanent.nom})}"><i class="fas fa-trash"></i> Borrar</a>
+          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiPermanentGestor/{id}/{nom}(id=${espai.id}, nom=${serveiPermanent.nom})}"
+             th:onclick="return confirm('Estàs segur d\'esborrar el servei amb nom ' + [[${serveiPermanent.nom}]] + '?');">
+            <i class="fas fa-trash"></i> Borrar</a>
         </td>
       </tr>
       </tbody>
@@ -69,7 +71,9 @@
         <td th:text="${serveiEstacional.dataInici.toString()}"></td>
         <td th:text="${serveiEstacional.dataFinal.toString()}"></td>
         <td>
-          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiEstacionalGestor/{id}/{nom}(id=${espai.id}, nom=${serveiEstacional.nom})}"><i class="fas fa-trash"></i> Borrar</a>
+          <a class="btn btn-danger btn-sm" th:href="@{/servei/deleteServeiEstacionalGestor/{id}/{nom}(id=${espai.id}, nom=${serveiEstacional.nom})}"
+             th:onclick="return confirm('Estàs segur d\'esborrar el servei amb nom ' + [[${serveiEstacional.nom}]] + '?');">
+            <i class="fas fa-trash"></i> Borrar</a>
         </td>
       </tr>
       </tbody>
