@@ -35,60 +35,59 @@ public class ReservesService implements InterfaceReservesService{
     @Autowired
     MunicipiDao municipiDao;
 
-    // @Todo
+
     @Override
-    public List<ReservaTablas> reservesPerEspai(int idEspai) {
+    public List<ReservaTablas> reservesPerEspaiGeneral(int idEspai) {
         List<ReservaTablas> res = new ArrayList<>();
-        List<Zona> zonesEspai = zonaDao.getZonesFromEspai(idEspai);
-        for (Zona zona : zonesEspai) {
-            for (Ocupa ocupa : ocupaDao.getListaOcupaZona(zona.getId())) {
-                int idZona = zona.getId();
-                //    LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraInici();
-                //    LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraFinal();
-                Reserva reserva = reservaDao.getReserva(ocupa.getIdReserva());
-                //    LocalDate data = ocupa.getDataReserva();
-                if (reserva.getEstat() != EstatReserva.CANCELADAPERGESTORMUNICIPAL && reserva.getEstat() != EstatReserva.CANCELADAPERCIUTADA && reserva.getEstat() != EstatReserva.CANCELADAPERCONTROLADOR) {
-                    //   if (LocalDate.now().isAfter(data) && LocalTime.now().isAfter(horaFinal))
-                        reserva.setEstat(EstatReserva.FIUS);
-                    //   else if (LocalDate.now().equals(data) && LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal))
-                        reserva.setEstat(EstatReserva.ENUS);
-                    //   else
-                        reserva.setEstat(EstatReserva.PENDENTUS);
-                }
-
-
-                //   ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), idZona, horaInici, horaFinal, data);
-                //   res.add(reservaTablas);
+        for (Reserva reserva : reservaDao.getReservesPerEspai(idEspai)){
+            List<Integer> zones = new ArrayList<>();
+            for (Ocupa ocupa : ocupaDao.getOcupesPerIdReserva(reserva.getId())){
+                zones.add(ocupa.getIdZona());
             }
+            LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()).getHoraInici();
+            LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()).getHoraFinal();
+            LocalDate data = reserva.getDataReserva();
+            if (reserva.getEstat() != EstatReserva.CANCELADAPERGESTORMUNICIPAL && reserva.getEstat() != EstatReserva.CANCELADAPERCIUTADA && reserva.getEstat() != EstatReserva.CANCELADAPERCONTROLADOR) {
+                if (LocalDate.now().isAfter(data) && LocalTime.now().isAfter(horaFinal))
+                    reserva.setEstat(EstatReserva.FIUS);
+                else if (LocalDate.now().equals(data) && LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal))
+                    reserva.setEstat(EstatReserva.ENUS);
+                else
+                    reserva.setEstat(EstatReserva.PENDENTUS);
+            }
+
+            ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), zones, horaInici, horaFinal, data);
+            res.add(reservaTablas);
+
         }
         return res;
     }
 
-    // @Todo
+
     @Override
     public List<ReservaTablas> reservesPerClient(String nifCiutada) {
         List<ReservaTablas> res = new ArrayList<>();
         for (Reserva reserva : reservaDao.getReserves()){
             if (reserva.getNifCiutada().equals(nifCiutada)){
+                List<Integer> zones = new ArrayList<>();
                 for (Ocupa ocupa : ocupaDao.getOcupesPerIdReserva(reserva.getId())){
-                    int idZona = ocupa.getIdZona();
-                    int idEspai = zonaDao.getZona(idZona).getIdEspai();
-                    //   LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraInici();
-                    //   LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(ocupa.getIdFranja()).getHoraFinal();
-                    //   LocalDate data = ocupa.getDataReserva();
-                    reserva = reservaDao.getReserva(ocupa.getIdReserva());
-                    if (reserva.getEstat() != EstatReserva.CANCELADAPERGESTORMUNICIPAL && reserva.getEstat() != EstatReserva.CANCELADAPERCIUTADA && reserva.getEstat() != EstatReserva.CANCELADAPERCONTROLADOR) {
-                        //   if (LocalDate.now().isAfter(data) && LocalTime.now().isAfter(horaFinal))
-                            reserva.setEstat(EstatReserva.FIUS);
-                        //   else if (LocalDate.now().equals(data) && LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal))
-                            reserva.setEstat(EstatReserva.ENUS);
-                        //  else
-                            reserva.setEstat(EstatReserva.PENDENTUS);
-                    };
-
-                    //   ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), idZona, horaInici, horaFinal, data);
-                    //   res.add(reservaTablas);
+                    zones.add(ocupa.getIdZona());
                 }
+                int idEspai = zonaDao.getZona(zones.get(0)).getIdEspai();
+                LocalTime horaInici = franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()).getHoraInici();
+                LocalTime horaFinal = franjaHorariaDao.getFranjaHoraria(reserva.getIdFranja()).getHoraFinal();
+                LocalDate data = reserva.getDataReserva();
+                if (reserva.getEstat() != EstatReserva.CANCELADAPERGESTORMUNICIPAL && reserva.getEstat() != EstatReserva.CANCELADAPERCIUTADA && reserva.getEstat() != EstatReserva.CANCELADAPERCONTROLADOR) {
+                    if (LocalDate.now().isAfter(data) && LocalTime.now().isAfter(horaFinal))
+                    reserva.setEstat(EstatReserva.FIUS);
+                    else if (LocalDate.now().equals(data) && LocalTime.now().isAfter(horaInici) && LocalTime.now().isBefore(horaFinal))
+                    reserva.setEstat(EstatReserva.ENUS);
+                    else
+                    reserva.setEstat(EstatReserva.PENDENTUS);
+                }
+
+                ReservaTablas reservaTablas = new ReservaTablas(reserva, idEspai, espaiPublicDao.getEspaiPublic(idEspai).getNom(), municipiDao.getMunicipi(espaiPublicDao.getEspaiPublic(idEspai).getIdMunicipi()).getNom(), zones, horaInici, horaFinal, data);
+                res.add(reservaTablas);
             }
         }
         return res;

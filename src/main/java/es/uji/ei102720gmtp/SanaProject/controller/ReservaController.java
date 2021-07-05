@@ -9,12 +9,10 @@ import es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva;
 import es.uji.ei102720gmtp.SanaProject.model.ReservaDadesCompletes;
 import es.uji.ei102720gmtp.SanaProject.services.EspaiPublicService;
 import es.uji.ei102720gmtp.SanaProject.services.InterfaceReservesService;
-import es.uji.ei102720gmtp.SanaProject.services.ReservesClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +39,6 @@ public class ReservaController {
     private ZonaDao zonaDao;
     private FranjaHorariaDao franjaHorariaDao;
     private InterfaceReservesService reservesService;
-    private ReservesClientService reservesClientService;
     private EmailDao emailDao;
 
     @Autowired
@@ -79,10 +76,6 @@ public class ReservaController {
         this.franjaHorariaDao = franjaHorariaDao;
     }
 
-    @Autowired
-    public void setReservesClientService(ReservesClientService reservesClientService) {
-        this.reservesClientService = reservesClientService;
-    }
 
     @Autowired
     public void setEmailDao(EmailDao emailDao){
@@ -106,7 +99,8 @@ public class ReservaController {
 
     @RequestMapping(value = "/reservesClient/{nif}")
     public String mostrarReservesClient(Model model, @PathVariable String nif){
-        model.addAttribute("reserves", reservesService.reservesPerClient(nif));
+        List<ReservaTablas> reserves = reservesService.reservesPerClient(nif);
+        model.addAttribute("reserves", reserves);
         model.addAttribute("nif", nif);
         return "reserva/reservesClient";
     }
@@ -115,7 +109,7 @@ public class ReservaController {
     public String mostrarReservesEspai(Model model, @PathVariable int id){
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
-        model.addAttribute("reserves", reservesService.reservesPerEspai(id));
+        model.addAttribute("reserves", reservesService.reservesPerEspaiGeneral(id));
         return "reserva/reservesEspai";
     }
 
@@ -123,7 +117,7 @@ public class ReservaController {
     public String mostrarReservesEspaiResponsable(Model model, @PathVariable int id){
         EspaiPublic espai = espaiPublicDao.getEspaiPublic(id);
         model.addAttribute("espai", espai);
-        model.addAttribute("reserves", reservesService.reservesPerEspai(id));
+        model.addAttribute("reserves", reservesService.reservesPerEspaiGeneral(id));
         return "reserva/reservesEspaiResponsable";
     }
 
@@ -250,15 +244,15 @@ public class ReservaController {
 
     @RequestMapping(value = "/mostrarQR/{idReserva}/{idEspai}")
     public String mostrarCodiQR(@PathVariable String idReserva, @PathVariable int idEspai, Model model){
-        System.out.println("Es va a mostrar el QR");
+        //System.out.println("Es va a mostrar el QR");
 
-        ReservaDadesCompletes reservaDadesCompletes = reservesClientService.getReservaDadesCompletes(idReserva);
-        FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
+        //ReservaDadesCompletes reservaDadesCompletes = reservesClientService.getReservaDadesCompletes(idReserva);
+        //FranjaHoraria franjaHoraria = franjaHorariaDao.getFranjaHoraria(Integer.valueOf(reservaDadesCompletes.getIdFranja()));
         EspaiPublic espaiPublic = espaiPublicDao.getEspaiPublic(idEspai);
 
-        model.addAttribute("dades", reservaDadesCompletes);
-        model.addAttribute("franjaHoraria", franjaHoraria);
-        model.addAttribute("espai", espaiPublic);
+        //model.addAttribute("dades", reservaDadesCompletes);
+        //model.addAttribute("franjaHoraria", franjaHoraria);
+        //model.addAttribute("espai", espaiPublic);
 
         return "/reserva/mostrarQR";
     }

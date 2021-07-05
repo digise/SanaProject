@@ -7,11 +7,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
 
     private int idEspai;
-    private int idZona;
+    private List<Integer> zones;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalTime horaInici;
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
@@ -22,12 +23,12 @@ public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
     private String nomEspai;
     private String nomMunicipi;
 
-    public ReservaTablas(Reserva reserva, int idEspai, String nomEspai, String nomMunicipi, int idZona, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
+    public ReservaTablas(Reserva reserva, int idEspai, String nomEspai, String nomMunicipi, List<Integer> zones, LocalTime horaInici, LocalTime horaFinal, LocalDate dataReserva){
         this.reserva = reserva;
         this.idEspai = idEspai;
         this.nomEspai = nomEspai;
         this.nomMunicipi = nomMunicipi;
-        this.idZona = idZona;
+        this.zones = zones;
         this.horaInici = horaInici;
         this.horaFinal = horaFinal;
         this.dataReserva = dataReserva;
@@ -49,12 +50,19 @@ public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
         this.idEspai = idEspai;
     }
 
-    public int getIdZona() {
-        return idZona;
+    public List<Integer> getZones() {
+        return zones;
+    }
+    public String mostrarZones(){
+        StringBuilder sbZones = new StringBuilder();
+        for (int i = 0; i < zones.size() - 1; i++)
+            sbZones.append(zones.get(i)).append(", ");
+        sbZones.append(zones.get(zones.size() - 1));
+        return sbZones.toString();
     }
 
-    public void setIdZona(int idZona) {
-        this.idZona = idZona;
+    public void setZones(List<Integer> zones) {
+        this.zones = zones;
     }
 
     public LocalTime getHoraInici() {
@@ -129,7 +137,7 @@ public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
     public String toString() {
         return "ReservaTablas{" +
                 "idEspai=" + idEspai +
-                ", idZona=" + idZona +
+                ", zones=" + zones +
                 ", horaInici=" + horaInici +
                 ", horaFinal=" + horaFinal +
                 ", dataReserva=" + dataReserva +
@@ -140,6 +148,4 @@ public class ReservaTablas extends Reserva implements Comparable<ReservaTablas>{
                 ", municipiDao=" + municipiDao +
                 '}';
     }
-
-
 }

@@ -26,5 +26,9 @@ public class ReservaValidator implements Validator{
         if (reserva.getNombrePersones() > capacitat )
             errors.rejectValue("nombrePersones", "Massa alt",
                     "Cal que el nombre siga menor o igual a la capacitat de totes les zones seleccionades");
+
+        if (reserva.getZones().size() > reserva.getNombrePersones())
+            errors.rejectValue("nombrePersones", "Massa baix",
+                    "Cal que el nombre de persones siga major o igual al nombre de zones");
     }
 }

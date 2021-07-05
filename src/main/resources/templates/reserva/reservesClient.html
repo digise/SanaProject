@@ -41,14 +41,14 @@
             <tr class="table-light" th:each="reserva: ${#lists.sort(reserves)}">
                 <td th:text="${reserva.reserva.id}"></td>
                 <td th:text="${reserva.nomEspai}"></td>
-                <td th:text="${reserva.idZona}"></td>
+                <td th:text="${reserva.mostrarZones()}"></td>
                 <td th:text="${reserva.reserva.nombrePersones}"></td>
                 <td th:text="${reserva.dataReserva.toString()}"></td>
                 <td th:text="${reserva.horaInici.toString()}"></td>
                 <td th:text="${reserva.horaFinal.toString()}"></td>
                 <td th:text="${reserva.reserva.estat.getDescripcion()}"></td>
                 <td>
-                    <a type="button" class="btn btn-danger" th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" th:href="@{/reserva/deletePerClient/{id}(id=${reserva.reserva.id})}"
+                    <a type="button" class="btn btn-danger btn-sm" th:if="${reserva.reserva.estat == T(es.uji.ei102720gmtp.SanaProject.model.enums.EstatReserva).PENDENTUS}" th:href="@{/reserva/deletePerClient/{id}(id=${reserva.reserva.id})}"
                        th:onclick="return confirm('Estàs segur d\'esborrar la reserva amb id ' + [[${reserva.reserva.id}]] + 'de l\'espai' + [[${reserva.nomEspai}]] + '?');">
                         <i class="fas fa-trash"></i> Anul·lar</a>
                 </td>
