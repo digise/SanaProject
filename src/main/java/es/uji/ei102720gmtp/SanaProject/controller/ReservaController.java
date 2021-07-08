@@ -165,8 +165,6 @@ public class ReservaController {
             return "reserva/add";
         }
         Ciutada ciutada = (Ciutada) session.getAttribute("ciutada");
-        emailDao.addEmail(new Email(reservaDadesCompletes.getDataReserva(), "no_reply@sana.es", ciutada.getEmail(), "RESERVA REALITZADA", " El codi de la reserva es " +
-                reservaDadesCompletes.getIdReserva() + "dins de la secció les meues reserves trobarás la informació detallada de la reserva", ciutada.getNif()));
 
         Reserva reservaSimple = new Reserva();
         reservaSimple.setNombrePersones(reservaDadesCompletes.getNombrePersones());
